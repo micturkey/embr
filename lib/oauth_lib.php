@@ -412,7 +412,7 @@ class OAuthRequest {
    * util function: current nonce
    */
   private static function generate_nonce() {
-    $mt = micro$_SERVER['REQUEST_TIME'];
+    $mt = microtime();
     $rand = mt_rand();
 
     return md5($mt . $rand); // md5s look nicer than numbers
