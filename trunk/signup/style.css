@@ -1,0 +1,7 @@
+body { font-family: Tahoma,Arial,sans-serif; font-size: 13px; }
+form { border: 20px solid #EBEBEB; width: 450px; margin: auto; padding: 5px 20px; }
+p { clear: both; }
+p label { width: 100%; text-align: left; font-weight: bold; }
+p input.text_field { width: 200px; }
+p span { margin-left: 20px; }
+.error { color: #FF0000; }
