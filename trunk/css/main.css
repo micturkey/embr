@@ -585,7 +585,6 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 #following_list span {float:left;padding:0 3px 2px 2px;}
 #following_list img {padding:0;}
 #friends_view_all {font-size:0.9em;padding:0 14px;}
-#plz_dont_block_us {background: transparent url(../img/dont_block_us.png) no-repeat scroll center center;display:block;float: left; margin: 10px 0 0 5px;width:180px;height:150px}
 #follow_us {float: left; display: block; margin-left: -3px; line-height: 22px;}
 #follow_us span {
 background-color:#FFFFFF;
@@ -603,7 +602,6 @@ text-align:left;
 text-transform:uppercase;
 }
 #follow_us span:hover {background-color:#eee !important;}
-
 /* =buttons
 ----------------------------------------*/
 .btn::-moz-focus-inner  {

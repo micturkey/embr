@@ -13,7 +13,15 @@
 		setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
 		setcookie('name', $user->name, $time, '/');
 		setcookie('listed_count', GetListed($t), $time, '/');
-		echo '{"friends": ' .$user->friends_count. ', "followers": ' .$user->followers_count. ', "listed": '.GetListed($t).', "statuses": '.$user->statuses_count.'}';
+		$callback = array(
+			'friends' => $user->friends_count,
+			'followers' => $user->followers_count,
+			'statuses' => $user->statuses_count,
+			'listed' => GetListed($t),
+			'imgurl' => getAvatar($user->profile_image_url),
+			'name' => $user->name
+		);
+		echo json_encode($callback);		
 	} else {
 		echo '{"error": 1}';
 	}

@@ -112,6 +112,15 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
+	case "plixi.com":
+		proc = {
+			reg: /^http:\/\/(?:www\.)?plixi\.com\/([\d\w]+)/,
+			func: function (url_key, url_elem) {
+				var src = "http://pubinside.appspot.com/TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				append_image(src, url_elem);
+			}
+		};
+		return proc;
 	case "ts1.in":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?ts1\.in\/(\d+)/,
