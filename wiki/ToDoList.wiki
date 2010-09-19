@@ -4,6 +4,8 @@ multi-imgbed upload.
 
 customized in-tab pages.
 
+browse suggestion
+
 itap implementing.
 
 How-to page.
