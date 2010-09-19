@@ -304,8 +304,7 @@
 	}
 
 	function getAvatar($profileImg){
-		if (getcookie('proxify') == true) {
-				//$profileImg = preg_replace("/(http[s]?\:\/\/)/", "http://pubinside.appspot.com/",$profileImg);
+		if (getcookie('proxify') == 'true') {
 				$profileImg = str_replace('http://','http://pubinside.appspot.com/', $profileImg);
 		}
 		return $profileImg;

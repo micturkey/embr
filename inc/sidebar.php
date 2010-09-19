@@ -8,7 +8,7 @@ $t = getTwitter();
 <div id="side" class="round-right">
 	<div id="sideinfo">
 		<a href="profile.php"><img id="sideimg" src="<?php echo getCookie("imgurl")?>" /></a>
-		<span id="sideid"><?php echo getEncryptCookie('twitese_name')?><a href="#" id="profileRefresh"><img src="img/refresh.png" /></a></span>
+		<span id="sideid"><span id="side_name"><?php echo getEncryptCookie('twitese_name')?></span><a href="#" id="profileRefresh" title="refresh your profile"><img src="img/refresh.png" /></a></span>
 		<a href="profile.php"><span id="me_tweets"><span id="update_count"><?php echo getCookie('statuses_count')?></span> tweets</span></a>
 	</div>
 	<?php if (strrpos($_SERVER['PHP_SELF'], 'profile')) {
@@ -49,12 +49,12 @@ $t = getTwitter();
 			<?php 
 			switch(mt_rand(0,2)) { 
 				case 2: ?>
-		<strong>Ex&middot;press</strong>
+		<strong>Realtime Refresh</strong>
 		<em>v.</em>
-		Now you can just tweet expressly without waiting timeline emerging.<br>Click for more details.<span id="indicator">[+]</span>
+		Now you can refresh your profile whenever you like!<br>Click for more details.<span id="indicator">[+]</span>
 		</a>
 		<a id="sidebarTip_more" style="display: none;">
-			Visit the Express Page in the Toolbox Menu, which is designed to the time-limited situation.	
+			See the circle behind your username? Try to click it!	
 			</a>
 				<?php break;
 				case 1: ?>

@@ -133,7 +133,7 @@
 	}
 ?>
 <div id="tweeting_controls">
-		<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#"><span>Tweet</span></a>
+		<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Tweet</span></a>
 	</div>
 <!--<input type="submit" id="submit_btn" value="update" />-->
 	<div id="func_set">

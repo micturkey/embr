@@ -947,15 +947,18 @@ var formFunc = function(){
 								$(".count").eq(0).text(msg.friends).end()
 									.eq(1).text(msg.followers).end()
 									.eq(2).text(msg.listed);
-								updateSentTip("Successfully updated!", 3000, "success");
+								$("#update_count").text(msg.statuses);
+								$("#side_name").text(msg.name);
+								$("[herf='profile.php']:first").html("<img id=\"sideimg\" src=\" " + msg.imgurl + "\" />");
+								updateSentTip("Profile updated successfully!", 3000, "success");
 							}
 							else {
-								updateSentTip("Failed to updated!", 3000, "failure");
+								updateSentTip("Failed to update your profile!", 3000, "failure");
 							}
 							that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
 						},
 						error: function (msg) {
-							updateSentTip("Failed to updated!", 3000, "failure");
+							updateSentTip("Failed to update your profile!", 3000, "failure");
 						},
 						complete: function() {
 							that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
