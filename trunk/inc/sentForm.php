@@ -1,7 +1,9 @@
 <script type="text/javascript" src="js/formfunc.js?ver=2010041501"></script>
 <script type="text/javascript" src="js/ajaxfileupload.js"></script>
-<?php if (!isset($_sentText)) { ?>
-<h2>What's happening?</h2>
+<?php if (!isset($_sentText)) { 
+	if ($_SERVER['PHP_SELF']!='/message.php') {
+	echo "<h2>What's happening?</h2>" ;
+	} ?> 
 <span id="tip"><b>140</b></span>
 <?php } ?>
 
@@ -133,9 +135,15 @@
 	}
 ?>
 <div id="tweeting_controls">
-		<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Tweet</span></a>
+	<?php
+	if($_SERVER['PHP_SELF'] == '/message.php') {
+		echo '<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a>';
+	} else {
+		echo '<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Tweet</span></a>';
+	}
+	?>
 	</div>
-<!--<input type="submit" id="submit_btn" value="update" />-->
+	
 	<div id="func_set">
 	
 	<a class="func_btn" href="javascript:shortUrlDisplay();" title="Shorten URL" style="background-position:-238px -113px">Shorten URL</a>

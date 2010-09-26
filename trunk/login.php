@@ -94,7 +94,7 @@ width:356px;
 <body class="form-container">
 <div class="clear rounded_5px" id="container">
  <div id="header">
-<h1><a href="/"><img border="0" alt="Rabr" src="img/big_logo.png"></a></h1>
+<h1><a href="/"><img border="0" alt="Embr" src="img/big_logo.png"></a></h1>
 </div>
  <!--[if IE]>
 <style type="text/css">
@@ -123,7 +123,7 @@ width:356px;
 </fieldset>
 </form>
 <div style="background: none repeat scroll 0% 0% transparent;" id="footer">
-<p>&copy; 2010 disinfeqt &middot; <a href="http://code.google.com/p/rabring/" target="_blank" title="Rabr Open Source">Open Source</a> &middot; Run by <a href="http://twitter.com/<?php echo SITE_OWNER ?>" title="<?php echo SITE_OWNER ?>" target="_blank"><?php echo SITE_OWNER ?></a></p>
+<p>&copy; 2010 disinfeqt &middot; <a href="http://code.google.com/p/embr/" target="_blank" title="Embr Open Source">Open Source</a> &middot; Run by <a href="http://twitter.com/<?php echo SITE_OWNER ?>" title="<?php echo SITE_OWNER ?>" target="_blank"><?php echo SITE_OWNER ?></a></p>
 </div>
 </div>
 </body>

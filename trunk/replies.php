@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	include ('lib/twitese.php');
 	$title = "Replies";
 	include ('inc/header.php');
@@ -66,13 +66,13 @@
 						<span class=\"status_body\">
 							<span class=\"status_id\">$status->id</span>
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> <span class=\"tweet\">$text</span> </span>";
-						if ($shorturl = unshortUrl($text)) $output .= "<span class=\"unshorturl\"><p>URL</p><a href=\"$shorturl\" target=\"_blank\">$shorturl</a></span>";
+						$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
 								<a class=\"replie_btn\" href=\"a_reply.php?id=$status->id\">回复</a><a class=\"rt_btn\" href=\"a_rt.php?id=$status->id\">回推</a><a class=\"favor_btn\" href=\"a_favor.php?id=$status->id\">收藏</a></span>
 				<span class=\"status_info\">";
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 				$output .= "				
-								<span class=\"source\">from $status->source</span>
+								<span class=\"source\">via $status->source</span>
 								<span class=\"date\"><a href=\"https://twitter.com/$user->screen_name/status/$status->id\" target=\"_blank\">$date</a></span>
 						    </span>
 						</span>

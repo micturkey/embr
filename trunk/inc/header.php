@@ -9,10 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="rabr, open source, php, twitter, oauth, disinfeqt" />
-<meta name="description" content="Revolutionary Interface for Twitter" />
+<meta name="description" content="Vivid Interface for Twitter" />
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link type="text/css" id="css" href="css/main.css?ver=2010041607" rel="stylesheet" />
-<title>Rabr / <?php echo $title ?></title>
+<title>Embr / <?php echo $title ?></title>
 <?php 
 	$myCSS = isset($_COOKIE["myCSS"]) ? $_COOKIE["myCSS"] : "";
 	$old_css = "ul.sidebar-menu li.active a";

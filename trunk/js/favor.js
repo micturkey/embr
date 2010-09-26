@@ -10,7 +10,7 @@ $(function(){
 	});
 	$(".delete_btn").click(function(e){
 		e.preventDefault();
-		onDelete($(this), "收藏");
+		onDelete($(this), "favor");
 	});
 	$(".retw_btn").live("click", function(e){
 		e.preventDefault();
