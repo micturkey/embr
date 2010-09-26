@@ -17,21 +17,21 @@ $(function(){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $(this).parent().parent().find(".rank_name").text().substr(1);
-		updateSentTip("正在取消关注推群" + id + "...");
+		updateSentTip("Unfollowing lists...", 5000, "ing");
 		$.ajax({
 			url: "ajax/list.php",
 			type: "POST",
 			data: "action=destory&id=" + id,
 			success: function(msg) {
 				if (msg.indexOf("success") >= 0) {
-					updateSentTip("取消关注推群" + id + "成功");
+					updateSentTip("Successfully unfollowing list" + id, 3000, "success");
 					$this.remove();
 				} else {
-					updateSentTip("取消关注推群" + id + "失败，请重试");
+					updateSentTip("Unfollow failed. Please try again.", 3000, "failure");
 				}
 			},
 			error: function(msg) {
-				updateSentTip("取消关注推群" + id + "失败，请重试");
+				updateSentTip("Unfollow failed. Please try again.", 3000, "failure");
 			}
 		});
 		
@@ -41,9 +41,9 @@ $(function(){
 		e.preventDefault();
 		var $this = $(this);  
 		var list_id = $(this).parent().parent().find(".rank_name").text().substr(1);
-		var confirm = window.confirm("确定要删除推群" + list_id + "?");
+		var confirm = window.confirm("Do you really want to delete" + list_id + "?");
 		if (confirm) {
-			updateSentTip("删除推群" + list_id + "中...");
+			updateSentTip("deleting list" + list_id + "...", 5000, "ing");
 			$.ajax({
 				url: "ajax/delete.php",
 				type: "POST",
@@ -51,13 +51,13 @@ $(function(){
 				success: function(msg) {
 					if (msg.indexOf("success") >= 0) {
 						$this.parent().parent().parent().remove();
-						updateSentTip("删除推群" + list_id + "成功");
+						updateSentTip("Successfully deleting" + list_id, 3000, "success");
 					} else {
-						updateSentTip("删除推群出错，请重试");
+						updateSentTip("Delete failed. Please try again.", 3000, "failure");
 					}
 				},
 				error: function(msg) {
-					updateSentTip("删除推群出错，请重试");
+					updateSentTip("Delete failed. Please try again.", 3000, "failure");
 				}
 			});
 		}
@@ -101,10 +101,10 @@ $(function(){
 		var liPosition = $(this).parent().parent().parent().position();
 		var list_name = $(this).parent().parent().find(".rank_name").text().split("/")[1];
 		$('<form method="POST" action="./lists.php?t=1" id="member_form">' +
-	    	'<span>成员ID:(以英文逗号隔开，示例：bang590,twitter)</span>' +
+	    	'<span>User ID:(Saperated with comma, e.g. JLHwung,twitter)</span>' +
 	    	'<span><textarea type="text" name="list_members" id="list_members"></textarea></span>' +
 	    	'<input type="hidden" name="member_list_name" value="' + list_name + '" />' +
-	    	'<span><input type="submit" class="btn" id="member_submit" value="提交" /> <input type="button" class="btn" id="member_cancel" value="取消" /></span>' +
+	    	'<span><input type="submit" class="btn" id="member_submit" value="Submit" /> <input type="button" class="btn" id="member_cancel" value="Cancel" /></span>' +
 	    '</form>').appendTo("#statuses").css("left", liPosition.left + position.left).css("top", liPosition.top + position.top + 30);
 		
 		$("#member_cancel").click(function(){

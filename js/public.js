@@ -290,9 +290,15 @@ var formFunc = function(){
 	var updateStatus = function(){
 		$('#tip').addClass('loading');
 		PAUSE_UPDATE = true;
+
 		var text = $("#textbox").val();
+				
+		if($("#sent_id").val()) {
+			var dm = "D " + $("#sent_id").val();
+			text = dm + ' ' + text; 
+		}
 		
-		var wordsCount = $("#textbox").val().length;
+		var wordsCount = text.length;
 		if (wordsCount > 140) {
 			updateSentTip("Your tweet is more than 140 words!", 3000, "failure");
 			return false;
@@ -352,6 +358,7 @@ var formFunc = function(){
 					}
 				});
 		}
+		
 		
 	};
 	function onFavor($this) {
@@ -967,6 +974,43 @@ var formFunc = function(){
 				}
 			});
 		});
+
+//message function
+$(function () {
+	$(".msg_delete_btn").click(function(e){
+		e.preventDefault();
+		
+		var $this = $(this);
+		var message_id = $.trim($this.parent().parent().find(".status_id").text());
+		var confirm = window.confirm("Are you sure to delete this message?");
+		
+		if (confirm) {
+			updateSentTip("Deleting message...", 5000, "ing");
+			$.ajax({
+				url: "ajax/delete.php",
+				type: "POST",
+				data: "message_id=" + message_id,
+				success: function(msg) {
+					if (msg.indexOf("success") >= 0) {
+						$this.parent().parent().parent().remove();
+						updateSentTip("Message deleted.", 3000, "success");
+					} else {
+						updateSentTip("Failed to delete this message!", 3000, "failure");
+					}
+				},
+				error: function(msg) {
+					updateSentTip("Failed to delete this message!", 3000, "failure");
+				}
+			});
+		}
+	});
+
+	$(".msg_replie_btn").click(function(e){
+		e.preventDefault();
+		$("#sent_id").val($(this).parent().parent().find(".status_word").find(".user_name").text());
+		$("#textbox").focus();
+	});
+});
 
 	//init global functions
 	$(document).ready(function () {

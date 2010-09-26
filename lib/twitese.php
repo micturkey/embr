@@ -170,7 +170,6 @@
 		$urlRegs[] ='/http:\/\/ff\.im\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/sinaurl\.cn\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/163\.fm\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/ow\.ly\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/fl5\.me\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/9911\.ms\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/t\.co\/([a-z0-9]*)/i';

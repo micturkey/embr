@@ -7,13 +7,22 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/message.js"></script>
+<!--<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/message.js"></script>-->
+<style type="text/css">.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <?php 
 	$isSentPage = isset($_GET['t'])? true : false;
 ?>
 <div id="statuses" class="column round-left">
+
+	<?php if ( isset($_GET['id']) ) { ?>
+	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" value="<?php echo $_GET['id'] ?>"/></h2>
+	<?php	} else { ?>
+	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" /></h2>
+	<?php	} ?>
+	<?php include('inc/sentForm.php')?>
+	
 	<div id="subnav">
 	<?php if ($isSentPage) {?>
        	<span class="subnavLink"><a href="message.php">Inbox</a></span><span class="subnavNormal">Sent</span>
@@ -21,7 +30,7 @@
        	<span class="subnavNormal">Inbox</span><span class="subnavLink"><a href="message.php?t=sent">Sent</a></span>
 	<?php } ?>
     </div>
-    
+	
 	<?php 
 		$t = getTwitter();
 		
@@ -54,19 +63,19 @@
 			}
 		}
 	?>
-	
+	<!--
 	<form action="message.php" method="post">
 	<?php if ( isset($_GET['id']) ) { ?>
-	<h2>Send message to <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 5px; padding: 2px; height: 16px; width: 150px; font-size: 13px;" name="sent_id" id="sent_id" value="<?php echo $_GET['id'] ?>"/></h2>
+	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 5px; padding: 2px; height: 16px; width: 150px; font-size: 13px;" name="sent_id" id="sent_id" value="<?php echo $_GET['id'] ?>"/></h2>
 	<?php	} else { ?>
-	<h2>Send message to <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 5px; padding: 2px; height: 16px; width: 150px; font-size: 13px;" name="sent_id" id="sent_id" /></h2>
+	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 5px; padding: 2px; height: 16px; width: 150px; font-size: 13px;" name="sent_id" id="sent_id" /></h2>
 	<?php	} ?>
 	<span id="tip"><b>140</b></span>
 		<textarea name="message" id="textbox"></textarea>
 		<input type="submit" id="submit_btn" value="send" />
 	</form>
 	<div class="clear"></div>
-	
+	-->
 	
 	
 	<?php 
@@ -107,10 +116,17 @@
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name </a> $text </span>
 							<span class=\"actions\">
 				";
+				/*
 				if (!$isSentPage) {
 					$output .= "<a class=\"msg_replie_btn\" href=\"message.php?id=$name\">回复</a><a class=\"delete_btn\" href=\"a_del.php?id=$message->id&t=m\">删除</a>";
 				} else {
 					$output .= "<a class=\"delete_btn\" href=\"a_del.php?id=$message->id&t=m\">删除</a>";
+				}
+				*/
+				if (!$isSentPage) {
+					$output .= "<a class=\"msg_replie_btn\" href=\"#\">reply</a><a class=\"msg_delete_btn\" href=\"#\">delete</a>";
+				} else {
+					$output .= "<a class=\"msg_delete_btn\" href=\"#\">delete</a>";
 				}
 				$output .="</span><span class=\"status_info\">
 								<span class=\"date\">$date</span>
