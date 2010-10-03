@@ -7,8 +7,8 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<!--<script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/message.js"></script>-->
+<!--<script type="text/javascript" src="js/main.js"></script>-->
+<script type="text/javascript" src="js/message.js"></script>
 <style type="text/css">.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <?php 
