@@ -47,7 +47,16 @@ $t = getTwitter();
 		<p id="sidebarTip" class='promotion round' style='cursor:pointer'> 
 			<a class="definition">
 			<?php 
-			switch(mt_rand(0,2)) { 
+			switch(mt_rand(0,3)) { 
+				case 3: ?>
+				<strong>Reply&middotAll</strong>
+		<em>v.</em>
+		Now you can reply to all users in a single tweet!<br>Click for more details.<span id="indicator">[+]</span>
+		</a>
+		<a id="sidebarTip_more" style="display: none;">
+			See the reply button in the tweet? Try to click it pressing Ctrl button!	
+			</a>
+			<?php break;
 				case 2: ?>
 		<strong>Realtime Refresh</strong>
 		<em>v.</em>
