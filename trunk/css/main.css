@@ -41,7 +41,7 @@ cursor:default;
 #error{padding:40px;text-align:center}
 #sidename,ul.sidebar-menu li a span.stat_count,#side #local_trend_locations li,#home #rssfeed,#search #rssfeed,#profile #rssfeed,#profile_favorites #rssfeed,#favorites #rssfeed,#home #rssfeed .timeline-rss,#search #rssfeed .search-rss,#profile #rssfeed .profile-rss,#favorites #rssfeed .favorites-rss,#profile_favorites #rssfeed .favorites-rss,#side .stats .stats_count,fieldset.vertical-form label,fieldset.vertical-form input{display:block}
 .timeline li:hover a,.rank_list li:hover a,#user_stats a:hover,#info_block_btn:hover,#side .promotion a:hover,#side .stats a:hover{text-decoration:none}
-a:hover,.timeline li:hover a:hover,.rank_list li:hover a:hover,#side .user_icon a:hover #me_tweets,#side .stats a:hover .label{text-decoration:underline}
+a:hover,.timeline li:hover a:hover,.rank_list li:hover a:hover,#side .user_icon a:hover #me_tweets,#side .stats a:hover .label{text-decoration:underline;}
 #left,#sidenav a:hover,.allHighLight{background-color:#FFF}
 #user_info li span,#user_info_profile li span,#side .about .label{font-weight:700}
 
@@ -371,6 +371,7 @@ position:relative;
 .status_info{color:#999;display:block;font-size:11px;height:22px;margin:5px 0;overflow:hidden;text-align:left;width:100%}
 .status_info a{color:#999;font-size:11px;text-decoration:none}
 .status_info span{display:inline-block;margin:0 0 3px;padding:0 1px}
+.status_info span.source{max-width:180px;overflow:hidden;padding-right:3px;white-space:nowrap;word-wrap:break-word;}
 .timeline li:hover,.rank_list li:hover{background-color:#F7F7F7}
 .status_author {
 height:48px;
@@ -388,20 +389,6 @@ opacity:0.2;
 }
 .rank_img{top:15px;left:10px;position:absolute;width:48px;height:48px}
 .status_author img,.rank_img img{height:48px;width:48px}
-.unshorturl_ {
-border-radius:5px;
--moz-border-radius:5px;
--webkit-border-radius:5px;
-border:1px solid #DDDDDD;
-display:block;
-font-family:tahoma;
-font-size:11px;
-margin:5px 10px 3px 0;
-overflow:hidden;
-padding:2 15px;
-white-space:nowrap;
-word-wrap:break-word;
-}
 
 .unshorturl {
 border-radius:5px;
@@ -414,6 +401,8 @@ font-size:11px;
 overflow:hidden;
 margin:5px 5px 5px 1px;
 padding:0 5px 2px;
+white-space:nowrap;
+word-wrap:break-word;
 }
 .unshorturl:hover{border:1px solid #999999}
 .unshorturl a {color:#999;word-wrap:break-word;word-break:break-all;white-space:nowrap;display:inline;padding:0 3px;}
