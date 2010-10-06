@@ -11,7 +11,7 @@
 		setcookie('statuses_count', $user->statuses_count, $time, '/');
 		setcookie('followers_count', $user->followers_count, $time, '/');
 		setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
-		setcookie('name', $user->name, $time, '/');
+		setcookie('name', $user->screen_name, $time, '/');
 		setcookie('listed_count', GetListed($t), $time, '/');
 		$callback = array(
 			'friends' => $user->friends_count,
@@ -19,7 +19,7 @@
 			'statuses' => $user->statuses_count,
 			'listed' => GetListed($t),
 			'imgurl' => getAvatar($user->profile_image_url),
-			'name' => $user->name
+			'name' => $user->screen_name,
 		);
 		echo json_encode($callback);		
 	} else {

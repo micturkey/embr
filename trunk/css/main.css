@@ -368,10 +368,10 @@ margin-left:60px;
 overflow:hidden;
 position:relative;
 }
-.status_info{color:#999;display:block;font-size:11px;height:22px;margin:5px 0;overflow:hidden;text-align:left;width:100%}
+.status_info{color:#999;display:block;font-size:11px;height:22px;margin:5px 0 0;overflow:hidden;text-align:left;width:100%}
 .status_info a{color:#999;font-size:11px;text-decoration:none}
 .status_info span{display:inline-block;margin:0 0 3px;padding:0 1px}
-.status_info span.source{max-width:180px;overflow:hidden;padding-right:3px;white-space:nowrap;word-wrap:break-word;}
+.status_info span.source{display:inline;max-width:180px;overflow:hidden;padding-right:3px;white-space:nowrap;}
 .timeline li:hover,.rank_list li:hover{background-color:#F7F7F7}
 .status_author {
 height:48px;
@@ -725,7 +725,7 @@ text-decoration:none
 
 /* =actions button
 ----------------------------------------*/
-.actions{border-width:0;bottom:10px;line-height:1.25em;position:absolute;right:0px;visibility:hidden;z-index:9;}
+.actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0px;visibility:hidden;z-index:9;}
 .rt_btn,.replie_btn,.favor_btn,.delete_btn,.msg_replie_btn,.msg_delete_btn,.retw_btn,.trans_btn {display:inline-block;height:16px;width:21px;margin:-7px 0;overflow:hidden;text-indent:-9999em;}
 .replie_btn,.msg_replie_btn{background:url("../img/sprite_icons.png") no-repeat scroll 4px 1px transparent}
 .replie_btn:hover,.msg_replie_btn:hover{background:url("../img/sprite_icons.png") no-repeat scroll -17px 1px transparent}
