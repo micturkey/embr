@@ -3,7 +3,7 @@
 	if(!isset($_SESSION)){
 		session_start();
 	}
-	require_once('lib/twitese.php');
+	include_once('lib/twitese.php');
 
 	if (isset($_REQUEST['oauth_token'])) {
 		if($_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
@@ -56,9 +56,14 @@
 	}else{
 		/* Create TwitterOAuth object and get request token */
 		$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-
+		
+		/* Get callback URL */
+		$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
+		$port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
+		$oauth_callback = $scheme . '://' . $_SERVER['HTTP_HOST'] . $port . $_SERVER['REQUEST_URI'];
+	
 		/* Get request token */
-		$request_token = $connection->getRequestToken(OAUTH_CALLBACK);
+		$request_token = $connection->getRequestToken($oauth_callback);
 
 		/* Save request token to session */
 		$_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
@@ -67,19 +72,52 @@
 		/* If last connection fails don't display authorization link */
 		switch ($connection->http_code) {
 			case 200:
-				/* Build authorize URL */
-
 				
 				$time = $_SERVER['REQUEST_TIME']+3600*24*365;
-				if ( isset($_POST['proxify']) ) {
-					$url = TWIOLP_API.'/oauth_proxy/'.$connection->getAuthorizeURL($token);
-					if(!isset($_COOKIE['proxify'])) setcookie('proxify', 'true', $time, '/');
-				}
+				$url = $connection->getAuthorizeURL($token);
+				if ( isset($_POST['proxify']) ) { 
+					$old = processCurl($url);
+					$search_contents ='https://twitter.com/oauth/authenticate';
+					$replace_contents = 'authenticate.php';
+		
+					//Retrieve oauth_token and authenticity_token
+					preg_match_all('/value="(.*?)"/i', $old, $m);
+
+					$username = $_POST['username'];
+					$password = $_POST['password'];
+					$data = array(
+						'session[username_or_email]' => $username,
+						'session[password]' => $password,
+						'authenticity_token' => $m[1][0],
+						'oauth_token' => $m[1][1],
+					);
+					$url = 'https://twitter.com/oauth/authenticate';
+
+					$oldInput = processCurl($url, http_build_query($data) );
+					if ( !$oldInput) {
+						header('location: error.php');
+					}
+					
+					$search_contents ='https://twitter.com/oauth/authorize';
+					if ($password) {
+						$password = urlencode(encrypt($password));
+					}
+					$replace_contents = 'authorize.php?username='.$username.'&password='.$password;
+					$new = str_replace($search_contents,$replace_contents,$oldInput);
+					$replace_contents = 'authenticate.php';
+					$new = str_replace($url,$replace_contents,$new);
+  				echo $new;
+  				 
+					if(!isset($_COOKIE['proxify'])) {
+						setcookie('proxify', 'true', $time, '/');
+					}
+				} //OAuth Proxy End
 				else {
-					$url = $connection->getAuthorizeURL($token);
-					if(!isset($_COOKIE['proxify'])) setcookie('proxify', 'false', $time, '/');
+					if(!isset($_COOKIE['proxify'])) {
+						setcookie('proxify', 'false', $time, '/');
+					}
+					header('Location: ' . $url); 
 				}
-				header('Location: ' . $url); 
 				break;
 			default:
 				echo 'Could not connect to Twitter. Refresh the page or try again later.';

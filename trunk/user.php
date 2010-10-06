@@ -67,9 +67,9 @@
 ?>
 		<div id="info_relation">
 		<?php if ($isFriend) {?>
-			<a id="info_block_btn" class="btn btn-red" href="a_relation.php?action=destory&id=<?php echo $userid ?>">Unfollow</a>
+			<a id="info_block_btn" class="btn btn-red" href="#">Unfollow</a>
 		<?php } else { ?>
-			<a id="info_follow_btn" class="btn btn-green" href="a_relation.php?action=create&id=<?php echo $userid ?>">Follow</a>
+			<a id="info_follow_btn" class="btn btn-green" href="#">Follow</a>
 		<?php } ?>
 		<?php if ($isFollower) {?>
 			<a class="btn" id="info_send_btn" href="message.php?id=<?php echo $userid ?>">DM</a>
@@ -148,9 +148,9 @@
 			<div id="info_name"><?php echo $userid ?></div>
 			<div id="info_relation">
 			<?php if ($isFriend) {?>
-				<a id="info_block_btn" class="btn_hover" href="a_relation.php?action=destory&id=<?php echo $userid ?>">Unfollow</a>
+				<a id="info_block_btn" class="btn_hover" href="#">Unfollow</a>
 			<?php } else { ?>
-				<a id="info_follow_btn" class="btn" href="a_relation.php?action=create&id=<?php echo $userid ?>">Follow</a>
+				<a id="info_follow_btn" class="btn" href="#">Follow</a>
 			<?php } ?>
 			<?php if ($isFollower) {?>
 				<a class="btn" id="info_send_btn" href="message.php?id=<?php echo $userid ?>">Send DM</a>
@@ -220,8 +220,6 @@
 <?php } else { 
 		include ('inc/sidebar.php');
 }
-?>
 
-<?php 
 	include ('inc/footer.php');
 ?>

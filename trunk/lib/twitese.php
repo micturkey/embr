@@ -142,7 +142,7 @@
 			if($recovered = unshortUrl($matches[0][$i])){
 				$split = explode('/', $recovered);
 	 			$fav_icon = 'http://www.google.com/s2/favicons?domain='.$split[2];
-	 			$output .= "<span class=\"unshorturl\"><span><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\" style=\"border:2px solid transparent\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span></span>";
+	 			$output .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
 			}
 		}
 		return $output;
@@ -184,7 +184,7 @@
 		return false; 
 	}
 
-	function processCurl($url,$postargs=false)
+	function processCurl($url,$postdata=false)
 	{
 		$ch = curl_init($url);
 
@@ -192,10 +192,14 @@
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_TIMEOUT,5);//added by yegle
-
+		
+		if($postdata !== false) {
+			curl_setopt ($ch, CURLOPT_POST, true);
+			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata);
+		}
+		
 		$response = curl_exec($ch);
 		$responseInfo=curl_getinfo($ch);
-
 		curl_close($ch);
 
 		if( intval( $responseInfo['http_code'] ) == 200 )

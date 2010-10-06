@@ -31,7 +31,7 @@ function leaveWord(num) {
 var formHTML = '<span id="tip"><b>140</b></span><form action="index.php" method="post">';
 formHTML += '<textarea name="status" id="textbox"></textarea>';
 formHTML += '<input type="hidden" id="in_reply_to" name="in_reply_to" value="0" />';
-formHTML += '<input type="submit" id="submit_btn" value="update" /></form>';
+formHTML += '<div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
 function rabrTweet(objs) {
 	if(typeof objs === 'undefined'){
 		var objs = $('#statuses .timeline .source a');
