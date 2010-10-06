@@ -130,6 +130,9 @@
 	}
 
 	function sort_timeline($timeline, $retweet){
+		if ( !is_array($timeline) ){
+			header('location: ./error.php?t=1');
+		}
 		$status = array_merge($timeline, (array)$retweet);
 		usort($status, "cmp");
 		return $status;
