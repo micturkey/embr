@@ -8,7 +8,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="rabr, open source, php, twitter, oauth, disinfeqt" />
+<meta name="keywords" content="rabr, open source, php, twitter, oauth, disinfeqt, JLHwung" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link type="text/css" id="css" href="css/main.css?ver=2010041607" rel="stylesheet" />
@@ -26,7 +26,6 @@
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
 body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>}
-#plz_dont_block_us {display: <?php echo $ad_display ?>}
 </style>
 <script type="text/javascript" src="js/jquery.js?ver=1.4.2"></script>
 <script type="text/javascript" src="js/jquery.plugins.js?ver=2010033101"></script>

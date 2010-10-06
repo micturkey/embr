@@ -49,7 +49,7 @@ $t = getTwitter();
 			<?php 
 			switch(mt_rand(0,3)) { 
 				case 3: ?>
-				<strong>Reply&middotAll</strong>
+				<strong>Reply&middot;All</strong>
 		<em>v.</em>
 		Now you can reply to all users in a single tweet!<br>Click for more details.<span id="indicator">[+]</span>
 		</a>
