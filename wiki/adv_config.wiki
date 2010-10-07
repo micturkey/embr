@@ -5,6 +5,7 @@
 
 1.蓝名显示自己的客户端。
 用过embr.tk的朋友一定会记得在embr发推的时候显示的from embr是炫炫的天蓝色，这当然是一个common trick，如果你花时间研究embr代码的话，我这里就直接告诉你怎么修改吧，时间最宝贵了～
+
 ./js/public.js Line 42
 {{{
 if (/embr/i.test($(objs[i]).text()))
