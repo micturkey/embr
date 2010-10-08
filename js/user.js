@@ -58,7 +58,7 @@ $(function(){
 	});
 
 
-	$(".favor_btn").live("click", function(){
+	$(".favor_btn").live("click", function(e){
 		e.preventDefault();
 		onFavor($(this));
 	});
