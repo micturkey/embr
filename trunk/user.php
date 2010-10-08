@@ -126,7 +126,7 @@
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 
 				$output .= "	
-					<span class=\"source\">via $status->source </span><span class=\"date\"><a href=\"/status.php?id=$status->id\">$date</a></span></span>
+					<span class=\"source\">via $status->source </span><span class=\"date\"><a href=\"status.php?id=$status->id\">$date</a></span></span>
 					</span>
 					</li>
 					";
