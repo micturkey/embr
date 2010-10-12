@@ -1,0 +1,91 @@
+#labels Featured
+The project is based on <a href="http://code.google.com/p/rabr">rabr</a> with tens of new features added.
+
+==Origin==
+
+embr is the abbreviation of embrace.It means:
+
+1. unfinished embrace, to everything you get from twitter.
+
+2. ephemeral embrace, to the time flying with twitter.
+
+==FAQ==
+
+*Error: Call to undefined function curl_init() ?*
+
+adding this line to your PHP5.ini
+{{{
+extension = curl.so
+}}}
+
+It might cost at least 5 mins to take into effect, if error recurs, i m afraid embr can't be installed, without support of curl.
+
+*Error: Call to undefined function mcrypt_module_open() *
+
+adding this line to your PHP5.ini
+{{{
+extension = mcrypt.so
+}}}
+
+It might cost at least 5 mins to take into effect, if error recurs, just leave the secure_key option blank in config.php
+
+==Features==
+
+I.Direct OAuth and OAuth via proxy, bypassing firewall more easily and smoothly。
+
+II.Image Uploading in OAuth.
+
+III.updated to the newest twitese.
+
+IV.Proxify the twitter Avatar.
+
+V.[http://code.google.com/p/embr/wiki/technique Even More]～
+
+==Install Instruction==
+
+I.Down embr-v`*`.7z from [http://code.google.com/p/embr/downloads/list download list]or SVN Checkout http://embr.googlecode.com/svn/trunk/ for the last code.
+
+II.Unzip，edit .\lib\config.php as below
+{{{
+
+    define('SECURE_KEY', 'YOU SHOULD CHANGE IT'); //Key to encrypt cookie.
+
+    define('API_URL', 'http://twitter.com'); //you shall change into api.twitter.com
+
+    define('API_TWITTER', 'http://api.twitter.com');
+
+    define('BASE_URL','http://MY_WEBSITE'); //Where your embr is hosted on?
+	
+	// get OAuth Config OAuth Key/Secret from https://twitter.com/oauth_clients 
+
+    define("CONSUMER_KEY", "CONSUMER_KEY");
+
+    define("CONSUMER_SECRET", "CONSUMER_SECRET");
+
+	//Optional Information
+
+    define('SITE_OWNER', 'JLHwung'); //Your Twitter ID  
+
+    define('STAT_IMG','');//leave it blank 
+
+    define('BLOG_SITE','http://jlhwung.tk'); //blog_site
+}}}
+Note
+
+1：you shall edit the .htaccess file if you host embr in a sub-Folder 
+
+2：Nginx Rewrite Rule.
+{{{
+	location / {
+		if (!-f $request_filename) {
+			rewrite ^/(\d+)$ /statuse.php?id=$1 last;
+			rewrite ^/([a-zA-Z_]+)$ /user.php?id=$1 last;
+		break;
+		}
+	}
+}}}
+III.Upload and enjoy!
+
+* Demo: http://embr.tk ipv4/ipv6+SSL*
+
+*Time limited, please be patient for my sporadic updating. :)*
