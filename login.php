@@ -45,11 +45,11 @@ a{color:#BFBFBF;outline:medium none;text-decoration:none;}
 #footer{color:#BFBFBF;font-size:13px;text-align:center;padding:10px;}
 .button:hover{background-position:center center;}
 .button:active{background-position:center bottom;}
-.rounded_left_12px{-moz-border-radius-topleft:12px;-moz-border-radius-bottomleft:12px;-webkit-border-top-left-radius:12px;-webkit-border-bottom-left-radius:12px;border-top-left-radius:12px;border-bottom-left-radius:12px;}
-.rounded_right_12px{-moz-border-radius-topright:12px;-moz-border-radius-bottomright:12px;-webkit-border-top-right-radius:12px;-webkit-border-bottom-right-radius:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;}
-.rounded_5px{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.rounded_left_12px{-moz-border-radius-topleft:12px;-moz-border-radius-bottomleft:12px;border-top-left-radius:12px;border-bottom-left-radius:12px;border-top-left-radius:12px;border-bottom-left-radius:12px;}
+.rounded_right_12px{-moz-border-radius-topright:12px;-moz-border-radius-bottomright:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;}
+.rounded_5px{-moz-border-radius:5px;border-radius:5px;border-radius:5px;}
 .clear{display:block;}
-input[type=text],input[type=password]{-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;font-family:helvetica;letter-spacing:1px;}
+input[type=text],input[type=password]{-moz-border-radius:3px;border-radius:3px;border-radius:3px;font-family:helvetica;letter-spacing:1px;}
 .form{padding:0 2px;}
 .form > fieldset{border-width:0;padding:20px 10px 10px;}
 .form fieldset fieldset{border-width:0;padding:10px 0 0;}
@@ -96,13 +96,13 @@ width:356px;
  <div id="header">
 <h1><a href="/"><img border="0" alt="Embr" src="img/big_logo.png"></a></h1>
 </div>
- <!--[if IE]>
+ <!--[if lt IE 9]>
 <style type="text/css">
 .form-container .form {display:none}
 </style>
 <div style="display: block; color: rgb(255, 0, 0); margin-top: 150px; margin-bottom: 10px; text-align: center;">
-<h1 style="font-size: 20px;">Sorry, but we're NOT IE-Friendly!</h1>
-<p style="font-size: 12px;">For a better experience using this site, please use web browsers with WebKit or Gecko core, like Firefox Chrome and Safari.</p>
+<h1 style="font-size: 20px;">Sorry, higer version of IE is needed!</h1>
+<p style="font-size: 12px;">For a better experience using this site, please update your IE or use web browsers with WebKit or Gecko core, like Firefox Chrome and Safari.</p>
 </div>
   <![endif]-->
 <form class="form rounded_5px" id="form_login" method="post" action="oauth.php">

@@ -46,7 +46,7 @@ margin:3px;
 }
 #share {
 -moz-border-radius:5px;
--webkit-border-radius:5px;
+border-radius:5px;
 box-shadow:0 0 5px #000000;
 -moz-box-shadow:0 0 5px #000000;
 -webkit-box-shadow:0 0 5px #000000;
@@ -58,7 +58,7 @@ width:500px;
 }
 #textbox {
 -moz-border-radius:2px;
--webkit-border-radius:2px;
+border-radius:2px;
 background-color:#FBFBFB;
 border:1px solid #A7A6AA;
 font-family:'Lucida Grande',Tahoma,sans-serif;
@@ -71,7 +71,7 @@ width:490px;
 }
 #url {
 -moz-border-radius:2px;
--webkit-border-radius:2px;
+border-radius:2px;
 background-color:#FBFBFB;
 border:1px solid #A7A6AA;
 font-family:'Lucida Grande',Tahoma,sans-serif;
@@ -119,7 +119,7 @@ width:100%;
 .more:active{background-position:left -38px;color:#666}
 .more.loading{background-color:#fff;background-image:url(../img/ajax.gif);background-position:50% 50%;background-repeat:no-repeat;border:1px solid #eee;cursor:default!important}
 .more::-moz-focus-inner{border:0}
-.round{-moz-border-radius:8px;-webkit-border-radius:8px}
+.round{-moz-border-radius:8px;border-radius:8px}
 #shareBtn {
 color:#666666;
 display:block;
