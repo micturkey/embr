@@ -9,7 +9,7 @@
 	define("CONSUMER_KEY", "YOUR_CONSUMER_KEY");
 	define("CONSUMER_SECRET", "YOUR_CONSUMER_SECRET");
 	
-	//Optional Infomation
+	//Optional Information
 	define('SITE_OWNER', 'TWITTER_ID'); //Your Twitter ID  
 	define('STAT_IMG','http://img.tongji.linezing.com/1792485/tongji.gif'); //linezing stats
 	define('BLOG_SITE','http://MY_BLOG_SITE'); //blog_site

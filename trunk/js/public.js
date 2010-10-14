@@ -598,7 +598,7 @@ var formFunc = function(){
 			if (str !== null) {
 				unshorten = 0;
 				for (idx = 0; idx < str.length; idx++) {
-					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/zi.mu\/[\S]+)|(http:\/\/orz.se\/[\S]+)/gi;
+					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/zi.mu\/[\S]+)|/gi;
 					if (!str[idx].match(regexp2)) {
 						l_urls += str[idx] + "|";
 					}
@@ -632,19 +632,18 @@ var formFunc = function(){
 				s_url = part[0];
 				l_url = part[1];
 			}
-			if (s_url.indexOf('http://zi.mu') > -1) {
+			if (s_url) {
 				stringVar = document.getElementById(target_layer).value;
 				stringVar = stringVar.replace(l_url, s_url);
 				document.getElementById(target_layer).value = stringVar + "";
 				leaveWord();
 				$('#tip').removeClass('loading');
 				updateSentTip("Successfully shortened your URLs!", 3000, "success");
-			}
-			else if (s_url.length > 0) {
+			}	else {
 				err_cnt++;
 			}
 		}
-		if (err_cnt < 0) {
+		if (err_cnt > 0) {
 			updateSentTip("Failed to shorten URLs, please try again.", 3000, "failure");
 		}
 	}
