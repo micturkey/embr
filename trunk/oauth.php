@@ -95,7 +95,7 @@
 
 					$oldInput = processCurl($url, http_build_query($data) );
 					if ( !$oldInput) {
-						header('location: error.php');
+						header('location: error.php');exit();
 					}
 					
 					$search_contents ='https://twitter.com/oauth/authorize';

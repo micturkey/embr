@@ -12,13 +12,13 @@
 		$statusid = $_GET['id'];
 		$status = $t->showStatus($statusid);
 		if (!$status) {
-			header('location: error.php');
+			header('location: error.php');exit();
 		}
 		$user = $status->user;
 		$date = formatDate($status->created_at);
 		$text = formatText($status->text);
 	} else {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 
 ?>

@@ -24,7 +24,7 @@
 	
 		$users = $t->rank($p);
 		if ($users === false) {
-			header('location: error.php');
+			header('location: error.php');exit();
 		} 
 		$empty = count($users) == 0? true: false;
 		if ($empty) {

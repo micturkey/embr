@@ -98,7 +98,7 @@
 		}
 		
 		if ($lists === false) {
-			header('location: error.php');
+			header('location: error.php');exit();
 		} 
 		
 		

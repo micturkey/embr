@@ -133,7 +133,7 @@
 	$t = getTwitter();
 	$current_user = $t == null ? false : $t->veverify();
 	if ($current_user === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	} 
 	$empty = count($current_user) == 0? true: false;
 	if ($empty) {
@@ -187,7 +187,7 @@
 	$statuses = $t->friendsTimeline();
 	$retweetes = $t->retweeted_to_me();
 	if ($statuses === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 	$empty = count($statuses) == 0? true: false;
 	if ($empty) {
@@ -217,7 +217,7 @@
 
 	$statuses = $t->replies();
 	if ($statuses === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 	$empty = count($statuses) == 0? true: false;
 	if ($empty) {
@@ -237,7 +237,7 @@
 
 	$messages = $t->directMessages();
 	if ($messages === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 	$empty = count($messages) == 0? true: false;
 	if ($empty) {

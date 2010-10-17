@@ -55,7 +55,7 @@
 	$retweetes = $t->retweeted_to_me($p);
 	if ($statuses == false)
 	{
-		header('location: error.php');
+		header('location: error.php');exit();
 	} 
 	$empty = count($statuses) == 0 ? true: false;
 	if ($empty)

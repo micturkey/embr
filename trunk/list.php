@@ -21,7 +21,7 @@
 		$statuses = $t->listStatus($id, $p);
 		$listInfo = $t->listInfo($id);
 		if ($statuses === false) {
-			header('location: error.php');
+			header('location: error.php');exit();
 		} 
 		
 		$isFollower = false;

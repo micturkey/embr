@@ -45,7 +45,7 @@
 			$messages = $t->directMessages($p);
 		}
 		if ($messages === false) {
-			header('location: error.php');
+			header('location: error.php');exit();
 		} 
 		$empty = count($messages) == 0? true: false;
 		if ($empty) {
