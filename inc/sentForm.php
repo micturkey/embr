@@ -99,7 +99,7 @@
 	$t = getTwitter();
 	$current_user = $t->veverify();
 	if ($current_user === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	} 
 	$empty = count($current_user) == 0? true: false;
 	if ($empty) {

@@ -11,7 +11,7 @@
 <div id="statuses" class="column round-left">
 <?php 
 	if (!loginStatus() || !isset($_GET['id'])) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 
 	$p = 1;
@@ -29,7 +29,7 @@
 	}
 	
 	if ($statuses === false) {
-		header('location: error.php');
+		header('location: error.php');exit();
 	}
 	$user = $t->showUser($userid);
 	$isProtected = $statuses->error == 'Not authorized';

@@ -598,7 +598,7 @@ var formFunc = function(){
 			if (str !== null) {
 				unshorten = 0;
 				for (idx = 0; idx < str.length; idx++) {
-					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/zi.mu\/[\S]+)|/gi;
+					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/zi.mu\/[\S]+)|(http:\/\/orz.se\/[\S]+)/gi;
 					if (!str[idx].match(regexp2)) {
 						l_urls += str[idx] + "|";
 					}

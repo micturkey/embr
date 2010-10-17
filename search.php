@@ -13,7 +13,7 @@
 		$statuses = $t->search($query, $page, $MAX_TWEETS);
 
 		//if ($statuses === false) {
-		//	header('location: error.php');
+		//	header('location: error.php');exit();
 		//}
 		$resultCount = count($statuses->results);
 		if ($resultCount <= 0) {
