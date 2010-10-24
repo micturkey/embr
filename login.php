@@ -15,9 +15,7 @@
 	delCookie('homeInterval');
 	delCookie('updatesInterval');
 	session_destroy();
-?>
-
-<?php 
+	
 	ob_start();
 	if(!isset($_SESSION)){
 		session_start();
@@ -38,7 +36,7 @@ a{color:#BFBFBF;outline:medium none;text-decoration:none;}
 .form-container #container{background:none repeat scroll 0 0 transparent;margin-top:70px;text-align:left;width:400px;border-width:0;}
 .form-container #header{position:absolute;text-align:center;z-index:-1;}
 .form-container #header h1{margin-left:-50px;margin-top:-30px;}
-.form-container .form{box-shadow:0 0 20px #666666;-webkit-box-shadow:0 0 20px #666666;-moz-box-shadow:0 0 20px #666666;background-color:#F1F8FC;margin-top:66px;opacity:0.8;}
+.form-container .form{box-shadow:0 0 20px #666;-webkit-box-shadow:0 0 20px #666;-moz-box-shadow:0 0 20px #666;background-color:#F1F8FC;margin-top:66px;opacity:0.8;}
 .form-container #footer{text-align:center;}
 #container{background:none repeat scroll 0 0 #FFF;border:1px solid #D6D8D9;text-align:left;width:920px;margin:0 auto;padding:20px;}
 #header h1{float:none;}
@@ -49,47 +47,24 @@ a{color:#BFBFBF;outline:medium none;text-decoration:none;}
 .rounded_right_12px{-moz-border-radius-topright:12px;-moz-border-radius-bottomright:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;}
 .rounded_5px{-moz-border-radius:5px;border-radius:5px;border-radius:5px;}
 .clear{display:block;}
-input[type=text],input[type=password]{-moz-border-radius:3px;border-radius:3px;border-radius:3px;font-family:helvetica;letter-spacing:1px;}
 .form{padding:0 2px;}
 .form > fieldset{border-width:0;padding:20px 10px 10px;}
 .form fieldset fieldset{border-width:0;padding:10px 0 0;}
 .form .checkbox{color:#666;font-size:1.15em;margin-left:90px;}
 .form .checkbox input{float:left;margin:0 .5em 0 0;}
 .form .form-footer{background:none repeat scroll 0 0 #E0F0FB;clear:both;font-size:12px;height:25px;line-height:25px;margin:10px 0 0;padding:10px;}
-.form .form-footer span{float:right;}
 .form .form-footer .delete:hover{color:#B42B2B;text-decoration:underline;}
-.form-footer .button{background:none repeat scroll 0 0 #FFFFFF;border:1px solid #EEE;color:#666666;cursor:pointer;display:inline-block;margin-left:-2px;font-weight:700;text-align:center;font-family:helvetica;outline:0;zoom:1;font-size:13px;height:21px;line-height:20px;vertical-align:middle;padding:1px 20px 2px;}
+.form-footer .button{background:none repeat scroll 0 0 #FFF;border:1px solid #EEE;color:#666;cursor:pointer;display:inline-block;margin-left:-2px;font-weight:700;text-align:center;font-family:helvetica;outline:0;zoom:1;font-size:13px;height:21px;line-height:20px;vertical-align:middle;padding:1px 20px 2px;}
 .form-footer .button:hover{background-color:#DDD;}
 .form-footer .button:active{background:none repeat scroll 0 0 #999!important;color:#CCC!important;outline:medium none;text-shadow:0 -1px 0 #404348;border-color:#61676F!important;}
 .form-footer .button.cancel:hover{background-color:#EDEDED;}
 .form-footer input.button{outline:none!important;font-size:13px;height:24px;padding-top:0;vertical-align:middle;}
 .form-footer .button::-moz-focus-inner{border-color:transparent!important;}
 a:hover,.form-footer{color:#999;}
-.form .textfield label,.form .searchfield label,.form .password label{color:#666;display:block;float:left;font-size:1.15em;text-align:right;width:110px;margin:.8em 0 0;}
-.form .textfield input,.form .password input{background:url(img/bg_input.png) repeat-x scroll 0 0 #FFF;border:1px solid #99A8AE;display:block;font-size:14px;width:190px;margin:0 0 0 120px;padding:.5em;}
 #oauth {border:none;line-height: 22px;margin-right:-2px;padding-left:25px;}
-#home_trends {position: relative; overflow: hidden; background-color: rgb(102, 102, 102); margin-top: 5px; -moz-border-radius: 5px 5px 5px 5px; padding: 5px 10px;}
-#home_trends h2 {font-size: 14px; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; color: rgb(153, 153, 153); border-bottom: 1px dotted; line-height: 24px;}
-#home_trends li {
-color:#EEEEEE;
-cursor:pointer;
-float:left;
-font-size:12px;
-padding-right:15px;
-}
-#home_trends ul li a {
-color:#EEEEEE;
-}
-#marquee  {
-height:20px;
-line-height:20px;
-overflow:hidden;
-width:356px;
-}
 </style>
-<script type="text/javascript" src="js/jquery.js?ver=1.4.2"></script>
-<script type="text/javascript" src="js/jquery.plugins.js?ver=2010033101"></script>
-<script type="text/javascript" src="js/public.js?ver=2010032904"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
 </head>
 <body class="form-container">
 <div class="clear rounded_5px" id="container">

@@ -11,7 +11,7 @@
 <meta name="keywords" content="rabr, open source, php, twitter, oauth, disinfeqt, JLHwung" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <link rel="shortcut icon" href="img/favicon.ico" />
-<link type="text/css" id="css" href="css/main.css?ver=2010041607" rel="stylesheet" />
+<link type="text/css" id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
 <?php 
 	$myCSS = isset($_COOKIE["myCSS"]) ? $_COOKIE["myCSS"] : "";
@@ -27,10 +27,9 @@
 a:active, a:focus {outline:none}
 body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>}
 </style>
-<script type="text/javascript" src="js/jquery.js?ver=1.4.2"></script>
-<script type="text/javascript" src="js/jquery.plugins.js?ver=2010033101"></script>
-<script type="text/javascript" src="js/mediaPreview.js?ver=2010041501"></script>
-<script type="text/javascript" src="js/public.js?ver=2010041604"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/mediaPreview.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
 </head>
 <body>
 <div id="shortcutTip" style="display:none"></div>

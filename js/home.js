@@ -73,7 +73,7 @@ function update() {
 			data: "since_id=" + since_id,
 			success: function (msg) {
 				if ($.trim(msg).indexOf("</li>") > 0) {
-					$("#allTimeline li.myTweet:not(:first)").removeClass("myTweet");
+					$("#allTimeline li.myTweet").fadeOut("fast");
 					var source = $(msg).prependTo($(".timeline"));
 					var num = 0;
 					if (document.title.match(/\d+/) != null) {

@@ -39,7 +39,7 @@
 		header('location: index.php');
 	}
 ?>
-<script type="text/javascript" src="js/home.js?ver=2010041101"></script>
+<script type="text/javascript" src="js/home.js"></script>
 <div id="statuses" class="column round-left">
 <?php
   include('inc/sentForm.php'); 

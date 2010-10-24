@@ -6,7 +6,7 @@
 
 ?>
 
-<script type="text/javascript" src="js/user.js?ver=2010031301"></script>
+<script type="text/javascript" src="js/user.js"></script>
 
 <div id="statuses" class="column round-left">
 <?php 
@@ -75,13 +75,13 @@
 			<a class="btn" id="info_send_btn" href="message.php?id=<?php echo $userid ?>">DM</a>
 		<?php } ?>
 <?php if($isBlocked){ ?>
-		<a class='btn' id='unblock_btn' href='javascript:void(0)'>Unblock</a>
+		<a class='btn' id='unblock_btn' href='#'>Unblock</a>
 <?php }else{ ?>
-		<a class='btn' id='block_btn' href='javascript:void(0)'>Block</a>
+		<a class='btn' id='block_btn' href='#'>Block</a>
 <?php } ?>
-			<a class="btn" id="info_reply_btn" href="javascript:void(0)">Reply</a>
-			<a class="btn" id="info_hide_btn" href="javascript:void(0)">Hide @</a>
-			<a class="btn " id="report_btn" href="javascript:void(0)" style="color:#a22">Report Spam</a>
+			<a class="btn" id="info_reply_btn" href="#">Reply</a>
+			<a class="btn" id="info_hide_btn" href="#">Hide @</a>
+			<a class="btn " id="report_btn" href="#" style="color:#a22">Report Spam</a>
 			<!-- <a class="btn btn-mint" id="nexus_btn" href="nexus.php?target=<?php echo $userid ?>&source=<?php echo getEncryptCookie('twitese_name')?>">Nexus</a> -->
 		</div>
 <?php } ?>
@@ -116,11 +116,11 @@
 					<span class=\"status_word\"><span class=\"tweet\"> $text </span></span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
-					<a class=\"replie_btn\" href=\"a_reply.php?id=$status->id\">Reply</a>
-					<a class=\"rt_btn\" href=\"a_rt.php?id=$status->id\">Retweet</a>
-					<a class=\"retw_btn\" title=\"New Retweet\" href=\"javascript:void(0);\">New Retweet</a>
-					<a class=\"favor_btn\" href=\"a_favor.php?id=$status->id\">Favorite</a>
-					<a class=\"trans_btn\" title=\"Translate\" href=\"javascript:void(0);\">Translate</a>
+					<a class=\"replie_btn\" href=\"#\">Reply</a>
+					<a class=\"rt_btn\" href=\"#\">Retweet</a>
+					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
+					<a class=\"favor_btn\" href=\"#\">Favorite</a>
+					<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>
 					</span><span class=\"status_info\">
 					";
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
@@ -156,12 +156,12 @@
 				<a class="btn" id="info_send_btn" href="message.php?id=<?php echo $userid ?>">Send DM</a>
 			<?php } ?>
 <?php if($isBlocked){ ?>
-		<a class='btn_hover' id='unblock_btn' href='javascript:void(0)'>Unblock</a>
+		<a class='btn_hover' id='unblock_btn' href='#'>Unblock</a>
 <?php }else{ ?>
-		<a class='btn' id='block_btn' href='javascript:void(0)'>Block</a>
+		<a class='btn' id='block_btn' href='#'>Block</a>
 <?php } ?>
-				<a class="btn" id="info_reply_btn" href="javascript:void(0)">Reply</a>
-				<a class="btn" id="info_hide_btn" href="javascript:void(0)">Hide @</a>
+				<a class="btn" id="info_reply_btn" href="#">Reply</a>
+				<a class="btn" id="info_hide_btn" href="#">Hide @</a>
 			</div>
 		</div>
 		<div class="clear"></div>
