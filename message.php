@@ -7,22 +7,14 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script type="text/javascript" src="js/message.js"></script>
 <style type="text/css">.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
-
+<script type="text/javascript" src="js/message.js"></script>
 <?php 
 	$isSentPage = isset($_GET['t'])? true : false;
 ?>
 <div id="statuses" class="column round-left">
-
-	<?php if ( isset($_GET['id']) ) { ?>
-	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" value="<?php echo $_GET['id'] ?>"/></h2>
-	<?php	} else { ?>
-	<h2>To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" /></h2>
-	<?php	} ?>
 	
 	<?php include('inc/sentForm.php')?>
-	
 	<div id="subnav">
 	<?php if ($isSentPage) {?>
        	<span class="subnavLink"><a href="message.php">Inbox</a></span><span class="subnavNormal">Sent</span>

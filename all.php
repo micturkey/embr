@@ -1,4 +1,4 @@
-﻿<?php 
+<?php
 	include_once('lib/twitese.php');
 	$title = 'Updates';
 	include_once('inc/header.php');
