@@ -40,9 +40,9 @@ $(document).ready(function () {
 	ar = url.substr(url.indexOf("?")+1).split("&");
 	if(ar.length > 0){
 		var id=ar[0].indexOf("id=");
-		$("h2").html('To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" />');
+		$("h2:first").html('To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" />');
 	} else{
-		$("h2").html('To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" value="'+id+'"/>');
+		$("h2:first").html('To <input type="text" style="border: 1px solid rgb(167, 166, 170); margin: 0px 0px 6px; padding: 2px; height: 14px; width: 120px; font-size: 13px;" name="sent_id" id="sent_id" value="'+id+'"/>');
 	}
 	$("a[tabindex='2'] span").text("Send");
 });
