@@ -16,15 +16,15 @@
 			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
 		$html .= recoverShortens($text);
 		$html .= '<span class="actions">
-			<a class="replie_btn" title="Reply" href="a_reply.php?id='.$rt_status->id.'">Reply</a>
-			<a class="rt_btn" title="Retweet" href="a_rt.php?id='.$rt_status->id.'">Retweet</a>';
+			<a class="replie_btn" title="Reply" href="#">Reply</a>
+			<a class="rt_btn" title="Retweet" href="#">Retweet</a>';
 		if($retweetByMe != true){
-			$html .= '<a class="retw_btn" title="New Retweet" href="javascript:void(0);">New Retweet</a>';
+			$html .= '<a class="retw_btn" title="New Retweet" href="#">New Retweet</a>';
 		}
-		$html .= '<a class="favor_btn" title="Favorite" href="a_favor.php?id='.$rt_status->id.'">Favorite</a>
-					<a class="trans_btn" title="Translate" href="javascript:void(0);">Translate</a>';
+		$html .= '<a class="favor_btn" title="Favorite" href="#">Favorite</a>
+					<a class="trans_btn" title="Translate" href="#">Translate</a>';
 		if($retweetByMe == true){
-			$html .= '<a class="delete_btn" title="Delete" href="javascript:void(0)"><span class="rt_id" style="display: none;">'.$status->id.'</span></a>';
+			$html .= '<a class="delete_btn" title="Delete" href="#"><span class="rt_id" style="display: none;">'.$status->id.'</span></a>';
 		}
 		$html .='</span>
 			<span class="status_info"><span class="source">Retweeted by <a href="user.php?id='.$retweeter->screen_name.'">'.$retweeter->screen_name.'</a> via '.$status->source.'</span>
@@ -50,11 +50,11 @@
 			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
 		$html .= recoverShortens($text);
 		$html .= '<span class="actions">
-			<a class="replie_btn" title="Reply" href="a_reply.php?id='.$status->id.'">Reply</a>
-			<a class="rt_btn" title="Retweet" href="a_rt.php?id='.$status->id.'">Retweet</a>
-			<a class="favor_btn" title="Favorite" href="a_favor.php?id='.$status->id.'">Favorite</a>
-			<a class="trans_btn" title="Translate" href="javascript:void(0);">Translate</a>
-			<a class="delete_btn" title="Delete" href="a_del.php?id='.$status->id.'&t=s">Delete</a>
+			<a class="replie_btn" title="Reply" href="#">Reply</a>
+			<a class="rt_btn" title="Retweet" href="#">Retweet</a>
+			<a class="favor_btn" title="Favorite" href="#">Favorite</a>
+			<a class="trans_btn" title="Translate" href="#">Translate</a>
+			<a class="delete_btn" title="Delete" href="#">Delete</a>
 			</span>
 			<span class="status_info">via '.$status->source.'
 			<span class="date"><a href="status.php?id='.$status->id.'" title="'.date('Y-m-d H:i:s', strtotime($status->created_at)).'" target="_blank">'.$date.'</a></span>
@@ -100,13 +100,13 @@
 			<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
 		$output .= recoverShortens($text);
 		$output .= "<span class=\"actions\">
-			<a class=\"replie_btn\" title=\"Reply\" href=\"#\">回复</a>
-			<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">回推</a>";
+			<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
+			<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>";
 		if($user->screen_name != $screen_name){
-			$output .= "<a class=\"retw_btn\" title=\"New Retweet\" href=\"javascript:void(0);\">New Retweet</a>";
+			$output .= "<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>";
 		}
 		$output .= "<a class=\"favor_btn\" title=\"Favorite\" href=\"#\">Favorite</a>
-					<a class=\"trans_btn\" title=\"Translate\" href=\"javascript:void(0);\">Translate</a>";
+					<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>";
 		if ($user->screen_name == $screen_name) $output .= "<a class=\"delete_btn\" title=\"Delete\" href=\"#\">Delete</a>";
 		$output .= "</span><span class=\"status_info\">";
 		if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a>&nbsp;</span>";
@@ -152,22 +152,22 @@
 		$relationship = getRelationship($user->screen_name, $username);
 
 		$mention = $dm = $unfollow = $follow = $block = $spam = '';
-		$mention = '<li class="rm_mention"><a href="javascript:void(0);"><i></i>Mention <span>'.$user->screen_name.'</a></li>';
+		$mention = '<li class="rm_mention"><a href="#"><i></i>Mention <span>'.$user->screen_name.'</a></li>';
 		if($relationship == 1){
-			$dm = '<li class="rm_dm"><a href="javascript:void(0);"><i></i>Direct message <span>'.$user->screen_name.'</span></a></li>';
+			$dm = '<li class="rm_dm"><a href="#"><i></i>Direct message <span>'.$user->screen_name.'</span></a></li>';
 		}
 		if($relationship == 1 || $relationship == 2){
-			$unfollow = '<li class="rm_unfollow"><a href="javascript:void(0);"><i></i>Unfollow <span>'.$user->screen_name.'</span></a></li>';
+			$unfollow = '<li class="rm_unfollow"><a href="#"><i></i>Unfollow <span>'.$user->screen_name.'</span></a></li>';
 		}
 		if($relationship == 3 || $relationship == 4 || $relationship == 9){
-			$follow = '<li class="rm_follow"><a href="javascript:void(0);"><i></i>Follow <span>'.$user->screen_name.'</span></a></li>';
+			$follow = '<li class="rm_follow"><a href="#"><i></i>Follow <span>'.$user->screen_name.'</span></a></li>';
 		}
 		if($relationship == 4){
-			$block = '<li class="rm_unblock"><a href="javascript:void(0);"><i></i>Unblock <span>'.$user->screen_name.'</span></a></li>';
+			$block = '<li class="rm_unblock"><a href="#"><i></i>Unblock <span>'.$user->screen_name.'</span></a></li>';
 		}else{
-			$block = '<li class="rm_block"><a href="javascript:void(0);"><i></i>Block <span>'.$user->screen_name.'</span></a></li>';
+			$block = '<li class="rm_block"><a href="#"><i></i>Block <span>'.$user->screen_name.'</span></a></li>';
 		}
-		$spam = '<li class="rm_spam"><a href="javascript:void(0);"><i></i>Report <span>'.$user->screen_name.'</span> for spam</a></li>';
+		$spam = '<li class="rm_spam"><a href="#"><i></i>Report <span>'.$user->screen_name.'</span> for spam</a></li>';
 		$html = '<ul class="right_menu round">'.$mention.$dm.$unfollow.$follow.$block.$spam.'</ul>';
 		return $html;
 	}

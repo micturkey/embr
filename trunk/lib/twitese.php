@@ -4,7 +4,7 @@
 		session_start();
 	}
 	include_once('mobile_device_detect.php');
-	mobile_device_detect(true,true,true,true,true,true,'https://dabr.in/',false);
+	mobile_device_detect(true,true,true,true,true,true,'https://t.orzdream.com/',false);
 	include_once('config.php');
 	include_once('utility.php');
 	include_once('twitteroauth.php');

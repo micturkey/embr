@@ -13,15 +13,22 @@ function leaveWord(num) {
 		leave -= $("#sent_id").val().length + 3;
 	}
 	if (leave < 0) {
-		$("#tip").css("color","#CC0000");
-		$("#tip b").css("color","#CC0000");
 		$("#tip").html("<b>-" + (-leave) + "</b>");
 		$("#tweeting_button").addClass('btn-disabled');
 	} else {
-		$("#tip").css("color","#CCCCCC");
-		$("#tip b").css("color","#CCCCCC");
 		$("#tip").html("<b>" + leave + "</b>");
 		$("#tweeting_button").removeClass('btn-disabled');
+		if (leave > 40) { 
+			$("#tip, #tip b").css("color","#CCC");
+		} else if(leave > 20) {
+			$("#tip, #tip b").css("color","#CAA");
+		} else if(leave > 10) {
+			$("#tip, #tip b").css("color","#C88");
+		} else if(leave > 0) {
+			$("#tip, #tip b").css("color","#C44");
+		} else {
+			$("#tip, #tip b").css("color","#E00");
+		}
 	}
 	if(leave === 140) {
 		$("#in_reply_to").val("");
@@ -303,9 +310,12 @@ var formFunc = function(){
 		
 		var wordsCount = text.length;
 		if (wordsCount > 140) {
-			updateSentTip("Your tweet is more than 140 words!", 3000, "failure");
-			return false;
-		} else if (wordsCount = 0) {
+			$.cookie('recover', text, {'expire': 30});
+			if(window.confirm("Your tweet is longer than 140 words! truncated? (you can restore later using restore button.)")){
+				text = text.substr(0,137) + '...' ;
+			}
+		} 
+		if (wordsCount = 0) {
 			updateSentTip("Your cannot send an empty tweet!", 3000, "failure");
 			return false;
 		} else {
@@ -347,7 +357,7 @@ var formFunc = function(){
 								previewMedia(source);
 								freshProfile();
 							}
-						}
+							}
 						} else {
 							$.cookie('recover', text, {'expire': 30});
 							$('#tip').removeClass('loading');
@@ -995,7 +1005,7 @@ var formFunc = function(){
 						});
 					$(this).removeClass().addClass("active").css("background", "transparent url('../img/spinner.gif') no-repeat scroll 173px center")
 				});
-			$("#statuses .big-retweet-icon, #func_set .func_btn").tipsy({
+			$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
 					gravity: 's'
 				});
 			$('#symbols span').tipsy({

@@ -5,12 +5,12 @@
 	
 	// Config
 	define('SECURE_KEY', 'YOU SHOULD CHANGE IT');
-	define('BASE_URL','http://MY_WEBSITE'); //Where your embr is hosted, i.e. http://bugbug.tk
-	define("CONSUMER_KEY", "YOUR_CONSUMER_KEY");
-	define("CONSUMER_SECRET", "YOUR_CONSUMER_SECRET");
+	define('BASE_URL','http://embr.tk'); //Where your embr is hosted, i.e. http://bugbug.tk
+	define("CONSUMER_KEY", "TEItTaPASySnYxziOyIdag");
+	define("CONSUMER_SECRET", "xJEoWvBumpqgiiBuviWTa7GT8KCvP7Kv3n0hixhJaZY");
 	
 	//Optional Information
-	define('SITE_OWNER', 'TWITTER_ID'); //Your Twitter ID  
+	define('SITE_OWNER', 'TWITTER'); //Your Twitter ID  
 	define('STAT_IMG','http://img.tongji.linezing.com/1792485/tongji.gif'); //linezing stats
-	define('BLOG_SITE','http://MY_BLOG_SITE'); //blog_site
+	define('BLOG_SITE','http://jlhwung.tk'); //blog_site
 ?>

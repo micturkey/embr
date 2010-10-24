@@ -38,9 +38,9 @@
 		<div id="info_name"><?php echo $id?></div>
 		<div id="info_relation">
 		<?php if ($isFollower) {?>
-			<a id="list_block_btn" class="info_btn_hover" href="a_list.php?action=destory&id=">Unfollow</a>
+			<a id="list_block_btn" class="info_btn_hover" href="#">Unfollow</a>
 		<?php } else { ?>
-			<a id="list_follow_btn" class="info_btn" href="a_list.php?action=create&id=">Follow</a>
+			<a id="list_follow_btn" class="info_btn" href="#">Follow</a>
 		<?php } ?>
 			<a id="list_send_btn" class="info_btn" href="#">Tweet</a>
 			<a class="info_btn" href="list_followers.php?id=<?php echo $id?>">Followers (<?php echo $listInfo->subscriber_count?>)</a>
@@ -70,11 +70,11 @@
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> $text </span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
-							<a class=\"replie_btn\" title=\"Reply\" href=\"a_reply.php?id=$status->id\">回复</a>
-							<a class=\"rt_btn\" title=\"Retweet\" href=\"a_rt.php?id=$status->id\">回推</a>
-							<a class=\"retw_btn\" title=\"New Retweet\" href=\"javascript:void(0);\">New Retweet</a>
-							<a class=\"favor_btn\" title=\"Favorite\" href=\"a_favor.php?id=$status->id\">收藏</a>";
-				if ($user->screen_name == $t->username) $output .= "<a class=\"delete_btn\" title=\"Delete\" href=\"a_del.php?id=$status->id&t=s\">删除</a>";
+							<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
+							<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>
+							<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
+							<a class=\"favor_btn\" title=\"Favorite\" href=\"#\">Fav</a>";
+				if ($user->screen_name == $t->username) $output .= "<a class=\"delete_btn\" title=\"Delete\" href=\"#\">Delete</a>";
 				$output .= "</span><span class=\"status_info\">";
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 				$output .= "<span class=\"source\">via $status->source</span>

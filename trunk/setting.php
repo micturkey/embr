@@ -5,7 +5,7 @@
 	if (!loginStatus()) header('location: login.php');	
 ?>
 <script type="text/javascript" src="js/colorpicker.js"></script>
-<script type="text/javascript" src="js/setting.js?ver=20100206"></script>
+<script type="text/javascript" src="js/setting.js"></script>
 <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
 <div id="statuses" class="column round-left">
 	<div id="setting">

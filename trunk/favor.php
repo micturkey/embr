@@ -45,11 +45,11 @@
 				<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
 			$output .= recoverShortens($text);
 			$output .="<span class=\"actions\">
-				<a class=\"replie_btn\" href=\"a_reply.php?id=$status->id\">Reply</a>
-				<a class=\"rt_btn\" href=\"a_rt.php?id=$status->id\">Retweet</a>
-				<a class=\"retw_btn\" title=\"New Retweet\" href=\"javascript:void(0);\">New Retweet</a>
-				<a class=\"trans_btn\" title=\"Translate\" href=\"javascript:void(0);\">Translate</a>
-				<a class=\"delete_btn\" href=\"a_del.php?id=$status->id&t=f\">Delete</a></span><span class=\"status_info\">
+				<a class=\"replie_btn\" href=\"#\">Reply</a>
+				<a class=\"rt_btn\" href=\"#\">Retweet</a>
+				<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
+				<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>
+				<a class=\"delete_btn\" href=\"#\">Delete</a></span><span class=\"status_info\">
 				";
 			if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a href=\"/status.php?id=$status->in_reply_to_status_id \">in reply to $status->in_reply_to_screen_name</a></span>";
 			$output .= "				

@@ -1,4 +1,4 @@
-<script type="text/javascript" src="js/formfunc.js?ver=2010041501"></script>
+<script type="text/javascript" src="js/formfunc.js"></script>
 <script type="text/javascript" src="js/ajaxfileupload.js"></script>
 <?php if (!isset($_sentText)) { 
 	if ($_SERVER['PHP_SELF']!='/message.php') {
@@ -88,7 +88,7 @@
 </select>
 <input type="button" value="Translate" class="btn" id="translateMy" style="vertical-align: middle; padding: 3px 8px; margin-top: -3px;">
 </p>
-<a href="#" onclick="$('#transArea').slideToggle(300)" title="Close" style="right:25px;top:5px;" class="close"></a>
+<a class="close" title="Close" onclick="$('#transArea').slideToggle(300)" href="#"></a>
 </form>
 
 <form action="index.php" method="post">
