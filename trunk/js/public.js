@@ -14,20 +14,19 @@ function leaveWord(num) {
 	}
 	if (leave < 0) {
 		$("#tip").html("<b>-" + (-leave) + "</b>");
+		$("#tip b").css("color","#C00");
 		$("#tweeting_button").addClass('btn-disabled');
 	} else {
 		$("#tip").html("<b>" + leave + "</b>");
 		$("#tweeting_button").removeClass('btn-disabled');
 		if (leave > 40) { 
-			$("#tip, #tip b").css("color","#CCC");
+			$("#tip b").css("color","#CCC");
 		} else if(leave > 20) {
-			$("#tip, #tip b").css("color","#CAA");
+			$("#tip b").css("color","#CAA");
 		} else if(leave > 10) {
-			$("#tip, #tip b").css("color","#C88");
-		} else if(leave > 0) {
-			$("#tip, #tip b").css("color","#C44");
+			$("#tip b").css("color","#C88");
 		} else {
-			$("#tip, #tip b").css("color","#E00");
+			$("#tip b").css("color","#C44");
 		}
 	}
 	if(leave === 140) {
@@ -299,6 +298,7 @@ var formFunc = function(){
 		});
 	var updateStatus = function(){
 		$('#tip').addClass('loading');
+		$('#tip b').css("opacity","0.1");
 		PAUSE_UPDATE = true;
 
 		var text = $("#textbox").val();
@@ -372,6 +372,7 @@ var formFunc = function(){
 						updateSentTip("Update failed. Please try again.", 3000, "failure");
 						$('#tweeting_button').removeClass('btn-disabled');
 						PAUSE_UPDATE = false;
+						leaveWord();
 					}
 				});
 		}

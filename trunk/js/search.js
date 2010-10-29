@@ -13,11 +13,11 @@ $(function(){
 	$(".replie_btn").click(function(e){
 		e.preventDefault();
 		if ($("#textbox").length > 0) {
-			onReplie($(this), e);
+			onReplie($(this),e);
 		} else {
 			$("#search_form").after(formHTML);
 			formFunc();
-			onReplie($(this), e);
+			onReplie($(this),e);
 		}
 	});
 	$(".favor_btn").live("click", function(e){

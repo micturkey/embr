@@ -15,7 +15,7 @@ $(function(){
 		} else {
 			$("#browse_title").after(formHTML);
 			formFunc();
-			onReplie($(this));
+			onReplie($(this),e);
 		}
 	});
 	$(".favor_btn").live("click", function(){
