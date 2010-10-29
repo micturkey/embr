@@ -12,7 +12,7 @@ $(function () {
 	});
 	$(".replie_btn").live("click", function (e) {
 		e.preventDefault();
-		onReplie($(this), e);
+		onReplie($(this),e);
 	});
 	$(".favor_btn").live("click", function (e) {
 		e.preventDefault();

@@ -6,7 +6,7 @@ $(function(){
 	
 	$(".replie_btn").live("click", function(e){
 		e.preventDefault();
-		onReplie($(this));
+		onReplie($(this),e);
 	});
 	$(".favor_btn").live("click", function(e){
 		e.preventDefault();

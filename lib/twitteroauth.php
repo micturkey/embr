@@ -36,7 +36,7 @@ class TwitterOAuth {
 	public $decode_json = TRUE;
 	/* Immediately retry the API call if the response was not successful. */
 	//public $retry = TRUE;
-	public $source = 'rabr';
+	public $source = 'embr';
 
 	// user info
 	public $username;
@@ -627,7 +627,7 @@ class TwitterOAuth {
 
 	/* ---------- Timeline ---------- */
 	function deleteStatus($id){
-		$url = '/statuses/destroy/$id';
+		$url = "/statuses/destroy/$id";
 		return $this->delete($url);
 	}
 

@@ -1,7 +1,9 @@
 <script type="text/javascript" src="js/formfunc.js"></script>
 <script type="text/javascript" src="js/ajaxfileupload.js"></script>
-<?php if (!isset($_sentText)) { ?>
-<h2>What's happening?</h2>
+<?php if (!isset($_sentText)) { 
+	if ($title != 'Direct Messages') {
+	echo "<h2>What's happening?</h2>" ;
+	} ?> 
 <span id="tip"><b>140</b></span>
 <?php } ?>
 
@@ -133,7 +135,13 @@
 	}
 ?>
 <div id="tweeting_controls">
-	<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Tweet</span></a>
+	<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>
+		<?php if($title == 'Direct Messages') {
+			echo 'Send';
+			} else {
+				echo 'Tweet';
+			} ?>
+		</span></a>
 	</div>
 	
 	<div id="func_set">

@@ -13,11 +13,11 @@ $(function(){
 	$(".replie_btn").click(function(e){
 		e.preventDefault();
 		if ($("#textbox").length > 0) {
-			onReplie($(this));
+			onReplie($(this),e);
 		} else {
 			$("#info_head").before('<h2>What are you doing?</h2>' + formHTML);
 			formFunc();
-			onReplie($(this));
+			onReplie($(this),e);
 		}
 	});
 
