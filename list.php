@@ -70,7 +70,7 @@
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> $text </span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
-							<a class=\"info_replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
+							<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
 							<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>
 							<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
 							<a class=\"favor_btn\" title=\"Favorite\" href=\"#\">Fav</a>";

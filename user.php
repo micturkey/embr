@@ -113,7 +113,7 @@
 					<li>
 					<span class=\"info_status_body\">
 					<span class=\"status_id\">$status->id</span>
-					<span class=\"status_word\"><span class=\"tweet\"> $text </span></span>";
+					<span class=\"status_word\"><a class=\"user_name\" style=\"display:none\">$userid</a><span class=\"tweet\"> $text </span></span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
 					<a class=\"replie_btn\" href=\"#\">Reply</a>

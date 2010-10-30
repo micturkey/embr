@@ -286,16 +286,15 @@ var formFunc = function(){
 					}
 				}
 			});
+	$("#tweeting_button").click(function (e) {
+		e.preventDefault();
+		if ($("#textbox").val().length >0 ) {
+			updateStatus();
+		}		
+		});		
 	};
 	//update button core
-	$(function () {
-			$("#tweeting_button").click(function (e) {
-					e.preventDefault();
-					if ($("#textbox").val().length >0 ) {
-						updateStatus();
-					}		
-				});
-		});
+
 	var updateStatus = function(){
 		$('#tip').addClass('loading');
 		$('#tip b').css("opacity","0.1");

@@ -4,18 +4,19 @@ $(function(){
 		if ($("#textbox").length > 0) {
 			onRT($(this));
 		} else {
-			$("#info_head").before('<h2>What are you doing?</h2>' + formHTML);
+			$("#info_head").after('<h2>What are you doing?</h2>' + formHTML);
 			formFunc();
 			onRT($(this));
 		}
 	});
 	
-	$(".replie_btn").click(function(e){
+	$(".replie_btn").live("click", function(e){
 		e.preventDefault();
+		var replie_id = $(this).parent().parent().find(".status_word").find(".user_name").text();
 		if ($("#textbox").length > 0) {
 			onReplie($(this),e);
 		} else {
-			$("#info_head").before('<h2>What are you doing?</h2>' + formHTML);
+			$("#info_head").after('<h2>In reply to ' + replie_id + '</h2>' + formHTML);
 			formFunc();
 			onReplie($(this),e);
 		}
@@ -24,7 +25,7 @@ $(function(){
 	$("#list_send_btn").click(function(e){
 		e.preventDefault();
 		if ($("#textbox").length == 0) {
-			$("#info_head").before('<h2>What are you doing?</h2>' + formHTML);
+			$("#info_head").after('<h2>What are you doing?</h2>' + formHTML);
 		formFunc();
 		}
 	});
