@@ -6,7 +6,7 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script type="text/javascript">
+<script>
 	$(function(){
 		formFunc();
 		$(".rt_btn").live("click", function(e){

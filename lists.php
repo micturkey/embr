@@ -6,7 +6,7 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script type="text/javascript" src="js/lists.js"></script>
+<script src="js/lists.js"></script>
 
 <div id="statuses">
 	<?php 

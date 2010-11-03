@@ -4,7 +4,7 @@
 	include ('inc/header.php');	
 	if (!loginStatus()) header('location: login.php');	
 ?>
-<style type="text/css">
+<style>
 #analyze {
 display: block; 
 float: left; 
@@ -123,7 +123,7 @@ margin-left:0 !important;
 text-align:center;
 }
 </style>
-<script type="text/javascript" src="js/nexus.js"></script>
+<script src="js/nexus.js"></script>
 <div id="statuses" class="column round-left">
 <div class="round" id="users">
 <h2>

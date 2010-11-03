@@ -4,9 +4,9 @@
 	include ('inc/header.php');	
 	if (!loginStatus()) header('location: login.php');	
 ?>
-<script type="text/javascript" src="js/colorpicker.js"></script>
-<script type="text/javascript" src="js/setting.js"></script>
-<link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
+<script src="js/colorpicker.js"></script>
+<script src="js/setting.js"></script>
+<link rel="stylesheet" href="css/colorpicker.css" />
 <div id="statuses" class="column round-left">
 	<div id="setting">
 <?php 

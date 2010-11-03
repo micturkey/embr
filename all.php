@@ -6,10 +6,8 @@
 	if (!loginStatus()) header('location: login.php');
 
 ?>
-<script type="text/javascript" src="js/all.js"></script>
-<script type="text/javascript" src="js/ajaxfileupload.js"></script>
-<script type="text/javascript" src="js/formfunc.js"></script>
-<style type="text/css">.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
+<script src="js/all.js"></script>
+<style>.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <div id="statuses" class="column round-left">
 	<?php include('inc/sentForm.php') ?>

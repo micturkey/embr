@@ -7,8 +7,8 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script type="text/javascript" src="js/message.js"></script>
-<style type="text/css">.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
+<script src="js/message.js"></script>
+<style>.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <?php 
 	$isSentPage = isset($_GET['t'])? true : false;

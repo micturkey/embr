@@ -27,7 +27,7 @@ class TwitterOAuth {
 	/* Set timeout default */
 	public $timeout = 5;
 	/* Set connect timeout */
-	public $connecttimeout = 5;
+	public $connecttimeout = 30;
 	/* Verify SSL Cert */
 	public $ssl_verifypeer = FALSE;
 	/* Respons type */
@@ -134,9 +134,9 @@ class TwitterOAuth {
 			return false;
 		}
 		if ($this->type == 'json' && $this->decode_json) {
-			return @json_decode($response);
+			return json_decode($response);
 		}elseif($this->type == 'xml' && function_exists('simplexml_load_string')){
-			return @simplexml_load_string($response);
+			return simplexml_load_string($response);
 		}
 		return $response;
 	}
