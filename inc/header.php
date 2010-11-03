@@ -7,7 +7,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html" charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <meta name="author" content="disinfeqt, JLHwung" />
@@ -15,15 +15,15 @@
 <link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
 <?php 
-	$myCSS = isset($_COOKIE["myCSS"]) ? $_COOKIE["myCSS"] : "";
+	$myCSS = getColor("myCSS","");
 	$old_css = "ul.sidebar-menu li.active a";
 	$new_css = "ul.sidebar-menu a.active";
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
-	$fontsize = isset($_COOKIE["fontsize"]) ? $_COOKIE["fontsize"] : "13px";
-	$ad_display = "block";
-	$bodyBg = isset($_COOKIE["bodyBg"]) ? $_COOKIE["bodyBg"] : "";
+	$fontsize = getColor("fontsize","13px");
+	$ad_display = getColor("ad_display","block");
+	$bodyBg = getColor("bodyBg","");
 ?>
-<style>
+<style type="text/css">
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
 body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>}
