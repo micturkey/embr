@@ -39,7 +39,7 @@
 		header('location: index.php');
 	}
 ?>
-<script type="text/javascript" src="js/home.js"></script>
+<script src="js/home.js"></script>
 <div id="statuses" class="column round-left">
 <?php
   include('inc/sentForm.php'); 
@@ -64,7 +64,7 @@
 	}
 	else
 	{
-		$output = '<ol class="timeline" id="allTimeline">';
+		echo '<ol class="timeline" id="allTimeline">';
 
 		include('ajax/timeline_format.php');
 		if(count($retweetes) > 0)
@@ -81,29 +81,23 @@
 			}
 			if(isset($status->retweeted_status))
 			{
-				$output .= format_retweet($status);
+				echo format_retweet($status);
 			}
 			else
 			{
-				$output .= format_timeline($status, $t->username);
+				echo format_timeline($status, $t->username);
 			}
 		}
 
-		$output .= "</ol><div id=\"pagination\">";
+		echo "</ol><div id=\"pagination\">";
 
-		if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"index.php?p=" . ($p-1) . "\">Back</a>";
-		if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?p=" . ($p+1) . "\">Next</a>";
-
-		$output .= "</div>";
-
-		echo $output;
+		if ($p >1) echo "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"index.php?p=" . ($p-1) . "\">Back</a>";
+		if (!$empty) echo "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?p=" . ($p+1) . "\">Next</a>";
 	}
 ?>
 </div>
+</div>
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

@@ -38,8 +38,8 @@
 	}
 	echo '<div id="statuses" class="column round-left">';
 	include_once('inc/sentForm.php');
-	$html = '<script type="text/javascript" src="js/btns.js"></script>
-	<style type="text/css">
+	$html = '<script src="js/btns.js"></script>
+	<style>
 	.big-retweet-icon{display:none}
 	.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}
 	</style>';

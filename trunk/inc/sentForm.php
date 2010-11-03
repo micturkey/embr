@@ -1,5 +1,5 @@
-<script type="text/javascript" src="js/formfunc.js"></script>
-<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+﻿<script src="js/formfunc.js"></script>
+<script src="js/ajaxfileupload.js"></script>
 <?php if (!isset($_sentText)) { 
 	if ($title != 'Direct Messages') {
 	echo "<h2>What's happening?</h2>" ;
@@ -27,7 +27,7 @@
 
 <form id="symArea">
 <div id="symbols">
-<?php include ('inc/symbols.php');?>
+<?php include ('inc/symbols.inc');?>
 </div>
 <a class="close" title="Close" onclick="$('#symArea').slideToggle(300)" href="#"></a>
 </form>

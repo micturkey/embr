@@ -6,7 +6,7 @@
 
 ?>
 
-<script type="text/javascript" src="js/user.js"></script>
+<script src="js/user.js"></script>
 
 <div id="statuses" class="column round-left">
 <?php 

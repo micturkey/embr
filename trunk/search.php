@@ -56,8 +56,8 @@
 
 	if (!loginStatus()) header('location: login.php');
 ?>
-<style type="text/css">#trend_entries{display:block}</style>
-<script type="text/javascript" src="js/search.js"></script>
+<style>#trend_entries{display:block}</style>
+<script src="js/search.js"></script>
 <div id="statuses" class="column round-left">
 
 	<form action="search.php" method="get" id="search_form">

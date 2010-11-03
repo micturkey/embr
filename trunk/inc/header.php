@@ -4,14 +4,15 @@
 		session_start();
 	}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="rabr, open source, php, twitter, oauth, disinfeqt, JLHwung" />
+<meta charset=utf-8" />
+<meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
-<link rel="shortcut icon" href="img/favicon.ico" />
-<link type="text/css" id="css" href="css/main.css" rel="stylesheet" />
+<meta name="author" content="disinfeqt, JLHwung" />
+<link rel="icon" href="img/favicon.ico" />
+<link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
 <?php 
 	$myCSS = isset($_COOKIE["myCSS"]) ? $_COOKIE["myCSS"] : "";
@@ -22,14 +23,14 @@
 	$ad_display = "block";
 	$bodyBg = isset($_COOKIE["bodyBg"]) ? $_COOKIE["bodyBg"] : "";
 ?>
-<style type="text/css">
+<style>
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
 body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>}
 </style>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/mediaPreview.js"></script>
-<script type="text/javascript" src="js/public.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/mediaPreview.js"></script>
+<script src="js/public.js"></script>
 </head>
 <body>
 <div id="shortcutTip" style="display:none"></div>

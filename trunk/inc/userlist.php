@@ -1,5 +1,5 @@
 <div id="statuses" class="column round-left">
-<script type="text/javascript" src="js/userlist.js"></script>
+<script src="js/userlist.js"></script>
 <?php
 	include_once('ajax/timeline_format.php');
 	
