@@ -45,12 +45,14 @@ V.[http://code.google.com/p/embr/wiki/technique Even More]～
 
 I.Down embr-v`*`.7z from [http://code.google.com/p/embr/downloads/list download list]or SVN Checkout http://embr.googlecode.com/svn/trunk/ for the last code.
 
-II.Unzip，edit .\lib\config.php as below
+Note: Now you can directly go to step III without any config editing using version 0.21+
+
+II.(Optional)Unzip，edit .\lib\config.php as below
 {{{
 
     define('SECURE_KEY', 'YOU SHOULD CHANGE IT'); //Key to encrypt cookie.
 
-    define('API_URL', 'http://twitter.com'); //you shall change into api.twitter.com
+    define('API_URL', 'http://twitter.com');
 
     define('API_TWITTER', 'http://api.twitter.com');
 
@@ -84,6 +86,7 @@ Note
 		}
 	}
 }}}
+
 III.Upload and enjoy!
 
 * Demo: http://embr.tk ipv4/ipv6+SSL*
