@@ -11,7 +11,7 @@
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
-			<span class="status_id">'.$status->id.'</span>
+			<span class="status_id">'.$status->id_str.'</span>
 			<span class="status_word">
 			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
 		$html .= recoverShortens($text);
@@ -24,11 +24,11 @@
 		$html .= '<a class="favor_btn" title="Favorite" href="#">Favorite</a>
 					<a class="trans_btn" title="Translate" href="#">Translate</a>';
 		if($retweetByMe == true){
-			$html .= '<a class="delete_btn" title="Delete" href="#"><span class="rt_id" style="display: none;">'.$status->id.'</span></a>';
+			$html .= '<a class="delete_btn" title="Delete" href="#"><span class="rt_id" style="display: none;">'.$status->id_str.'</span></a>';
 		}
 		$html .='</span>
 			<span class="status_info"><span class="source">Retweeted by <a href="user.php?id='.$retweeter->screen_name.'">'.$retweeter->screen_name.'</a> via '.$status->source.'</span>
-			<span class="date"><a href="status.php?id='.$rt_status->id.'" title="'.date('Y-m-d H:i:s', strtotime($status->created_at)).'" target="_blank">'.$date.'</a></span>
+			<span class="date"><a href="status.php?id='.$rt_status->id_str.'" title="'.date('Y-m-d H:i:s', strtotime($status->created_at)).'" target="_blank">'.$date.'</a></span>
 			</span>
 			</span>
 			</li>';
@@ -45,7 +45,7 @@
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
-			<span class="status_id">'.$status->id.'</span>
+			<span class="status_id">'.$status->id_str.'</span>
 			<span class="status_word">
 			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
 		$html .= recoverShortens($text);
@@ -57,7 +57,7 @@
 			<a class="delete_btn" title="Delete" href="#">Delete</a>
 			</span>
 			<span class="status_info">via '.$status->source.'
-			<span class="date"><a href="status.php?id='.$status->id.'" title="'.date('Y-m-d H:i:s', strtotime($status->created_at)).'" target="_blank">'.$date.'</a></span>
+			<span class="date"><a href="status.php?id='.$status->id_str.'" title="'.date('Y-m-d H:i:s', strtotime($status->created_at)).'" target="_blank">'.$date.'</a></span>
 			</span>
 			</span>
 			</li>';
@@ -96,7 +96,7 @@
 			<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"$user->screen_name\" /></a>
 			</span>
 			<span class=\"status_body\">
-			<span class=\"status_id\">$status->id </span>
+			<span class=\"status_id\">$status->id_str </span>
 			<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
 		$output .= recoverShortens($text);
 		$output .= "<span class=\"actions\">
@@ -111,7 +111,7 @@
 		$output .= "</span><span class=\"status_info\">";
 		if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a>&nbsp;</span>";
 		$output .= "<span class=\"source\">via $status->source</span>
-			<span class=\"date\"><a href=\"status.php?id=$status->id\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
+			<span class=\"date\"><a href=\"status.php?id=$status->id_str\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
 			</span>
 			</span>
 			</li>";

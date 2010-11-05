@@ -490,7 +490,7 @@ class TwitterOAuth {
  	}
  	
 	function relationship($target, $source = false){
-		$url = API_TWITTER.'/1/friendships/show.'.$this->type;
+		$url = '/friendships/show';
 		$args = array();
 		$args['target_screen_name'] = $target;
 		if($source){
@@ -524,7 +524,7 @@ class TwitterOAuth {
 
 	/* ---------- Retweet ---------- */
 	function getRetweeters($id, $count = false){
-		$url = API_TWITTER."/1/statuses/retweets/$id.$this->type";
+		$url = "/statuses/retweets/$id";
 		if($count != false){
 			$url .= "?count=$count";
 		}
@@ -532,7 +532,7 @@ class TwitterOAuth {
 	}
 
 	function retweet($id){
-		$url = API_TWITTER."/1/statuses/retweet/$id.$this->type";
+		$url = "/statuses/retweet/$id";
 		return $this->post($url);
 	}
 
@@ -540,13 +540,15 @@ class TwitterOAuth {
 		if($count > 100){
 			$count = 100;
 		}
-		$url = API_TWITTER."/1/statuses/retweets/id.$this->type?count=$count";
-		return $this->get($url);
+		$url = "/statuses/retweets/$id";
+		$args = array();
+		$args['count'] = $count;
+		return $this->get($url,$args);
 	}
 
 	// Returns the 20 most recent retweets posted by the authenticating user.
 	function retweeted_by_me($page = false, $count = 20, $since_id = false, $max_id = false){
-		$url = API_TWITTER."/1/statuses/retweeted_by_me.$this->type";
+		$url = '/statuses/retweeted_by_me';
 		$args = array();
 		if($since_id){
 			$args['since_id'] = $since_id;
@@ -565,7 +567,7 @@ class TwitterOAuth {
 
 	// Returns the 20 most recent retweets posted by the authenticating user's friends.
 	function retweeted_to_me($page = false, $count = false, $since_id = false, $max_id = false){
-		$url = API_TWITTER."/1/statuses/retweeted_to_me.$this->type";
+		$url = '/statuses/retweeted_to_me';
 		$args = array();
 		if($since_id){
 			$args['since_id'] = $since_id;
@@ -583,7 +585,7 @@ class TwitterOAuth {
 	}
 
 	function retweets_of_me($page = false, $count = false, $since_id = false, $max_id = false){
-		$url = API_TWITTER."/1/statuses/retweets_of_me.$this->type";
+		$url = '/statuses/retweets_of_me';
 		$args = array();
 		if($since_id){
 			$args['since_id'] = $since_id;
@@ -619,7 +621,7 @@ class TwitterOAuth {
 
 	/* ---------- Spam ---------- */
 	function reportSpam($screen_name){
-		$url = API_TWITTER."/1/report_spam.$this->type";
+		$url = '/1/report_spam';
 		$args = array();
 		$args['screen_name'] = $screen_name;
 		return $this->post($url, $args);

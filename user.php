@@ -112,7 +112,7 @@
 				$output .= "
 					<li>
 					<span class=\"info_status_body\">
-					<span class=\"status_id\">$status->id</span>
+					<span class=\"status_id\">$status->id_str</span>
 					<span class=\"status_word\"><a class=\"user_name\" style=\"display:none\">$userid</a><span class=\"tweet\"> $text </span></span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
@@ -126,7 +126,7 @@
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 
 				$output .= "	
-					<span class=\"source\">via $status->source </span><span class=\"date\"><a href=\"status.php?id=$status->id\">$date</a></span></span>
+					<span class=\"source\">via $status->source </span><span class=\"date\"><a href=\"status.php?id=$status->id_str\">$date</a></span></span>
 					</span>
 					</li>
 					";

@@ -31,7 +31,7 @@
 					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"$status->from_user\" /></a>
 					</span>
 					<span class=\"status_body\">
-					<span class=\"status_id\">$status->id</span>
+					<span class=\"status_id\">$status->id_str</span>
 					<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$status->from_user\">$status->from_user</a> <span class=\"tweet\">$text</span> </span>";
 				$output .= recoverShortens($text);
 				$output .="<span class=\"actions\">
@@ -39,7 +39,7 @@
 					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
 					<a class=\"favor_btn\" href=\"#\">Fav</a></span><span class=\"status_info\">";
 				$output .=	"<span class=\"source\">via ".html_entity_decode($status->source)."</span>
-					<span class=\"date\"><a href=\"status.php?id=$status->id\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
+					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
 					</span>
 					</span>
 					</li>

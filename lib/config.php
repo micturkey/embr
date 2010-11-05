@@ -1,6 +1,5 @@
 <?php
 	define('API_URL', 'http://api.twitter.com/1');
-	define('API_TWITTER', 'http://api.twitter.com');
 	define('TWITESE_API_URL', 'http://twiteseapi.appspot.com');//need NOT change it
 	
 	// Config

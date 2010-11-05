@@ -23,7 +23,7 @@
 			{
 				foreach ($statuses as $status)
 				{
-					if($status->id < $_GET['since_id'])
+					if($status->id_str < $_GET['since_id'])
 					{
 						break;
 					}
