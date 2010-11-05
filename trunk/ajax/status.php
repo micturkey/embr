@@ -43,7 +43,7 @@
 			<span class="status_word" style="font-size: 12px;"><a class="user_name" href="user.php?id='.$user->screen_name.'">'.$user->screen_name.'</a> <span class="tweet">'.$text.'</span></span>
 			<span class="status_info" style="font-size: 11px; margin: 0px;">';
 		if($end && isset($status->in_reply_to_user_id)){
-			$html .= '<span class="in_reply_to"> <a class="ajax_reply" href="ajax/status.php?id='.$status->in_reply_to_status_id.'&uid='.$user->id.'">in reply to '.$status->in_reply_to_screen_name.'</a></span>';
+			$html .= '<span class="in_reply_to"> <a class="ajax_reply" href="ajax/status.php?id='.$status->in_reply_to_status_id_str.'&uid='.$user->id.'">in reply to '.$status->in_reply_to_screen_name.'</a></span>';
 		}
 		$html .= '<span class="source">via '.$status->source.'</span>
 			<span class="date"><a href="status.php?id='.$status_id.'" target="_blank">'.$date.'</a></span>
@@ -51,7 +51,7 @@
 			</span>
 			</li>';
 		if(!$end){
-			$html .= formatConversation($status->in_reply_to_status_id);
+			$html .= formatConversation($status->in_reply_to_status_id_str);
 		}
 		return $html;
 	}
