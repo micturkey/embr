@@ -46,7 +46,7 @@
 				if(!isset($_COOKIE['login_page'])) {
 					header('Location: ./index.php');
 				} else {
-					header('Location: ./'.getcookie('login_page'));
+					header('Location: .'.$_COOKIE['login_page']);
 				}
 			} else {
 				session_destroy();

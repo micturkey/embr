@@ -20,8 +20,10 @@
 	$new_css = "ul.sidebar-menu a.active";
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
 	$fontsize = getColor("fontsize","13px");
-	$ad_display = getColor("ad_display","block");
 	$bodyBg = getColor("bodyBg","");
+	if ($_SERVER['PHP_SELF'] != '\error.php' ){
+		setcookie('login_page',$_SERVER['PHP_SELF'],$_SERVER['REQUEST_TIME']+3600*24);
+	}
 ?>
 <style type="text/css">
 <?php echo $myCSS ?>

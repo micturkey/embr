@@ -1,6 +1,6 @@
 <?php
 	function setEncryptCookie($key, $value, $time = 0, $path) {
-		if (trim(getMcryptKey()) == '') {
+		if (trim(SECURE_KEY) == '') {
 			setcookie($key, $value, $time, $path);
 		} else {
 			setcookie($key, encrypt($value), $time, $path);
@@ -9,7 +9,7 @@
 
 	function getEncryptCookie($key) {
 		if ( isset($_COOKIE[$key]) ) {
-			if (trim(getMcryptKey()) == '') {
+			if (trim(SECURE_KEY) == '') {
 				return $_COOKIE[$key];
 			} else {
 				return decrypt($_COOKIE[$key]);
@@ -30,14 +30,10 @@
 		setcookie($key, '', $_SERVER['REQUEST_TIME']-300, '/');
 	}
 
-	function getMcryptKey() {
-		return SECURE_KEY;
-	}
-
 	function encrypt($plain_text) {	  
 		$td = mcrypt_module_open('blowfish', '', 'cfb', '');
 		$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
-		mcrypt_generic_init($td, getMcryptKey(), $iv);
+		mcrypt_generic_init($td, SECURE_KEY, $iv);
 		$crypt_text = mcrypt_generic($td, $plain_text);
 		mcrypt_generic_deinit($td);
 		return base64_encode($iv.$crypt_text);
@@ -49,7 +45,7 @@
 		$ivsize = mcrypt_enc_get_iv_size($td);
 		$iv = substr($crypt_text, 0, $ivsize);
 		$crypt_text = substr($crypt_text, $ivsize);
-		mcrypt_generic_init($td, getMcryptKey(), $iv);
+		mcrypt_generic_init($td, SECURE_KEY, $iv);
 		$plain_text = mdecrypt_generic($td, $crypt_text);
 		mcrypt_generic_deinit($td);
 

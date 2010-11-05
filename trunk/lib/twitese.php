@@ -9,9 +9,6 @@
 	include_once('utility.php');
 	include_once('twitteroauth.php');
 	include_once('oauth_lib.php');
-	function errorHandler($errno, $errstr, $errfile, $errline){
-		return TRUE;
-	}
 
 	function refreshProfile(){
 		$t = getTwitter();
@@ -29,14 +26,12 @@
 		$time = $_SERVER['REQUEST_TIME'] + 3600*24*30;
 		setcookie('myCSS', $myCSS, $time);
 		setcookie('fontsize', $fontsize, $time);
-		setcookie('ad_display', "None", $time);
 		setcookie('bodyBg', $bodyBg, $time);
 	}
 
 	function resetStyle() {
 		delCookie('myCSS');
 		delCookie('fontsize');
-		delCookie('ad_display');
 		delCookie('bodyBg');
 	}
 
@@ -256,7 +251,8 @@
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'embr');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_TIMEOUT,10);
+		curl_setopt($ch, CURLOPT_TIMEOUT,5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,30);
 
 		$response = curl_exec($ch);
 		$response_info=curl_getinfo($ch);
@@ -270,7 +266,7 @@
 	}
 	
 	function getTwitter() {
-		if(isOAuth()){
+		if(loginStatus()){
 			$access_token = $_SESSION['access_token'] ? $_SESSION['access_token'] : null;
 			$oauth_token = $access_token ? $access_token['oauth_token'] : $_COOKIE['oauth_token'];
 			$oauth_token_secret = $access_token ? $access_token['oauth_token_secret'] : $_COOKIE['oauth_token_secret'];
@@ -279,12 +275,8 @@
 		}
 		return null;
 	}
-	
-	function loginStatus() {
-		return isOAuth();
-	}
 
-	function isOAuth() {
+	function loginStatus() {
 		if(isset($_SESSION['login_status'])){
 			return $_SESSION['login_status'] == 'verified' ? true : false;
 		}elseif(getEncryptCookie("oauth_token") != "" && getEncryptCookie("oauth_token_secret") != "" && getEncryptCookie("user_id") != "" && getEncryptCookie("twitese_name") != ""){

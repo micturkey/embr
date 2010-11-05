@@ -137,12 +137,12 @@ textarea#textbox:focus{outline:none;border:1px solid rgba(82,168,236,.75)!import
 
 /*sidebar*/
 #side_base{-moz-border-radius-bottomright:5px;-moz-border-radius-topright:5px;border-bottom-right-radius:5px;border-top-right-radius:5px;background-color:#DDEEF6;border-left:1px solid #C0DEED;line-height:1.2;vertical-align:top;width:198px}
-#side{-moz-border-radius-bottomright:5px;-moz-border-radius-topright:5px;float:left;font-size:12px;margin:0 -2px;overflow:hidden;padding-top:.5em;width:198px}
+#side{-moz-border-radius-bottomright:5px;-moz-border-radius-topright:5px;float:left;font-size:90%;margin:0 -2px;overflow:hidden;padding-top:.5em;width:198px}
 #sideimg{float:left;height:31px;margin:10px 10px 10px 15px;width:31px}
 #sideid{display:block;font:bold 1.2em/1.2em Helvetica Neue,Helvetica,sans-serif;color:#2276BB;padding:10px 0 0 18px}
 #sideid img{margin-left:2px;opacity:.5;}
 #sideid img:hover{opacity:1;}
-#me_tweets {font-family:Helvetica,Arial,sans-serif;font-size:11px;margin-top:17px;}
+#me_tweets {font-family:Helvetica,Arial,sans-serif;font-size:90%;margin-top:17px;}
 #user_stats{clear:both;padding:0 0 0 10px}
 #user_stats li{display:inline-block;float:left;overflow:hidden;padding:0 5px;width:48px}
 .count{display:block;font:bold 13px Helvetica Neue,Helvetica,Arial,sans-serif;}
@@ -237,7 +237,7 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .notify div{background-color:#edffe5;font-size:.9em;margin:0 12px 0 24px;padding:10px 5px;-moz-border-radius:5px;border-radius:5px;}
 #trend_entries, #tools_list{display:none;width: 198px; float: left;margin-top:5px !important;}
 #trends, #following, #toolbox{margin-left: -2px;}
-#trends_title, #following_title, #toolbox_title{background: transparent url(../img/toggle_down_dark.png) no-repeat scroll right center; font-weight: normal; font-size: 13px; padding-left: 3px; margin-bottom: 0px; margin-top: 0px;width: 177px;cursor:pointer}
+#trends_title, #following_title, #toolbox_title{background: transparent url(../img/toggle_down_dark.png) no-repeat scroll right center; font-weight: normal; font-size:110%; padding-left: 3px; margin-bottom: 0px; margin-top: 0px;width: 177px;cursor:pointer}
 #trends_title.loading, #following_title.loading, #toolbox_title.loading{background: transparent url(../img/spinner.gif) no-repeat scroll right center !important;}
 #trends_title.open, #following_title.open, #toolbox_title.open{background: transparent url(../img/toggle_up_dark.png) no-repeat scroll right center ! important;}
 #following_list {display:none;float:left;padding:10px 10px 0 10px;}

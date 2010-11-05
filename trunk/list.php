@@ -66,7 +66,7 @@
 							<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"$user->screen_name\" /></a>
 						</span>
 						<span class=\"status_body\">
-							<span class=\"status_id\">$status->id</span>
+							<span class=\"status_id\">$status->id_str_str</span>
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> $text </span>";
 				$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
@@ -78,7 +78,7 @@
 				$output .= "</span><span class=\"status_info\">";
 				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 				$output .= "<span class=\"source\">via $status->source</span>
-							<span class=\"date\"><a href=\"status.php?id=$status->id\" target=\"_blank\">$date</a></span>
+							<span class=\"date\"><a href=\"status.php?id=$status->id_str_str\" target=\"_blank\">$date</a></span>
 						    </span>
 						</span>
 					</li>
