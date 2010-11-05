@@ -42,7 +42,7 @@
 					<a class=\"favor_btn\" title=\"Favorite\" href=\"a_favor.php?id=$status->id_str\">收藏</a>";
 				if ($user->screen_name == $t->username) $output .= "<a class=\"delete_btn\" title=\"Delete\" href=\"a_del.php?id=$status->id_str&t=s\">删除</a>";
 				$output .= "</span><span class=\"status_info\">";
-				if ($status->in_reply_to_status_id) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
+				if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id_str&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 				$output .= "<span class=\"source\">via $status->source</span>
 					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" target=\"_blank\">$date</a></span>
 					</span>
