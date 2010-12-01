@@ -60,9 +60,9 @@
 
 	function formatText($text) {
 		//如果开启了魔术引号\" \' 转回来
-		//if (get_magic_quotes_gpc()) {
-		//	$text = stripslashes($text);
-		//}
+		if (get_magic_quotes_gpc()) {
+			$text = stripslashes($text);
+		}
 
 		//添加url链接
 		$urlReg = '/(((http|https|ftp):\/\/){1}([[:alnum:]\-\.])+(\.)(([[:alnum:]]){2,4})?([[:alnum:]\/+=%#&\:\;_\.~\?\!\-\,]*))/i';

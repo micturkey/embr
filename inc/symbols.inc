@@ -1,3 +1,4 @@
+﻿<span title="花蕾无语">╮(╯_╰)╭</span>
 <span title=" 嗷~~">┗|｀O′|┛</span>
 <span title="~你给我回来！">o(°▽、°o)....+((￣﹏￣m )</span>
 <span title="“不明真相的围观群众”">槑槑槑槑呆槑槑槑槑槑槑槑槑……</span>
@@ -485,5 +486,5 @@
 <span title="足球">( · ·)L☆ ．．．..○ 冂 </span>
 <span title="醉拳">ヨロ (*~▽~)ノ ヨロ ヽ(~▽~*）ヨロ (*~▽~)―〇 ☆ バシ ))>口<)</span>
 <p style="display: block; float: left; margin-top: 25px; margin-bottom: -40px;">&copy; 2010 @ag108lau<br>Thanks @OnlyTiny<br />
-Last Update: 2010-03-12
+Last Update: 2010-11-13
 </p>

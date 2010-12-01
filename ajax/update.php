@@ -10,7 +10,11 @@
 			echo 'empty';
 			exit();
 		}
-		$result = $t->update($_POST['status'], $_POST['in_reply_to']);
+		if (get_magic_quotes_gpc()) {
+			$result = $t->update(stripslashes($_POST['status']), $_POST['in_reply_to']);
+		} else {
+			$result = $t->update($_POST['status'], $_POST['in_reply_to']);
+		}
 		if(isset($result->error)){
 			if(strpos($result->error, 'duplicate') > 0){
 				$tmp = $t->userTimeline();

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	include ('lib/twitese.php');
 	$title = "Replies";
 	include ('inc/header.php');
@@ -68,7 +68,7 @@
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> <span class=\"tweet\">$text</span> </span>";
 						$output .= recoverShortens($text);
 				$output .= "<span class=\"actions\">
-								<a class=\"replie_btn\" href=\"a_reply.php?id=$status->id_str\">回复</a><a class=\"rt_btn\" href=\"a_rt.php?id=$status->id_str\">回推</a><a class=\"favor_btn\" href=\"a_favor.php?id=$status->id_str\">收藏</a></span>
+								<a class=\"replie_btn\" href=\"#\">回复</a><a class=\"rt_btn\" href=\"#\">回推</a><a class=\"favor_btn\" href=\"#\">收藏</a></span>
 				<span class=\"status_info\">";
 				if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id_str&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
 				$output .= "				

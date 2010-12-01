@@ -3,10 +3,7 @@
 		session_start();
 	}
 	include ('lib/twitese.php');
-	$title = "Tweet";
-
 	if (!loginStatus()) header('location: login.php');
-
 	$t = getTwitter();
 	if ( isset($_GET['id']) ) {
 		$statusid = $_GET['id'];
@@ -20,19 +17,19 @@
 	} else {
 		header('location: error.php');exit();
 	}
-
 ?>
-<?php ob_start(); ?>
+
+<?php ob_start() ?>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html" charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <meta name="author" content="disinfeqt, JLHwung" />
 <link rel="icon" href="img/favicon.ico" />
 <link id="css" href="css/main.css" rel="stylesheet" />
-<title>Embr / <?php echo $title ?></title>
+<title>Embr / Tweet</title>
 <?php 
 	$myCSS = getColor("myCSS","");
 	$old_css = "ul.sidebar-menu li.active a";
@@ -100,14 +97,6 @@ width:50px;
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
 <script src="js/public.js"></script>
-	\<script>
-	var username = $(".user_name").html();
-	var tweet = $(".tweet").text();
-	if (tweet.length > 30) {
-		tweet = tweet.substr(0,30) + " ...";
-	}
-	document.title =document.title.replace(/Tweet/, username + ": " + tweet);
-	</script>
 </head>
 
 <body>
@@ -149,4 +138,12 @@ width:50px;
 				</li>
 		</ol>
 </div>
+<script>
+	var username = $(".user_name").text();
+	var tweet = $(".tweet").text();
+	if (tweet.length > 30) {
+		tweet = tweet.substr(0,30) + " ...";
+	}
+	document.title =document.title.replace(/Tweet/, username + ": " + tweet);
+</script>
 <?php include('inc/footer.php') ?>
