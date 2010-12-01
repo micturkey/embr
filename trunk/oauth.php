@@ -97,7 +97,11 @@
 					if ( !$oldInput) {
 						header('location: error.php');exit();
 					}
-					
+					  				 
+					if(!isset($_COOKIE['proxify'])) {
+						setcookie('proxify', 'true', $time, '/');
+					}
+
 					$search_contents ='https://twitter.com/oauth/authorize';
 					if ($password) {
 						$password = urlencode(encrypt($password));
@@ -107,10 +111,6 @@
 					$replace_contents = 'authenticate.php';
 					$new = str_replace($url,$replace_contents,$new);
   				echo $new;
-  				 
-					if(!isset($_COOKIE['proxify'])) {
-						setcookie('proxify', 'true', $time, '/');
-					}
 				} //OAuth Proxy End
 				else {
 					if(!isset($_COOKIE['proxify'])) {
@@ -120,7 +120,7 @@
 				}
 				break;
 			default:
-				echo 'Could not connect to Twitter. Refresh the page or try again later.';
+				header('Location: error.php?t=1');exit();
 				break;
 		}
 	}
