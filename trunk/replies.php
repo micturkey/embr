@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	include ('lib/twitese.php');
 	$title = "Replies";
 	include ('inc/header.php');

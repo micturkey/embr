@@ -9,7 +9,7 @@
 		if($_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
 			$_SESSION['oauth_status'] = 'oldtoken';
 			session_destroy();
-			header('Location: ./login.php?oauth=old');
+			header('Location: login.php?oauth=old');
 		}else{
 			/* Create TwitteroAuth object with app key/secret and token key/secret from default phase */
 			$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
@@ -32,9 +32,9 @@
 				$user = $t->veverify();
 				/* And set new cookies */
 				$time = $_SERVER['REQUEST_TIME']+3600*24*365;
-				setEncryptCookie("oauth_token", $access_token['oauth_token'], $time, "/");
-				setEncryptCookie("oauth_token_secret", $access_token['oauth_token_secret'], $time, "/");
-				setEncryptCookie("user_id", $access_token['user_id'], $time, "/");
+				setEncryptCookie('oauth_token', $access_token['oauth_token'], $time, '/');
+				setEncryptCookie('oauth_token_secret', $access_token['oauth_token_secret'], $time, '/');
+				setEncryptCookie('user_id', $access_token['user_id'], $time, '/');
 				setEncryptCookie('twitese_name', $t->screen_name, $time, '/');
 				refreshProfile();
 				if(!isset($_COOKIE['showpic_cookie'])){
@@ -44,13 +44,13 @@
 					setcookie('mediaPre', 'true', $time, '/');
 				}
 				if(!isset($_COOKIE['login_page'])) {
-					header('Location: ./index.php');
+					header('Location: index.php');
 				} else {
-					header('Location: .'.$_COOKIE['login_page']);
+					header('Location: ' . $_COOKIE['login_page']);
 				}
 			} else {
 				session_destroy();
-				header('Location: ./login.php?oauth=error');
+				header('Location: login.php?oauth=error');
 			}
 		}
 	}else{
