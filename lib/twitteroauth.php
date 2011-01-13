@@ -706,7 +706,7 @@ class TwitterOAuth {
 		}
 	}
 
-	function userTimeline($page = false, $id = false, $count = false, $since_id = false){
+	function userTimeline($page = false, $id = false, $count = false, $since_id = false, $include_rts = true){
 		$url = '/statuses/user_timeline';
 		$args = array();
 		if($page)
@@ -717,6 +717,8 @@ class TwitterOAuth {
 			$args['count'] = $count;
 		if($since_id)
 			$args['since_id'] = $since_id;
+		if($include_rts)
+			$args['include_rts'] = $include_rts;
 		$response = $this->get($url, $args);
 		if(isset($response->error))
 		{

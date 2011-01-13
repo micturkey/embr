@@ -88,57 +88,22 @@
 	</div>
 	<div class="clear"></div>
 <?php 
-
 		$empty = count($statuses) == 0? true: false;
 		if ($empty) {
 			echo "<div id=\"empty\">No tweet to display.</div>";
 		} else {
-			
 			$output = '<ol class="timeline" id="allTimeline">';
-			if ( isset($_GET['fav'])) { //fav page
-				foreach ($statuses as $status) {
+			foreach ($statuses as $status) {
+				if (isset($status->retweeted_status)) {
+					$output .= format_retweet($status);
+				} else { 
 				$output .= format_timeline($status,$t->username);
 				}
-				$output .= "</ol><div id=\"pagination\">";
-				if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&fav=true&p=" . ($p-1) . "\">Back</a>";
-				if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&fav=true&p=" . ($p+1) . "\">Next</a>";
-			} else { //user page
-				foreach ($statuses as $status) {
-				
-				$user = $status->user;
-				$date = formatDate($status->created_at);
-				$text = formatText($status->text);
-
-				$output .= "
-					<li>
-					<span class=\"info_status_body\">
-					<span class=\"status_id\">$status->id_str</span>
-					<span class=\"status_word\"><a class=\"user_name\" style=\"display:none\">$userid</a><span class=\"tweet\"> $text </span></span>";
-				$output .= recoverShortens($text);
-				$output .= "<span class=\"actions\">
-					<a class=\"replie_btn\" href=\"#\">Reply</a>
-					<a class=\"rt_btn\" href=\"#\">Retweet</a>
-					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-					<a class=\"favor_btn\" href=\"#\">Favorite</a>
-					<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>
-					</span><span class=\"status_info\">
-					";
-				if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id_str&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
-
-				$output .= "	
-					<span class=\"source\">via $status->source </span><span class=\"date\"><a href=\"status.php?id=$status->id_str\">$date</a></span></span>
-					</span>
-					</li>
-					";
-				}
-
-				$output .= "</ol><div id=\"pagination\">";
-
-				if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&p=" . ($p-1) . "\">Back</a>";
-				if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&p=" . ($p+1) . "\">Next</a>";
 			}
+			$output .= "</ol><div id=\"pagination\">";
+			if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&fav=true&p=" . ($p-1) . "\">Back</a>";
+			if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&fav=true&p=" . ($p+1) . "\">Next</a>";
 			$output .= "</div>";
-
 			echo $output;
 		}
 	}//end of if(!$isProtected)

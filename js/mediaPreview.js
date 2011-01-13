@@ -31,11 +31,7 @@ var previewFlash = function (obj) {
 		}
 	}
 }
-// Image preview
-COOKIE_NAME = "showpic_cookie";
-options = {
-	expires: 10
-};
+
 function get_img_processor(type) {
 
 	if (type.indexOf('phodroid.com') == 0) { //ugly fix for bloody Phodroid (which's the worst image hosting service ON EARTH) by @luosheng
@@ -222,7 +218,7 @@ var previewImg = function (obj) {
 }
 var previewMedia = function (objs) {
 	$(objs).find(".tweet a:not(:hidden)").each(function () {
-		if ($.cookie(COOKIE_NAME) === 'true') {
+		if ($.cookie('showpic') === 'true') {
 			previewImg($(this));
 		}
 		if ($.cookie('mediaPre') === 'true') {
