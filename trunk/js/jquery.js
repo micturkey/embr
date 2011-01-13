@@ -154,12 +154,11 @@ f.top,left:d.left-f.left}},offsetParent:function(){return this.map(function(){fo
 e&&e.document?e.document.compatMode==="CSS1Compat"&&e.document.documentElement["client"+b]||e.document.body["client"+b]:e.nodeType===9?Math.max(e.documentElement["client"+b],e.body["scroll"+b],e.documentElement["scroll"+b],e.body["offset"+b],e.documentElement["offset"+b]):f===w?c.css(e,d):this.css(d,typeof f==="string"?f:f+"px")}});A.jQuery=A.$=c})(window);
 
 /*!
- * jQuery Plugins Package for Rabr
- * https://rabr.in/
+ * jQuery Plugins Package for Embr
+ * https://embr.in/
  *
- * Copyright 2010, Plugins Authors
- * Packaged by disinfeqt
- * http://www.zdxia.com/
+ * Copyright 2010-2011, Plugins Authors
+ * Packaged by disinfeqt & JLHwung
  * 
  * Currently including:
  * - Cookie
@@ -167,6 +166,7 @@ e&&e.document?e.document.compatMode==="CSS1Compat"&&e.document.documentElement["
  * - Tipsy
  * - Lazy Load
  * - Marquee
+ * - Select
  */
 
 //Cookie
@@ -200,3 +200,6 @@ return fold>=$(element).offset().left+settings.threshold+$(element).width();};$.
 if(scrollSize<(_type?scrollW:scrollH))return;$element.append($kids.clone()).css(_type?'width':'height',scrollSize*2);var numMoved=0;function scrollFunc(){var _dir=(opts.direction=='left'||opts.direction=='right')?'scrollLeft':'scrollTop';if(opts.loop>0){numMoved+=opts.scrollAmount;if(numMoved>scrollSize*opts.loop){_scrollObj[_dir]=0;return clearInterval(moveId);}}
 if(opts.direction=='left'||opts.direction=='up'){_scrollObj[_dir]+=opts.scrollAmount;if(_scrollObj[_dir]>=scrollSize){_scrollObj[_dir]=0;}}else{_scrollObj[_dir]-=opts.scrollAmount;if(_scrollObj[_dir]<=0){_scrollObj[_dir]=scrollSize;}}}
 var moveId=setInterval(scrollFunc,opts.scrollDelay);$marquee.hover(function(){clearInterval(moveId);},function(){clearInterval(moveId);moveId=setInterval(scrollFunc,opts.scrollDelay);});});};$.fn.rabrMarquee.defaults={isEqual:true,loop:0,direction:'left',scrollAmount:1,scrollDelay:20};$.fn.rabrMarquee.setDefaults=function(settings){$.extend($.fn.rabrMarquee.defaults,settings);};})(jQuery);
+	
+//Select
+jQuery.fn.setSelectedValue=function(value){jQuery(this).get(0).value = value;};

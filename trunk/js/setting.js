@@ -54,56 +54,27 @@ $(function(){
 	});
 });
 
-$(show_pic_option);
-
-function show_pic_option () {
-	var cookie_val = $.cookie (COOKIE_NAME);
-	if (cookie_val === null) {
-		$.cookie (COOKIE_NAME, true, options);
+$(function(){
+	checkbox('showpic',"#showpic",true);
+	checkbox('mediaPre',"#mediaPreSelect",true);
+	checkbox('p_avatar',"#proxifyAvatar",false);
+	selectbox('homeInterval',"#homeInterval");
+	selectbox('updatesInterval',"#updatesInterval");
+});
+function checkbox(c,id,d){
+	if ($.cookie (c) === null) {
+		$.cookie (c, d, { expires: 30 });
+	} else if ($.cookie (c) === 'true') {
+		$(id).attr('checked', true);
+	} else {
+		$(id).attr('checked', false);
 	}
-	else if (cookie_val === 'false') {
-		$("#show_pic").attr("checked", false);
-	}
-
-	$("#show_pic").click(function (){
-		$.cookie (COOKIE_NAME, $("#show_pic").attr("checked"), options);
+	$(id).click(function (){
+		$.cookie(c, $(id).attr("checked"), { expires: 30 });
 	});
-
-	if ($.cookie('mediaPre') === null) {
-		$.cookie('mediaPre', true, { expires: 30 });
-		$("#mediaPreSelect").attr('checked', true);
+}
+function selectbox(c,id){
+	if($.cookie(c)){
+		$(id).setSelectedValue($.cookie(c));
 	}
-
-	if($.cookie('mediaPre') === 'true'){
-		$("#mediaPreSelect").attr('checked', true);
-	}else{
-		$("#mediaPreSelect").attr('checked', false);;
-	}
-
-	$("#mediaPreSelect").click(function(){
-		if($(this).attr('checked') == true){
-			$.cookie('mediaPre', true, { expires: 30 });
-		}else{
-			$.cookie('mediaPre', false, { expires: 30 });
-		}				
-	});
-	
-	if ($.cookie('proxify') === null) {
-		$.cookie('proxify', true, { expires: 30 });
-		$("#proxify").attr('checked', true);
-	}
-	
-	if($.cookie('proxify') === 'true'){
-		$("#proxify").attr('checked', true);
-	}else{
-		$("#proxify").attr('checked', false);;
-	}
-	
-	$("#proxify").click(function(){
-		if($(this).attr('checked') == true){
-			$.cookie('proxify', true, { expires: 30 });
-		}else{
-			$.cookie('proxify', false, { expires: 30 });
-		}				
-	});
 }

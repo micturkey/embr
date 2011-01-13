@@ -97,10 +97,6 @@
 					if ( !$oldInput) {
 						header('location: error.php');exit();
 					}
-					  				 
-					if(!isset($_COOKIE['proxify'])) {
-						setcookie('proxify', 'true', $time, '/');
-					}
 
 					$search_contents ='https://twitter.com/oauth/authorize';
 					if ($password) {
@@ -113,9 +109,6 @@
   				echo $new;
 				} //OAuth Proxy End
 				else {
-					if(!isset($_COOKIE['proxify'])) {
-						setcookie('proxify', 'false', $time, '/');
-					}
 					header('Location: ' . $url); 
 				}
 				break;

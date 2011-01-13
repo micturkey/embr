@@ -81,8 +81,8 @@
 
 			<legend>Proxify</legend>
 
-			<input id="proxify" type="checkbox" />
-			<label>Proxify the twitter avatar</label>
+			<input id="proxifyAvatar" type="checkbox" />
+			<label>Proxify the twitter avatar for CERNET</label>
 			<br />
 
 			</fieldset>
@@ -111,12 +111,12 @@
 				resetStyle();
 				echo "<div id=\"otherTip\">Your styles have been reseted!</div>";
 			}
-			if(isset($_POST['updatesInterval'])){
-				setcookie('updatesInterval', $_POST['updatesInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
+			if(isset($_POST['homeInterval'])){
+				setcookie('homeInterval', $_POST['homeInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
 				setcookie('intervalChanged', 'true', $_SERVER['REQUEST_TIME']+3600*24*365, '/');
 			}
-			if(isset($_POST['homeInterval'])){
-				setcookie('homeInterval', $_POST['updatesInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
+			if(isset($_POST['updatesInterval'])){
+				setcookie('updatesInterval', $_POST['updatesInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
 				setcookie('intervalChanged', 'true', $_SERVER['REQUEST_TIME']+3600*24*365, '/');
 			}
 ?>
@@ -126,13 +126,13 @@
 
 			<legend>Enhancements</legend>
 
-			<input id="show_pic" type="checkbox" checked="checked" />
+			<input id="showpic" type="checkbox" checked="checked" />
 			<label>Enable Auto Images Preview</label>
 			<small>(Supports mainstream image hostings)</small>
 
 			<br /><br />
 
-			<input id="mediaPreSelect" type="checkbox" />
+			<input id="mediaPreSelect" type="checkbox" checked="checked" />
 			<label>Enable Auto Medias Preview</label>
 			<small>(Supports Xiami and Tudou)</small><br />
 
