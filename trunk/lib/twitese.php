@@ -299,13 +299,10 @@
 	}
 
 	function getAvatar($profileImg){
-		$profileImg = preg_replace('/http:\/\/a([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$profileImg);
-		/*
-		if (getcookie('proxify') == 'true') {
-				$profileImg = str_replace('http://','http://pubinside.appspot.com/', $profileImg);
+		if (getcookie('p_avatar') == 'true') {
+				return str_replace('http://','http://pubinside.appspot.com/', $profileImg);
 		}
-		*/
-		return $profileImg;
+		return preg_replace('/http:\/\/a([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$profileImg);
 	}
 
 	// $target: can't be current user

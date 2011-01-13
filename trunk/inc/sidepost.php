@@ -26,12 +26,11 @@
 </div>
 </div>
 <hr />
-<div id="toolbox">
-<h2 id="toolbox_title">
-<span>Toolbox</span>
+<div id="apiquota">
+<h2 id="apiquota_title">
+<span>API Quota</span>
 </h2>
-<ul id="tools_list" class="sidebar-menu">
-<li><a class="in-page-link" href="nexus.php"><span>Nexus</span></a></li>
+<ul id="apiquota_list" class="sidebar-menu">
 </ul>
 </div>
 <hr />
