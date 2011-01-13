@@ -32,7 +32,11 @@
 			$output = '<ol class="timeline" id="allTimeline">';
 
 			foreach ($statuses as $status) {
-				$output .= format_timeline($status, $t->username);
+				if (isset($status->retweeted_status)) {
+					$output .= format_retweet($status);
+				} else { 
+				$output .= format_timeline($status,$t->username);
+				}
 			}
 
 			$output .= "</ol><div id=\"pagination\">";

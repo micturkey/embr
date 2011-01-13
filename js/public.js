@@ -766,14 +766,26 @@ var formFunc = function(){
 					$("#following_title").removeClass();
 				});
 		});
+	function updateAPIQuota() {
+		$.ajax({
+			url: "ajax/apiQuota.php",
+			type: "GET",
+			success: function (msg) {
+				$("#apiquota_list").html(msg);
+			}
+		});
+	}
+	
 	$(function () {
-			$("#toolbox_title").toggle(
+			$("#apiquota_title").toggle(
 				function () {
-					$("#toolbox_title").removeClass().addClass("open");
-					$("#tools_list").slideDown("fast");
+					$("#apiquota_title").removeClass().addClass("loading");
+					updateAPIQuota();
+					$("#apiquota_title").removeClass().addClass("open");
+					$("#apiquota_list").slideDown("fast");
 				}, function () {
-					$("#tools_list").slideUp("fast");
-					$("#toolbox_title").removeClass();
+					$("#apiquota_list").slideUp("fast");
+					$("#apiquota_title").removeClass();
 				});
 		});
 	$(function () {

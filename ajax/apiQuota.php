@@ -7,6 +7,8 @@
 	$limit = $t->ratelimit();
 	$reset = intval((strtotime($limit->reset_time) - time())/60);
 	$remaining = $limit->remaining_hits < 0 ? 0 : $limit->remaining_hits;
-	header('Content-Type: text/plain');
-	echo "{ limit: $remaining, reset: $reset }";
+	$hourly = $limit->hourly_limit;
+	header('Content-Type: text/html');
+	echo "<li><span style=\"color: #2276BB\">API: $remaining/$hourly</span></li>
+	<li><span style=\"color: #2276BB\">Reset in $reset min(s)</span></li>";
 ?>

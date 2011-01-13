@@ -101,8 +101,13 @@
 				}
 			}
 			$output .= "</ol><div id=\"pagination\">";
-			if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&fav=true&p=" . ($p-1) . "\">Back</a>";
-			if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&fav=true&p=" . ($p+1) . "\">Next</a>";
+			if ($_GET['fav'] == true) {
+				if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&fav=true&p=" . ($p-1) . "\">Back</a>";
+				if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&fav=true&p=" . ($p+1) . "\">Next</a>";
+			} else {
+				if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"user.php?id=$userid&p=" . ($p-1) . "\">Back</a>";
+				if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"user.php?id=$userid&p=" . ($p+1) . "\">Next</a>";
+			}
 			$output .= "</div>";
 			echo $output;
 		}

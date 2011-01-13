@@ -183,11 +183,10 @@ h3{font-size:14px;margin:14px 0 0 14px}
 ul.sidebar-menu li .side-tab-ajax{display:none;float:right;margin-right:1em;vertical-align:top}
 ul.sidebar-menu span.stat_count{-moz-border-radius-bottomleft:3px;-moz-border-radius-bottomright:3px;-moz-border-radius-topleft:3px;-moz-border-radius-topright:3px;background-color:transparent;float:right;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;font-weight:700;line-height:normal;margin-right:14px;margin-top:0;padding:0 .1em}
 span.link-title{float:left}
-.ie6 ul.sidebar-menu li a{margin-top:-2px}
 ul.sidebar-menu li{padding-top:1px}
-ul.sidebar-menu li a{background-image:none;clear:both;cursor:pointer!important;display:block;margin-right:-1px;outline-style:none;outline-width:medium;padding:8px 0 8px 14px}
+ul.sidebar-menu li a,#apiquota_list li span{background-image:none;clear:both;display:block;margin-right:-1px;outline-style:none;outline-width:medium;padding:8px 0 8px 14px}
+ul.sidebar-menu li a{cursor:pointer!important;}
 .safari ul.sidebar-menu li a{padding:6px 0 6px 14px}
-.ie8 ul.sidebar-menu li a{margin-right:0}
 ul.sidebar-menu li a span{display:inline-block;width:150px}
 ul#primary_nav.sidebar-menu li a span{display:inline-block;width:auto}
 ul.sidebar-menu li.loading a{background:#EDFEFF url(https://s3.amazonaws.com/twitter_production/a/1256928834/images/spinner.gif) no-repeat scroll 171px .5em}
@@ -235,11 +234,11 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .ie#side hr{filter:alpha(opacity=70);}
 .notify{text-align:center;line-height:1;padding:5px 0;background-repeat:no-repeat;background-position:left center;margin-bottom:8px;}
 .notify div{background-color:#edffe5;font-size:.9em;margin:0 12px 0 24px;padding:10px 5px;-moz-border-radius:5px;border-radius:5px;}
-#trend_entries, #tools_list{display:none;width: 198px; float: left;margin-top:5px !important;}
-#trends, #following, #toolbox{margin-left: -2px;}
-#trends_title, #following_title, #toolbox_title{background: transparent url(../img/toggle_down_dark.png) no-repeat scroll right center; font-weight: normal; font-size:110%; padding-left: 3px; margin-bottom: 0px; margin-top: 0px;width: 177px;cursor:pointer}
-#trends_title.loading, #following_title.loading, #toolbox_title.loading{background: transparent url(../img/spinner.gif) no-repeat scroll right center !important;}
-#trends_title.open, #following_title.open, #toolbox_title.open{background: transparent url(../img/toggle_up_dark.png) no-repeat scroll right center ! important;}
+#trend_entries, #apiquota_list{display:none;width: 198px; float: left;margin-top:5px !important;}
+#trends, #following, #apiquota{margin-left: -2px;}
+#trends_title, #following_title, #apiquota_title{background: transparent url(../img/toggle_down_dark.png) no-repeat scroll right center; font-weight: normal; font-size:110%; padding-left: 3px; margin-bottom: 0px; margin-top: 0px;width: 177px;cursor:pointer}
+#trends_title.loading, #following_title.loading, #apiquota_title.loading{background: transparent url(../img/spinner.gif) no-repeat scroll right center !important;}
+#trends_title.open, #following_title.open, #apiquota_title.open{background: transparent url(../img/toggle_up_dark.png) no-repeat scroll right center ! important;}
 #following_list {display:none;float:left;padding:10px 10px 0 10px;}
 #following_list span {float:left;padding:0 3px 2px 2px;}
 #following_list img {padding:0;}
