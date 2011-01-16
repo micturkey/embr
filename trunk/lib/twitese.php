@@ -302,7 +302,7 @@
 		if (getcookie('p_avatar') == 'true') {
 				return str_replace('http://','http://pubinside.appspot.com/', $profileImg);
 		}
-		return preg_replace('/http:\/\/a([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$profileImg);
+		return preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$profileImg);
 	}
 
 	// $target: can't be current user
