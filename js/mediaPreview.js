@@ -49,7 +49,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?twitgoo\.com\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/twitgoo.com/show/thumb/" + url_key[1];
+				var src = "img.php?imgurl=http://twitgoo.com/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -67,7 +67,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?twitpic\.com\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/twitpic.com/show/thumb/" + url_key[1];
+				var src = "img.php?imgurl=http://twitpic.com/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -76,7 +76,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?img\.ly\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/img.ly/show/thumb/" + url_key[1];
+				var src = "img.php?imgurl=http://img.ly/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -94,7 +94,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?pic\.gd\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
@@ -103,7 +103,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
@@ -112,7 +112,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?plixi\.com\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://pubinside.appspot.com/TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
@@ -182,7 +182,7 @@ function get_img_processor(type) {
 				var url = "http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=" + apiKey + "&photo_id=" + id;
 				$.getJSON(url + "&format=json&jsoncallback=?", function (data) {
 					if (data.stat == "ok") {
-						var imgsrc = "http://pubinside.appspot.com/farm" + data.photo.farm + ".static.flickr.com/" + data.photo.server + "/" + data.photo.id + "_" + data.photo.secret + "_m.jpg";
+						var imgsrc = "img.php?imgurl=http://farm" + data.photo.farm + ".static.flickr.com/" + data.photo.server + "/" + data.photo.id + "_" + data.photo.secret + "_m.jpg";
 						append_image(imgsrc, url_elem);
 					}
 				});
