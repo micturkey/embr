@@ -37,16 +37,19 @@
 				setEncryptCookie('user_id', $access_token['user_id'], $time, '/');
 				setEncryptCookie('twitese_name', $t->screen_name, $time, '/');
 				refreshProfile();
-				if(!isset($_COOKIE['showpic_cookie'])){
-					setcookie('showpic_cookie', 'true', $time, '/');
+				if(!isset($_COOKIE['showpic'])){
+					setcookie('showpic', 'true', $time, '/');
 				}
 				if(!isset($_COOKIE['mediaPre'])){
 					setcookie('mediaPre', 'true', $time, '/');
 				}
-				if(!isset($_COOKIE['login_page'])) {
+				if(!isset($_COOKIE['loginPage'])) {
 					header('Location: index.php');
 				} else {
-					header('Location: ' . $_COOKIE['login_page']);
+					$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
+					$port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
+					$login_page = $scheme . '://' . $_SERVER['HTTP_HOST'] . $port . $_COOKIE['loginPage'];
+					header('Location: '. $login_page);
 				}
 			} else {
 				session_destroy();

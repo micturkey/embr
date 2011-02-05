@@ -82,7 +82,7 @@
 			<legend>Proxify</legend>
 
 			<input id="proxifyAvatar" type="checkbox" />
-			<label>Proxify the twitter avatar for CERNET</label>
+			<label>Proxify the twitter avatar</label>
 			<br />
 
 			</fieldset>

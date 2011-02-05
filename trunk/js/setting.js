@@ -60,6 +60,7 @@ $(function(){
 	checkbox('p_avatar',"#proxifyAvatar",false);
 	selectbox('homeInterval',"#homeInterval");
 	selectbox('updatesInterval',"#updatesInterval");
+	selectbox('fontsize',"#fontsize");
 });
 function checkbox(c,id,d){
 	if ($.cookie (c) === null) {
