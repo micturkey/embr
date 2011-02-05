@@ -2,6 +2,7 @@
 	if(!isset($_SESSION)){
 		session_start();
 	}
+	include ('lib/twitese.php');
 ?>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -168,7 +169,6 @@ function leaveWord(num) {
 
 <body>
 <?php
-	include ('lib/twitese.php');
 	$t = getTwitter();
 	if ( isset($_POST['status']) ) {
 		$status = $_POST['status'];

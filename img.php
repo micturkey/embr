@@ -21,16 +21,16 @@ if(isset($_GET['imgurl']))
 			$header = $m[0][0];
 			$ret = substr($ret,$Hsize);
 			Header($header);
-			echo $ret;//Êä³öÍ¼Ïñ
+			echo $ret;
 		}
 		else
 		{
-			echo "Ä¿±ê²»ÊÇÍ¼Æ¬!";
+			echo 'image not found';
 		}
 	}
 	else
 	{
-		echo '¶ÁÈ¡Í¼Æ¬´íÎó!´íÎóHttp´úÂëÎª:'.$Httpcode;
+		echo 'image loading error, code: '.$Httpcode;
 	}
 }
 ?>
