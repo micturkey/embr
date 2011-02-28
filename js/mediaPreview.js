@@ -43,6 +43,16 @@ function get_img_processor(type) {
 		}
 		};
 	}
+	
+	if (type.indexOf('instagr.am') == 0) { 
+		return {
+			reg: /^http:\/\/(?:www\.)?instagr\.am\/([\d\w\/]+)/,
+			func: function (url_key, url_elem) {
+				var src = "http://instagr.am/" + url_key[1] + "media/?size=t";
+				append_image(src, url_elem);
+			}
+		};
+	}
 
 	switch (type) {
 	case "twitgoo.com":
@@ -162,7 +172,7 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "flic.kr/p": //ugly fix for flickr thumb.
+	case "flic.kr/p": 
 		proc = {
 			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/([A-Za-z0-9]+)/,
 			func: function (url_key, url_elem) {

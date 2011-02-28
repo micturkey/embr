@@ -230,7 +230,7 @@ class TwitterOAuth {
 	/*                                   */
 	/* ---------- Block ---------- */
 	function blockingIDs(){
-		$url = 'blocks/blocking/ids';
+		$url = '/blocks/blocking/ids';
 		return $this->get($url);
 	}
 
@@ -346,8 +346,9 @@ class TwitterOAuth {
 
 	function deleteListMember($id, $memberid){
 		$arr = explode("/", $id);
-		$url = "$arr[0]/$arr[1]/members";
+		$url = "/$arr[0]/$arr[1]/members";
 		$args = array();
+		$args['list_id'] = $arr[1];
 		if($memberid){
 			$args['id'] = $memberid;
 		}
@@ -355,7 +356,7 @@ class TwitterOAuth {
 	}
 
 	function editList($prename, $name, $description, $isProtect){
-		$url = "$this->username/lists/$prename";
+		$url = "/$this->username/lists/$prename";
 		$args = array();
 		if($name){
 			$args['name'] = $name;
@@ -518,10 +519,6 @@ class TwitterOAuth {
 		return $this->get($url);
 	}
 
-	function ratelimit_status(){
-		return $this->ratelimit();
-	}
-
 	/* ---------- Retweet ---------- */
 	function getRetweeters($id, $count = false){
 		$url = "/statuses/retweets/$id";
@@ -621,7 +618,7 @@ class TwitterOAuth {
 
 	/* ---------- Spam ---------- */
 	function reportSpam($screen_name){
-		$url = '/1/report_spam';
+		$url = '/report_spam';
 		$args = array();
 		$args['screen_name'] = $screen_name;
 		return $this->post($url, $args);

@@ -19,6 +19,7 @@
 			if(strpos($result->error, 'duplicate') > 0){
 				$tmp = $t->userTimeline();
 				$result = $tmp[0];
+				echo 'error';
 			}
 		}
 		if(isset($result->user)){

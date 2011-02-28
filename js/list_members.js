@@ -26,7 +26,7 @@ $(function(){
 				success: function(msg) {
 					if (msg.indexOf("success") >= 0) {
 						$this.parent().parent().parent().remove();
-						updateSentTip(member_name + "has been deleted.", 3000, "success");
+						updateSentTip(member_name + " has been deleted.", 3000, "success");
 					} else {
 						updateSentTip("Failed to delete " + member_name + ".", 3000, "failure");
 					}
