@@ -18,7 +18,20 @@ $(function () {
 				$("#symArea").toggle();
 			});
 		$("#symbols span").click(function () {
-				$("#textbox").val($("#textbox").val() + $(this).html());
+      var obj = document.getElementById('textbox'); 
+      var str = $(this).html();
+      if(document.selection) {  
+         obj.focus();  
+         var sel=document.selection.createRange();  
+         document.selection.empty();  
+         sel.text = str;  
+      } else {  
+         var prefix, main, suffix;  
+         prefix = obj.value.substring(0, obj.selectionStart);  
+         main = obj.value.substring(obj.selectionStart, obj.selectionEnd);  
+         suffix = obj.value.substring(obj.selectionEnd);  
+         obj.value = prefix + str + suffix;  
+      }
 				$("#symArea").hide();
 				leaveWord();
 			});
