@@ -251,8 +251,8 @@
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'embr');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_TIMEOUT,5);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,30);
+		curl_setopt($ch, CURLOPT_TIMEOUT,120);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,5);
 
 		$response = curl_exec($ch);
 		$response_info=curl_getinfo($ch);

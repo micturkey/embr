@@ -9,9 +9,7 @@ function between($str, $strStart, $strEnd) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $twitter = req('https://twitter.com/signup', false, false);
-    $recaptha_params = between($twitter, 'https://api-secure.recaptcha.net/challenge', '">');
-    $recaptcha = req('https://api-secure.recaptcha.net/challenge'.$recaptha_params, false, false);
-    
+    $recaptcha = req('https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO', false, false);
     $auth_key = between($twitter, '<input name="authenticity_token" type="hidden" value="', '" />');
     $challenge = between($recaptcha, "challenge : '", "',");
     echo 
