@@ -100,6 +100,7 @@ function ajaxFileUpload() {
 	updateSentTip("Uploading your image...", 10000, "ing");
 	$.ajaxFileUpload({
 			url: 'ajax/uploadPhoto.php',
+			timeout: 60000,
 			secureuri: false,
 			fileElementId: 'imageFile',
 			dataType: 'json',

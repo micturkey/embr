@@ -33,6 +33,9 @@ a:hover,.timeline li:hover a:hover,.rank_list li:hover a:hover,#side .user_icon 
 #logo img{left:0;margin-top:-2px;position:absolute}
 #nav{background-color:#FFF;display:inline-block;padding:0 .7em;white-space:nowrap}
 #nav li{float:left;padding:6px 8px}
+#nav li:hover{background-color:#DDEEF6}
+#nav li a:hover{text-decoration:none}
+#nav li .share{text-decoration:none;padding: 0px 3px; overflow: hidden; cursor: move;}
 
 /*status form*/
 #tweeting_controls {float:right;padding:5px 12px 0 5px;}
@@ -274,8 +277,6 @@ text-transform:uppercase;
 #footer{background:#FFF none repeat scroll 0 0;font-size:12px;line-height:1;margin-top:.7em;padding:8px 0;text-align:center;white-space:nowrap}
 #footer li{display:inline;padding:0 4px}
 #footer li.first:before{content:'';padding-right:0}
-#footer li .share{text-decoration:none;border: 1px dashed #DADADA; padding: 0px 3px; overflow: hidden; cursor: move;}
-#footer li .share:hover{text-decoration:none;border: 1px dashed #666;}
 #footer li img {border:0 none;margin:-3px;padding:0}
 
 /*ranking*/
