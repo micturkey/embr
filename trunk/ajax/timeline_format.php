@@ -118,26 +118,6 @@
 		return $output;
 	}
 
-	/* ---------- Sorting timeline ---------- */
-	function cmp($a, $b)
-	{
-		$a_date = strtotime($a->created_at);
-		$b_date = strtotime($b->created_at);
-		if ($a_date == $b_date) {
-			return 0;
-		}
-		return ($a_date > $b_date) ? -1 : 1;
-	}
-
-	function sort_timeline($timeline, $retweet){
-		if ( !is_array($timeline) ){
-			header('location: ./error.php?t=1');
-		}
-		$status = array_merge($timeline, (array)$retweet);
-		usort($status, "cmp");
-		return $status;
-	}
-
 	/* ---------- Restore shortened urls ---------- */
 	function initShortcutMenu($user = false){
 		return '';

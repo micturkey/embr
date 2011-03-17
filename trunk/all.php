@@ -17,8 +17,7 @@
 			<a class="allBtn" id="allMessageBtn" href="#">Messages</a>
 		</div>
 <?php
-	$statuses = $t->friendsTimeline();
-	$retweetes = $t->retweeted_to_me();
+	$statuses = $t->homeTimeline();
 	if ($statuses === false) {
 		header('location: error.php');exit();
 	}
@@ -27,15 +26,7 @@
 		echo "<div id=\"empty\">No tweet to display</div>";
 	} else {
 		$output = '<ol class="timeline" id="allTimeline">';
-		if(count($retweetes) > 0){
-			$statuses = sort_timeline($statuses, $retweetes);
-		}
-		$MAX_STATUSES = 20;
-		$status_count = 0;
 		foreach ($statuses as $status) {
-			if($status_count++ >= $MAX_STATUSES){
-				break;
-			}
 			if(isset($status->retweeted_status)){
 				$output .= format_retweet($status);
 			}else{
