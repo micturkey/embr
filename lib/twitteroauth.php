@@ -630,6 +630,20 @@ class TwitterOAuth {
 		return $this->delete($url);
 	}
 
+	function homeTimeline($page = false, $since_id = false, $count = false, $trim_user = false) {
+		$url = '/statuses/home_timeline';
+		$args = array();
+		if($page)
+			$args['page'] = $page;
+		if($since_id)
+			$args['since_id'] = $since_id;
+		if($count)
+			$args['count'] = $count;
+		if($trim_user)
+			$args['trim_user'] = $trim_user;
+		return $this->get($url, $args);
+	}
+	
 	function friendsTimeline($page = false, $since_id = false, $count = false){
 		$url = '/statuses/friends_timeline';
 		$args = array();

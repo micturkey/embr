@@ -51,8 +51,7 @@
 		if ($p <= 0) $p = 1;
 	}
 
-	$statuses = $t->friendsTimeline($p);
-	$retweetes = $t->retweeted_to_me($p);
+	$statuses = $t->homeTimeline($p);
 	if ($statuses == false)
 	{
 		header('location: error.php');exit();
@@ -64,35 +63,23 @@
 	}
 	else
 	{
-		echo '<ol class="timeline" id="allTimeline">';
+		$output = '<ol class="timeline" id="allTimeline">';
 
 		include('ajax/timeline_format.php');
-		if(count($retweetes) > 0)
-		{
-			$statuses = sort_timeline($statuses, $retweetes);
-		}
-		$MAX_STATUSES = 20;
-		$status_count = 0;
-		foreach ($statuses as $status)
-		{
-			if(++$status_count >= $MAX_STATUSES)
-			{
-				break;
-			}
-			if(isset($status->retweeted_status))
-			{
-				echo format_retweet($status);
-			}
-			else
-			{
-				echo format_timeline($status, $t->username);
+		
+		foreach ($statuses as $status) {
+			if (isset($status->retweeted_status)) {
+				$output .= format_retweet($status);
+			} else { 
+				$output .= format_timeline($status,$t->username);
 			}
 		}
 
-		echo "</ol><div id=\"pagination\">";
+		$output .= "</ol><div id=\"pagination\">";
 
-		if ($p >1) echo "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"index.php?p=" . ($p-1) . "\">Back</a>";
-		if (!$empty) echo "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?p=" . ($p+1) . "\">Next</a>";
+		if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"index.php?p=" . ($p-1) . "\">Back</a>";
+		if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?p=" . ($p+1) . "\">Next</a>";
+		echo $output;
 	}
 ?>
 </div>

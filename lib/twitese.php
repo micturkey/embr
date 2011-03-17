@@ -133,10 +133,11 @@
 		$patten = '/(http[s]?\:\/\/[\w]+[\w\.]*\/[\w\/+=%#&\:_\.~\?\!\-\,]+)/i';
 		preg_match_all($patten, $text, $matches);
 		$output = '';
+		$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 		for($i = 0; $i < count($matches[0]); $i += 2){
 			if($recovered = unshortUrl($matches[0][$i])){
 				$split = explode('/', $recovered);
-	 			$fav_icon = 'http://www.google.com/s2/favicons?domain='.$split[2];
+	 			$fav_icon = $scheme.'://www.google.com/s2/favicons?domain='.$split[2];
 	 			$output .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
 			}
 		}
