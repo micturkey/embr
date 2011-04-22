@@ -168,7 +168,8 @@
 		$urlRegs[] ='/http:\/\/163\.fm\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/fl5\.me\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/9911\.ms\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/t\.co\/([a-z0-9]*)/i';
+		$urlRegs[] ='/http:\/\/t\.co\/([a-z0-9]*)/i';	
+		$urlRegs[] ='/http:\/\/t\.cn\/([a-z0-9]*)/i';
 		
 		foreach($urlRegs as $urlReg) {
 			if(preg_match($urlReg,$text,$match)){
