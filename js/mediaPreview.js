@@ -1,32 +1,45 @@
 // Flash preview
 TUDOU_EMBED = '<br /><embed src="http://www.tudou.com/v/src_id" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="420" height="363"></embed>';
 XIAMI_EMBED = '<br /><embed src="http://www.xiami.com/widget/0_src_id/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>';
-YOUKU_EMBED = '<br /><embed src="http://player.youku.com/player.php/sid/src_id/v.swf" quality="high" width="480" height="400" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
+YOUKU_EMBED = '<br /><embed src="http://player.youku.com/player.php/sid/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
+YOUTUBE_EMBED = '<br /><embed src="http://www.youtube.com/e/src_id?enablejsapi=1&version=3&playerapiid=ytplayer" quality="high" width="420" height="363" align="middle" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>';
 EMBED_FRAME = '';
 
 function getFlashReg(sSite) {
 	switch (sSite) {
-	case 'xiami':
+	case 'www.xiami.com':
 		EMBED_FRAME = XIAMI_EMBED;
 		return /[\S]+\.xiami\.com\/song\/([\d]+)[\S]*/i;
 		break;
-	case 'tudou':
+	case 'www.tudou.com':
 		EMBED_FRAME = TUDOU_EMBED;
 		return /[\S]+.tudou.[\S]+\/([\w-]+)[\S]*/i;
+		break;
+	case 'v.youku.com':
+		EMBED_FRAME = YOUKU_EMBED;
+		return /[\S]+.youku.com\/v_show\/id_([\w-]+)[\S]*(.html)/i;
+		break;
+	case 'youtu.be':
+		EMBED_FRAME = YOUTUBE_EMBED;
+		return /youtu.be\/([\w-_?]+)[\S]*/i;
+		break;
+	case 'www.youtube.com':
+		EMBED_FRAME = YOUTUBE_EMBED;
+		return /[\S]+.youtube.[\S]+\/watch\?v=([\w-_?]+)[\S]*/i;
 		break;
 	default:
 		return null;
 	}
 }
 var previewFlash = function (obj) {
-	var reg = /http:\/\/[\w]+\.([\w]+)\.[\w]+/i;
+	var reg = /http:\/\/([\w]*[\.]*[\w]+\.[\w]+)\//i;
 	var embed = "";
 	if (reg.exec(obj.text().toLowerCase()) !== null) {
 		var re = getFlashReg(RegExp.$1);
 		if (re !== null) {
 			if (re.exec(obj.text()) !== null) {
 				embed = EMBED_FRAME.replace(/src_id/, RegExp.$1);
-				$(embed).appendTo(obj.parent());
+				$(embed).appendTo(obj.parent().parent().find(".tweet"));
 			}
 		}
 	}
@@ -104,7 +117,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?pic\.gd\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
@@ -113,16 +126,16 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
 		return proc;
-	case "plixi.com":
+	case "plixi.com/p":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?plixi\.com\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
-				var src = "img.php?imgurl=http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=thumbnail&url=http://plixi.com/p/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -227,7 +240,7 @@ var previewImg = function (obj) {
 	}
 }
 var previewMedia = function (objs) {
-	$(objs).find(".tweet a:not(:hidden)").each(function () {
+	$(objs).find(".tweet a:not(:hidden), .unshorturl").each(function () {
 		if ($.cookie('showpic') === 'true') {
 			previewImg($(this));
 		}

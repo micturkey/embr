@@ -30,7 +30,10 @@
 		setcookie($key, '', $_SERVER['REQUEST_TIME']-300, '/');
 	}
 
-	function encrypt($plain_text) {	  
+	function encrypt($plain_text) {
+		if ( !function_exists('mcrypt_module_open') ) {
+			return EDencrypt($plain_text, SECURE_KEY);
+		}
 		$td = mcrypt_module_open('blowfish', '', 'cfb', '');
 		$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
 		mcrypt_generic_init($td, SECURE_KEY, $iv);
@@ -40,6 +43,9 @@
 	}
 
 	function decrypt($crypt_text) {
+		if ( !function_exists('mcrypt_module_open') ) {
+			return EDdecrypt($plain_text, SECURE_KEY);
+		}
 		$crypt_text = base64_decode($crypt_text);
 		$td = mcrypt_module_open('blowfish', '', 'cfb', '');
 		$ivsize = mcrypt_enc_get_iv_size($td);
@@ -69,5 +75,51 @@
 				return strlen($text);
 			}
 		}
+	}
+	
+	function keyED($txt,$encrypt_key) {
+
+		$encrypt_key = md5($encrypt_key);
+		$ctr=0;
+		$tmp = "";
+
+		for ($i=0;$i<strlen($txt);$i++) {
+			if ($ctr==strlen($encrypt_key)) $ctr=0;
+			$tmp.= substr($txt,$i,1) ^ substr($encrypt_key,$ctr,1);
+			$ctr++;
+		}
+
+		return $tmp;
+	}
+
+	function EDencrypt($txt,$key) {
+
+		srand((double)microtime()*1000000);
+		$encrypt_key = md5(rand(0,32000));
+		$ctr=0;
+		$tmp = "";
+
+		for ($i=0;$i<strlen($txt);$i++) {
+			if ($ctr==strlen($encrypt_key)) $ctr=0;
+			$tmp.= substr($encrypt_key,$ctr,1) . (substr($txt,$i,1) ^ substr($encrypt_key,$ctr,1));
+			$ctr++;
+		}
+
+		return keyED($tmp,$key);
+	}
+
+	function EDdecrypt($txt,$key) {
+
+		$txt = keyED($txt,$key);
+		$tmp = "";
+
+		for ($i=0;$i<strlen($txt);$i++) {
+			$md5 = substr($txt,$i,1);
+			$i++;
+			$tmp.= (substr($txt,$i,1) ^ $md5);
+		}
+
+		return $tmp;
+
 	}
 ?>
