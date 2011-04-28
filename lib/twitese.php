@@ -181,24 +181,28 @@
 		return false; 
 	}
 
-	function processCurl($url,$postdata=false)
+	function processCurl($url,$postdata=false,$header=false)
 	{
 		$ch = curl_init($url);
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_TIMEOUT,5);//added by yegle
+		curl_setopt($ch, CURLOPT_TIMEOUT,120);
 		
 		if($postdata !== false) {
 			curl_setopt ($ch, CURLOPT_POST, true);
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata);
 		}
 		
+		if($header !== false) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		}
+		
 		$response = curl_exec($ch);
 		$responseInfo=curl_getinfo($ch);
 		curl_close($ch);
-
+		var_dump($response);
 		if( intval( $responseInfo['http_code'] ) == 200 )
 			return $response;		
 		else
@@ -234,14 +238,13 @@
 		$request = OAuthRequest::from_consumer_and_token($t->consumer, $t->token, 'GET', $signingurl, array());
 		$request->sign_request($t->sha1_method, $t->consumer, $t->token);
 		// header
-		$header = $request->to_header("http://api.twitter.com/");
-		$postdata = array
-		(
-			'media' => "@$image", 
-		);
-
+		$r_header = $request->to_header("http://api.twitter.com/");
+		
 		/**** request method ****/ 
 		$url = 'http://img.ly/api/2/upload.xml';
+		$postdata = array('media' => "@$image");
+		$header = array('X-Auth-Service-Provider: '.$signingurl,'X-Verify-Credentials-'.$r_header);
+		
 		$ch = curl_init($url);
 		
 		if($postdata !== false)
@@ -265,6 +268,7 @@
 		} else {
 			return null;
 		}
+		
 	}
 	
 	function getTwitter() {
@@ -331,5 +335,23 @@
 			return 3;
 		}
 		return 9;
+	}
+	
+	function urlshorten($url, $type='goo.gl'){
+		switch($type){
+			case 'goo.gl':
+			$data = json_encode(array('longUrl' => $url));
+			$api = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDsX2BAo9Jc2yG3Pq1VbLQALqdrtDFvXkg';
+			$header = array('Content-type: application/json');
+			$result = objectifyJson(processCurl($api,$data,$header))->id;
+			break;
+			case 'zi.mu':
+			$api = 'http://zi.mu/api.php?format=simple&action=shorturl&url=';
+			$result = objectifyJson(processCurl($api.rawurlencode($url)));
+			break;
+			default:
+			break;
+		}
+		return $result;
 	}
 ?>

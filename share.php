@@ -200,35 +200,8 @@ function leaveWord(num) {
 		if ( trim($select) != "" ) $text = $select;
 	}
 	
-	$text = $text;
-	
+	$text = $text;	
 	$siteUrl = str_replace('share', 'index', 'http://' . $_SERVER ['HTTP_HOST'] . $_SERVER['PHP_SELF']);
-
-	function shareUrl($url, $type = "orzse") {
-                switch ($type) {
-                        case 'isgd':
-                                $request = 'http://is.gd/api.php?longurl=' . rawurlencode($url);
-                                $result = processCurl( $request );
-                                if ($result) return $result;
-                                else return false;
-                                break;
-                        case 'aacx':
-                                $request = 'http://aa.cx/api.php?url=' . rawurlencode($url);
-                                $result = processCurl( $request );
-                                if ($result) return $result;
-                                else return false;
-                                break;
-			case 'orzse':
-                                $request = 'http://orz.se/api.php?format=simple&action=shorturl&url=' . 				rawurlencode($url);
-                                $result = processCurl( $request );
-                                if ($result) return $result;
-                                else return false;
-                                break;
-                        default:
-                                return false;
-                }
-        }
-
 	?>
 <div id="share">
 
@@ -237,7 +210,7 @@ function leaveWord(num) {
 	<?php } else if ( isset($_POST['status']) ) { 
 			if ($result) {
 	?>
-				<div id="message">Successfully shared your stuff on Rabr! <a href="javascript:window.close()">Close</a></div>
+				<div id="message">Successfully shared your stuff on Embr! <a href="javascript:window.close()">Close</a></div>
 					<script type="text/javascript">
 					setTimeout("window.close()",1000);
 					</script>
@@ -256,7 +229,7 @@ function leaveWord(num) {
 				<td><input type="text" name="url" id="url" disabled="ture" value="<?php echo $url?>"/></td>
 			</tr>
 			<tr>
-			<td><textarea name="status" id="textbox"><?php echo $text?> <?php if (strlen($url)>30) echo shareUrl($url, "orzse"); else echo $url ?></textarea></td>
+			<td><textarea name="status" id="textbox"><?php echo $text?> <?php if (strlen($url)>30) echo urlshorten($url); else echo $url ?></textarea></td>
 			</tr>
 			<tr>
 			<td>
