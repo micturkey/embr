@@ -109,6 +109,7 @@
 					$new = str_replace($search_contents,$replace_contents,$oldInput);
 					$replace_contents = 'authenticate.php';
 					$new = str_replace($url,$replace_contents,$new);
+					$new = str_replace('html { display:none; }','.error{display:none;}',$new);
 					$new = preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$new);
   				echo $new;
 				} //OAuth Proxy End
