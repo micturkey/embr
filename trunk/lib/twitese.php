@@ -202,7 +202,6 @@
 		$response = curl_exec($ch);
 		$responseInfo=curl_getinfo($ch);
 		curl_close($ch);
-		var_dump($response);
 		if( intval( $responseInfo['http_code'] ) == 200 )
 			return $response;		
 		else
