@@ -38,7 +38,7 @@ body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $
 <div id="shortcutTip" style="display:none"></div>
 	<div id="header">
 		<div class="wrapper">
-			<a href="index.php"><img id="logo" style="float:left" src="img/logo.png" /></a>
+			<a href="index.php"><img id="logo" style="float:left" width="155" height="49" src="img/logo.png" /></a>
 			<ul id="nav" class="round">
 				<?php $scheme=(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http://' : 'https://';
 				$base_url=str_replace('http://',$scheme,BASE_URL);
