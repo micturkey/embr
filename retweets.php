@@ -68,6 +68,9 @@
 			}
 		}
 		$html .= '</ol><div id="pagination">';
+			if ($p >1) $html .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"replies.php?p=" . ($p-1) . "\">Back</a>";
+			if (!$empty) $html .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"replies.php?p=" . ($p+1) . "\">Next</a>";
+		$html .= "</div>";
 	}
 	echo $html;
 	include_once('inc/sidebar.php');
