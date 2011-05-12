@@ -36,10 +36,10 @@
 <hr />
 <!--Preload Start-->
 <div class="preload" style="position: absolute; left: -9999em; top: -9999em;">
-<img src="img/spinner.gif" />
-<img src="img/toggle_up_dark.png" />
-<img src="img/sprite-icons.png" />
-<img src="/img/square.gif" />
+<img src="img/spinner.gif" width="14" height="14"/>
+<img src="img/toggle_up_dark.png" width="13" height="13"/>
+<img src="img/sprite-icons.png" width="288" height="96"/>
+<img src="/img/square.gif" width="16" height="11"/>
 </div>
 <!--Preload End-->
 </td>

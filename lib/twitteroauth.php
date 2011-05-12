@@ -742,7 +742,7 @@ class TwitterOAuth {
 	}
 
 	function trends(){
-		$url = "http://search.twitter.com/trends.$this->type";
+		$url = "/trends";
 		return $this->get($url);
 	}
 
