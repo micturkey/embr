@@ -130,7 +130,7 @@ width:50px;
 							<span class="status_id"><?php echo $statusid ?></span>
 							<span class="status_word"><a class="user_name" href="user.php?id=<?php echo $user->screen_name ?>"><?php echo $user->screen_name ?></a> <span class="tweet"><?php echo $text ?></span></span>
 							<span class="status_info">
-										<?php if ($status->in_reply_to_status_id) {?><span class="in_reply_to"> <a href="status.php?id=<?php echo $status->in_reply_to_status_id ?>">in reply to <?php echo $status->in_reply_to_screen_name?></a></span> <?php }?>
+										<?php if ($status->in_reply_to_status_id_str) {?><span class="in_reply_to"> <a href="status.php?id=<?php echo $status->in_reply_to_status_id_str ?>">in reply to <?php echo $status->in_reply_to_screen_name?></a></span> <?php }?>
 										<span class="source">from <?php echo $status->source ?></span>
 										<span class="date"><a href="status.php?id=<?php echo $statusid ?>" target="_blank"><?php echo $date ?></a></span>
 							</span>

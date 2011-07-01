@@ -1,4 +1,4 @@
-﻿<span title="花蕾无语">╮(╯_╰)╭</span>
+<span title="花蕾无语">╮(╯_╰)╭</span>
 <span title=" 嗷~~">┗|｀O′|┛</span>
 <span title="~你给我回来！">o(°▽、°o)....+((￣﹏￣m )</span>
 <span title="“不明真相的围观群众”">槑槑槑槑呆槑槑槑槑槑槑槑槑……</span>
