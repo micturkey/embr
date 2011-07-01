@@ -99,12 +99,7 @@ class TwitterOAuth {
 		if (is_array($token)) {
 			$token = $token['oauth_token'];
 		}
-		if (empty($sign_in_with_twitter)) {
-			$url = $this->authorizeURL() . "?oauth_token={$token}";
-		} else {
-			$url = $this->authenticateURL() . "?oauth_token={$token}";
-		}
-		return $url;
+		return $this->authorizeURL() . "?oauth_token={$token}&force_login=1";
 	}
 
 	/**
