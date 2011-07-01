@@ -4,7 +4,11 @@
 		session_start();
 	}
 	include_once('lib/twitese.php');
-
+	if (isset($_GET['denied'])) {
+		session_destroy();
+		header('Location: login.php?oauth=denied');
+	}
+	
 	if (isset($_REQUEST['oauth_token'])) {
 		if($_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
 			$_SESSION['oauth_status'] = 'oldtoken';
@@ -79,38 +83,9 @@
 				$time = $_SERVER['REQUEST_TIME']+3600*24*365;
 				$url = $connection->getAuthorizeURL($token);
 				if ( isset($_POST['proxify']) ) { 
-					$old = processCurl($url);
-					$search_contents ='https://twitter.com/oauth/authenticate';
-					$replace_contents = 'authenticate.php';
-		
-					//Retrieve oauth_token and authenticity_token
-					preg_match_all('/value="(.*?)"/i', $old, $m);
-
-					$username = $_POST['username'];
-					$password = $_POST['password'];
-					$data = array(
-						'session[username_or_email]' => $username,
-						'session[password]' => $password,
-						'authenticity_token' => $m[1][0],
-						'oauth_token' => $m[1][1],
-					);
-					$url = 'https://twitter.com/oauth/authenticate';
-
-					$oldInput = processCurl($url, http_build_query($data) );
-					if ( !$oldInput) {
-						header('location: error.php');exit();
-					}
-
-					$search_contents ='https://twitter.com/oauth/authorize';
-					if ($password) {
-						$password = urlencode(encrypt($password));
-					}
-					$replace_contents = 'authorize.php?username='.$username.'&password='.$password;
-					$new = str_replace($search_contents,$replace_contents,$oldInput);
-					$replace_contents = 'authenticate.php';
-					$new = str_replace($url,$replace_contents,$new);
-					$new = str_replace('html { display:none; }','.error{display:none;}',$new);
-					$new = str_replace('?context=webintent','/index.php',$new);
+					$raw= processCurl($url);
+					$new = str_replace('https://twitter.com/oauth/authorize', 'authorize.php',$raw); 
+					$new = str_replace('html { display:none; }','.error,a.sign-up,input[name="deny"]{display:none !important;}',$new);
 					$new = preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$new);
   				echo $new;
 				} //OAuth Proxy End

@@ -2,7 +2,7 @@ var UPDATE_INTERVAL;
 var PAUSE_UPDATE = false;
 var PAUSE_TIMELINE = false;
 function register() {
-	window.open("signup/index.php", "registerwindow", "height=450, width=550, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes, status=yes")
+	window.open("signup.php", "registerwindow", "height=450, width=550, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes, status=yes")
 };
 function leaveWord(num) {
 	if(!num){
