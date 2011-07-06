@@ -49,11 +49,11 @@ function get_img_processor(type) {
 
 	if (type.indexOf('phodroid.com') == 0) { //ugly fix for bloody Phodroid (which's the worst image hosting service ON EARTH) by @luosheng
 		return {
-		reg: /^http:\/\/(?:www\.)?phodroid\.com\/([\d\w\/]+)/,
-		func: function (url_key, url_elem) {
-		var src = "http://phodroid.s3.amazonaws.com/" + url_key[1] + ".jpg";
-		append_image(src, url_elem);
-		}
+			reg: /^http:\/\/(?:www\.)?phodroid\.com\/([\d\w\/]+)/,
+			func: function (url_key, url_elem) {
+				var src = "http://phodroid.s3.amazonaws.com/" + url_key[1] + ".jpg";
+				append_image(src, url_elem);
+			}
 		};
 	}
 	
@@ -69,14 +69,14 @@ function get_img_processor(type) {
 
 	switch (type) {
 		case "picplz.com":
-+		proc = {
-+			reg: /^http:\/\/(?:www\.)?picplz\.com\/([\d\w]+)/,
-+			func: function (url_key, url_elem) {
-+				var src = "http://picplz.com/" + url_key[1] + "/thumb/400";
-+				append_image(src, url_elem);
-+			}
-+		};
-+		return proc;    
+		proc = {
+			reg: /^http:\/\/(?:www\.)?picplz\.com\/([\d\w]+)/,
+			func: function (url_key, url_elem) {
+				var src = "http://picplz.com/" + url_key[1] + "/thumb/400";
+				append_image(src, url_elem);
+			}
+		};
+		return proc;    
 	case "twitgoo.com":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?twitgoo\.com\/([\d\w]+)/,
