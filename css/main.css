@@ -118,6 +118,7 @@ textarea#textbox:focus{outline:none;border:1px solid rgba(82,168,236,.75)!import
 .unshorturl a {color:#999;word-wrap:break-word;word-break:break-all;white-space:nowrap;display:inline;padding:0 3px;}
 .unshorturl:hover a{text-decoration:none !important}
 
+.hashtag{font-weight:bold}
 #empty{font-size:16px;font-weight:700;margin:50px;text-align:center}
 #description{font-size:14px;padding:10px}
 #description p{line-height:22px;margin:15px}
