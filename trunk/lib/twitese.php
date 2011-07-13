@@ -77,8 +77,8 @@
 		$text = preg_replace($listReg,	'<a href="list.php?id=\2\3" target="_blank">@\2\3</a>', $text);
 
 		//ÃÌº”±Í«©¡¥Ω”
-		$tagReg = "/\B(\#{1}([\w]*[^\f\n\r\t\v#]+[\w]*))([\s]*)/u";
-		$text = preg_replace($tagReg, '<a target="_blank" href="search.php?q=%23\2">\1</a>\3', $text);
+		$tagReg = "/\B(\#{1}([\w]*[\pN\pC\pL]+[\w]*))([\s]*)/u";
+		$text = preg_replace($tagReg, '<a target="_blank" href="search.php?q=%23\2">#<span class="hashtag">\2</span></a>\3', $text);
 
 		$text = formatTweetID($text);
 
