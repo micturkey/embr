@@ -40,11 +40,7 @@
 						$html .= format_timeline($status, $t->username);
 					}
 				}
-				if($count == 1){
-					$tweetCounter = "$count unread tweet";
-				}else{
-					$tweetCounter = "$count unread tweets";
-				}
+				$tweetCounter = "<span class=\"tweetcount\">$count</span> unread tweet(s)";
 				$html .= '<div class="new">'.$tweetCounter.'</div>';
 				echo $html;
 			}

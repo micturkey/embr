@@ -73,7 +73,7 @@ function update() {
 			data: "since_id=" + since_id,
 			success: function (msg) {
 				if ($.trim(msg).indexOf("</li>") > 0) {
-					$("#allTimeline li.myTweet").fadeOut("fast");
+					$("#allTimeline li.myTweet").empty();
 					var source = $(msg).prependTo($(".timeline"));
 					var num = 0;
 					if (document.title.match(/\d+/) != null) {
@@ -83,7 +83,12 @@ function update() {
 					markReply($('#allTimeline > li'));
 					filterEle();
 					rabrTweet(source);
-					$(".new").slideDown("fast");
+					if($(".new").length == 1) {
+						$(".new").css("display","block");
+						$(".new").slideDown("fast");
+					} else {
+						$(".tweetcount").filter(":last").text(num + $(msg).length - 1);
+					}
 					$(".big-retweet-icon").tipsy({
 						gravity: 's'
 					});
@@ -96,6 +101,6 @@ function update() {
 			error: function (msg) {
 				PAUSE_TIMELINE = false;
 			}
-		});
+		}); 
 	}
 }

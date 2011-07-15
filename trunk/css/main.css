@@ -88,7 +88,8 @@ textarea#textbox:focus{outline:none;border:1px solid rgba(82,168,236,.75)!import
 /*timeline*/
 #allTimeline,#allReplies,#allMessage {margin:10px;padding:0;clear:both;}
 .timeline embed{margin: 10px 0px 0px 10px}
-.new {background-color:#E3F1FA;color:#858585;display:block;float:left;font-size:11px;text-align:center;width:522px;}
+.tweetcount{display:inline}
+.new {background-color:#E3F1FA;color:#858585;display:none;float:left;font-size:11px;text-align:center;width:522px;}
 .mine{display:none;background-color:#E8FFED}
 .reply{background-color:#E8FECD}
 .filter{background-color:#FFFFCC}
