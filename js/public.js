@@ -152,10 +152,10 @@ var transCallback = function(content, translation){
 		var li, target;
 		if(typeof INTERVAL_COOKIE !== 'undefined'){
 			li = $("#statuses ol:visible li:has(.status_id)").filter(":contains(" + content + ")");
-			target = li.find(".status_word:first");
+			target = li.find(".status_word").filter(":first");
 		}else{
 			li = $("#statuses li:has(.status_id)").filter(":contains(" + content + ")");
-			target = li.find(".status_word:first");
+			target = li.find(".status_word").filter(":first");
 		}
 		$(html).appendTo(target);
 		li.removeClass("loading");
@@ -608,7 +608,7 @@ var formFunc = function(){
 			if (str !== null) {
 				unshorten = 0;
 				for (idx = 0; idx < str.length; idx++) {
-					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/zi.mu\/[\S]+)|(http:\/\/goo.gl\/[\S]+)/gi;
+					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/goo.gl\/[\S]+)/gi;
 					if (!str[idx].match(regexp2)) {
 						l_urls += str[idx] + "|";
 					}
@@ -984,7 +984,7 @@ var formFunc = function(){
 									.eq(2).text(msg.listed);
 								$("#update_count").text(msg.statuses);
 								$("#side_name").text(msg.name);
-								$("[herf='profile.php']:first").html("<img id=\"sideimg\" src=\" " + msg.imgurl + "\" />");
+								$("[herf='profile.php']").filter(":first").html("<img id=\"sideimg\" src=\" " + msg.imgurl + "\" />");
 								updateSentTip("Profile updated successfully!", 3000, "success");
 							}
 							else {

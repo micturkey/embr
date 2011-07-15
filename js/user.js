@@ -74,7 +74,7 @@ $(function(){
 			data: "action=create&id=" + id,
 			success: function(msg) {
 				if (msg.indexOf("success") >= 0) {
-					updateSentTip("You have followed " + id + "!");
+					updateSentTip("You have followed " + id + "!", 3000, "success");
 					$this.after('<a class="btn btn-red" id="info_block_btn" href="javascript:void(0)">Unfollow</a>');
 					$this.remove();
 					if($('#unblock') != null){
@@ -224,7 +224,7 @@ function onInfoReplie($this) {
 
 function onInfoRT($this) {
 	var replie_id = $("#info_name").text();
-	$("#textbox").val("RT @" + replie_id + ":" + $this.parent().parent().find(".status_word").text());
+	$("#textbox").val("RT @" + replie_id + ":" + $this.parent().parent().find(".tweet").text());
 	$("#textbox").focus();
 	leaveWord();
 }
