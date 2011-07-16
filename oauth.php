@@ -4,11 +4,9 @@
 		session_start();
 	}
 	include_once('lib/twitese.php');
-	if (isset($_GET['denied'])) {
-		session_destroy();
-		header('Location: login.php?oauth=denied');
+	foreach ($AUTH_ID as &$id) {
+		$id = strtoupper($id);
 	}
-	
 	if (isset($_REQUEST['oauth_token'])) {
 		if($_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
 			$_SESSION['oauth_status'] = 'oldtoken';
@@ -34,6 +32,11 @@
 				$_SESSION['login_status'] = 'verified';
 				$t = getTwitter();
 				$user = $t->veverify();
+				
+				if ( ID_AUTH && (!in_array(strtoupper($t->screen_name),$AUTH_ID)) ){
+					session_destroy();
+					header("Location: login.php?oauth=denied");exit;
+				}
 				/* And set new cookies */
 				$time = $_SERVER['REQUEST_TIME']+3600*24*365;
 				setEncryptCookie('oauth_token', $access_token['oauth_token'], $time, '/');
@@ -41,6 +44,7 @@
 				setEncryptCookie('user_id', $access_token['user_id'], $time, '/');
 				setEncryptCookie('twitese_name', $t->screen_name, $time, '/');
 				refreshProfile();
+				
 				if(!isset($_COOKIE['showpic'])){
 					setcookie('showpic', 'true', $time, '/');
 				}
@@ -55,6 +59,7 @@
 					$login_page = $scheme . '://' . $_SERVER['HTTP_HOST'] . $port . $_COOKIE['loginPage'];
 					header('Location: '. $login_page);
 				}
+				
 			} else {
 				session_destroy();
 				header('Location: login.php?oauth=error');
