@@ -1,5 +1,5 @@
 <?php 
-	include ('lib/twitese.php');
+	include ('lib/twitese.php'); 
 	delCookie('oauth_token');
 	delCookie('oauth_token_secret');
 	delCookie('user_id');
@@ -25,18 +25,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="rabr, open source, php, twitter, oauth" />
+<meta name="keywords" content="rabr, open source, php, twitter, oauth, embr" />
 <meta name="description" content="Vivid Interface for Twitter" />
-<meta name="author" content="disinfeqt, JLHwung" />
+<meta name="author" content="Contributors" />
 <title>Embr / Sign In</title>
 <style>
 *{list-style:none outside none;margin:0;padding:0;}
 body{background:none repeat scroll 0 0 #F6F7F8;font:10px helvetica,arial,sans-serif;text-align:center;margin:0;padding:0;}
 a:active,a:focus{outline:none;}
 a{color:#BFBFBF;outline:medium none;text-decoration:none;}
-#container{background:none repeat scroll 0 0 transparent;border:1px solid #D6D8D9;text-align:left;margin-top:70px;width:400px;margin:0 auto;padding:20px;border-width:0;}
-#header{position:absolute;text-align:center;z-index:-1;}
-#header h1{margin-left:-50px;margin-top:-30px;float:none;}
+.form-container #container{background:none repeat scroll 0 0 transparent;margin-top:70px;text-align:left;width:400px;border-width:0;}
+.form-container #header{position:absolute;text-align:center;z-index:-1;}
+.form-container #header h1{margin-left:-50px;margin-top:-30px;}
+.form-container .form{box-shadow:0 0 20px #666;-webkit-box-shadow:0 0 20px #666;-moz-box-shadow:0 0 20px #666;background-color:#F1F8FC;margin-top:66px;opacity:0.8;}
+.form-container #footer{text-align:center;}
+#container{background:none repeat scroll 0 0 #FFF;border:1px solid #D6D8D9;text-align:left;width:920px;margin:0 auto;padding:20px;}
+#header h1{float:none;}
 #footer{color:#BFBFBF;font-size:13px;text-align:center;padding:10px;}
 .button:hover{background-position:center center;}
 .button:active{background-position:center bottom;}
@@ -44,7 +48,7 @@ a{color:#BFBFBF;outline:medium none;text-decoration:none;}
 .rounded_right_12px{-moz-border-radius-topright:12px;-moz-border-radius-bottomright:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;}
 .rounded_5px{-moz-border-radius:5px;border-radius:5px;border-radius:5px;}
 .clear{display:block;}
-.form{box-shadow:0 0 20px #666;-webkit-box-shadow:0 0 20px #666;-moz-box-shadow:0 0 20px #666;background-color:#F1F8FC;margin-top:66px;opacity:0.8;padding:0 2px;}
+.form{padding:0 2px;}
 .form > fieldset{border-width:0;padding:20px 10px 10px;}
 .form fieldset fieldset{border-width:0;padding:10px 0 0;}
 .form .checkbox{color:#666;font-size:1.15em;margin-left:90px;}
@@ -62,12 +66,22 @@ a:hover,.form-footer{color:#999;}
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/public.js"></script>
-</head>
+</head> 
+<?php if(BASIC_AUTH) require ('./basic_auth.php'); ?>
 <body class="form-container">
 <div class="clear rounded_5px" id="container">
  <div id="header">
 <h1><a href="/"><img border="0" alt="Embr" height="167" width="500" src="img/big_logo.png"></a></h1>
+</div> 
+<?php if(isset($_GET['oauth']) && $_GET['oauth'] == 'denied') {?> 
+<style type="text/css">
+.form-container .form {display:none}
+</style>
+<div style="display: block; color: rgb(255, 0, 0); margin-top: 150px; margin-bottom: 10px; text-align: center;">
+<h1 style="font-size: 20px;">Sorry, you are unauthorized to this site!</h1>
+<p style="font-size: 12px;">Please contact the sitemaster for the ID-authorization issues.</p>
 </div>
+<?php } ?>
  <!--[if lt IE 9]>
 <style type="text/css">
 .form-container .form {display:none}
@@ -95,7 +109,7 @@ a:hover,.form-footer{color:#999;}
 </fieldset>
 </form>
 <div style="background: none repeat scroll 0% 0% transparent;" id="footer">
-<p>&copy; 2011 Contributors &middot; <a href="http://code.google.com/p/embr/" target="_blank" title="Embr Open Source">Open Source</a> &middot; Run by <a href="http://twitter.com/<?php echo SITE_OWNER ?>" title="<?php echo SITE_OWNER ?>" target="_blank"><?php echo SITE_OWNER ?></a></p>
+<p>&copy; 2011 Contributors <?php if(isset($_COOKIE['twitese_name'])) echo 'and '.$_COOKIE['twitese_name'];?> &middot; <a href="http://code.google.com/p/embr/" target="_blank" title="Embr Open Source">Open Source</a></p>
 </div>
 </div>
 </body>

@@ -147,7 +147,7 @@ function updateFunc(type, name, pw) {
 					var source = $(msg).prependTo(div);
 					if (div === "#allTimeline") {
 						$(div + " li.myTweet:not(:first)").removeClass("myTweet");
-						$("#allTimeline li.myTweet").empty();
+						$("#allTimeline li.myTweet").fadeIn("fast");
 						markReply($('#allTimeline > li'));
 					}
 					var num = 0;
