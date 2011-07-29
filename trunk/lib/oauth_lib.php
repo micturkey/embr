@@ -1,5 +1,4 @@
 <?php
-// vim: foldmethod=marker
 
 /* Generic exception class
  */
@@ -170,14 +169,17 @@ class OAuthRequest {
   private $parameters;
   private $http_method;
   private $http_url;
+  public $http_header;
   // for debug purposes
   public $base_string;
   public static $version = '1.0a';
   public static $POST_INPUT = 'php://input';
 
-  function __construct($http_method, $http_url, $parameters=NULL) {
-    @$parameters or $parameters = array();
+  function __construct($http_method, $http_url, $parameters = array(), $http_header= array()) {
+    //@$parameters or $parameters = array();
     $this->parameters = $parameters;
+	//@$http_header or $http_header = array();
+	$this->http_header = $http_header;
     $this->http_method = $http_method;
     $this->http_url = $http_url;
   }
@@ -264,6 +266,17 @@ class OAuthRequest {
     } else {
       $this->parameters[$name] = $value;
     }
+  }
+  
+
+  public function set_http_header($multipart = NULL) {
+	if (empty($this->parameters)) {
+		$this->http_header[] = 'Content-Type:';
+      $this->http_header[] = 'Content-Length:';
+	} else {
+	 	if($multipart) $this->http_header[] = $this->to_header(); //add OAuth header if we post multipart
+		$this->http_header[] = 'Expect: ';
+	}
   }
 
   public function get_parameter($name) {
@@ -364,21 +377,21 @@ class OAuthRequest {
   /**
    * builds the Authorization: header
    */
-  public function to_header($realm="") {
-    $out ='Authorization: OAuth realm="'.$realm.'"';
+  public function to_header($realm=NULL) {
+    $out = 'Authorization: OAuth ';
+	if ($realm) $out .= 'realm="'.$realm.'",';
     $total = array();
     foreach ($this->parameters as $k => $v) {
       if (substr($k, 0, 5) != "oauth") continue;
       if (is_array($v)) {
         throw new OAuthException('Arrays not supported in headers');
       }
-      $out .= ',' .
-              OAuthUtil::urlencode_rfc3986($k) .
+      $out .= OAuthUtil::urlencode_rfc3986($k) .
               '="' .
               OAuthUtil::urlencode_rfc3986($v) .
-              '"';
+              '",';
     }
-    return $out;
+    return substr($out,0,-1);
   }
 
   public function __toString() {
@@ -417,224 +430,6 @@ class OAuthRequest {
 
     return md5($mt . $rand); // md5s look nicer than numbers
   }
-}
-
-class OAuthServer {
-  protected $timestamp_threshold = 300; // in seconds, five minutes
-  protected $version = 1.0;             // hi blaine
-  protected $signature_methods = array();
-
-  protected $data_store;
-
-  function __construct($data_store) {
-    $this->data_store = $data_store;
-  }
-
-  public function add_signature_method($signature_method) {
-    $this->signature_methods[$signature_method->get_name()] =
-      $signature_method;
-  }
-
-  // high level functions
-
-  /**
-   * process a request_token request
-   * returns the request token on success
-   */
-  public function fetch_request_token(&$request) {
-    $this->get_version($request);
-
-    $consumer = $this->get_consumer($request);
-
-    // no token required for the initial token request
-    $token = NULL;
-
-    $this->check_signature($request, $consumer, $token);
-
-    $new_token = $this->data_store->new_request_token($consumer);
-
-    return $new_token;
-  }
-
-  /**
-   * process an access_token request
-   * returns the access token on success
-   */
-  public function fetch_access_token(&$request) {
-    $this->get_version($request);
-
-    $consumer = $this->get_consumer($request);
-
-    // requires authorized request token
-    $token = $this->get_token($request, $consumer, "request");
-
-
-    $this->check_signature($request, $consumer, $token);
-
-    $new_token = $this->data_store->new_access_token($token, $consumer);
-
-    return $new_token;
-  }
-
-  /**
-   * verify an api call, checks all the parameters
-   */
-  public function verify_request(&$request) {
-    $this->get_version($request);
-    $consumer = $this->get_consumer($request);
-    $token = $this->get_token($request, $consumer, "access");
-    $this->check_signature($request, $consumer, $token);
-    return array($consumer, $token);
-  }
-
-  // Internals from here
-  /**
-   * version 1
-   */
-  private function get_version(&$request) {
-    $version = $request->get_parameter("oauth_version");
-    if (!$version) {
-      $version = 1.0;
-    }
-    if ($version && $version != $this->version) {
-      throw new OAuthException("OAuth version '$version' not supported");
-    }
-    return $version;
-  }
-
-  /**
-   * figure out the signature with some defaults
-   */
-  private function get_signature_method(&$request) {
-    $signature_method =
-        @$request->get_parameter("oauth_signature_method");
-    if (!$signature_method) {
-      $signature_method = "PLAINTEXT";
-    }
-    if (!in_array($signature_method,
-                  array_keys($this->signature_methods))) {
-      throw new OAuthException(
-        "Signature method '$signature_method' not supported " .
-        "try one of the following: " .
-        implode(", ", array_keys($this->signature_methods))
-      );
-    }
-    return $this->signature_methods[$signature_method];
-  }
-
-  /**
-   * try to find the consumer for the provided request's consumer key
-   */
-  private function get_consumer(&$request) {
-    $consumer_key = @$request->get_parameter("oauth_consumer_key");
-    if (!$consumer_key) {
-      throw new OAuthException("Invalid consumer key");
-    }
-
-    $consumer = $this->data_store->lookup_consumer($consumer_key);
-    if (!$consumer) {
-      throw new OAuthException("Invalid consumer");
-    }
-
-    return $consumer;
-  }
-
-  /**
-   * try to find the token for the provided request's token key
-   */
-  private function get_token(&$request, $consumer, $token_type="access") {
-    $token_field = @$request->get_parameter('oauth_token');
-    $token = $this->data_store->lookup_token(
-      $consumer, $token_type, $token_field
-    );
-    if (!$token) {
-      throw new OAuthException("Invalid $token_type token: $token_field");
-    }
-    return $token;
-  }
-
-  /**
-   * all-in-one function to check the signature on a request
-   * should guess the signature method appropriately
-   */
-  private function check_signature(&$request, $consumer, $token) {
-    // this should probably be in a different method
-    $timestamp = @$request->get_parameter('oauth_timestamp');
-    $nonce = @$request->get_parameter('oauth_nonce');
-
-    $this->check_timestamp($timestamp);
-    $this->check_nonce($consumer, $token, $nonce, $timestamp);
-
-    $signature_method = $this->get_signature_method($request);
-
-    $signature = $request->get_parameter('oauth_signature');
-    $valid_sig = $signature_method->check_signature(
-      $request,
-      $consumer,
-      $token,
-      $signature
-    );
-
-    if (!$valid_sig) {
-      throw new OAuthException("Invalid signature");
-    }
-  }
-
-  /**
-   * check that the timestamp is new enough
-   */
-  private function check_timestamp($timestamp) {
-    // verify that timestamp is recentish
-    $now = $_SERVER['REQUEST_TIME'];
-    if ($now - $timestamp > $this->timestamp_threshold) {
-      throw new OAuthException(
-        "Expired timestamp, yours $timestamp, ours $now"
-      );
-    }
-  }
-
-  /**
-   * check that the nonce is not repeated
-   */
-  private function check_nonce($consumer, $token, $nonce, $timestamp) {
-    // verify that the nonce is uniqueish
-    $found = $this->data_store->lookup_nonce(
-      $consumer,
-      $token,
-      $nonce,
-      $timestamp
-    );
-    if ($found) {
-      throw new OAuthException("Nonce already used: $nonce");
-    }
-  }
-
-}
-
-class OAuthDataStore {
-  function lookup_consumer($consumer_key) {
-    // implement me
-  }
-
-  function lookup_token($consumer, $token_type, $token) {
-    // implement me
-  }
-
-  function lookup_nonce($consumer, $token, $nonce, $timestamp) {
-    // implement me
-  }
-
-  function new_request_token($consumer) {
-    // return a new token attached to this consumer
-  }
-
-  function new_access_token($token, $consumer) {
-    // return a new access token attached to this consumer
-    // for the user associated with this token if the request token
-    // is authorized
-    // should also invalidate the request token
-  }
-
 }
 
 class OAuthUtil {
@@ -742,7 +537,7 @@ class OAuthUtil {
     return $parsed_parameters;
   }
 
-  public static function build_http_query($params) {
+  public static function build_http_query($params,$multipart=NULL) {
     if (!$params) return '';
 
     // Urlencode both keys and values

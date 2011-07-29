@@ -9,7 +9,7 @@ $(function () {
 			});
 		$("#imageUploadSubmit").click(function (e) {
 				e.preventDefault();
-				ajaxFileUpload();
+				ImageUpload();
 			});
 		$("#filterBtn").click(function () {
 				$("#filterArea").slideToggle(100);
@@ -96,34 +96,36 @@ $(function () {
 				}
 			});
 	});
-function ajaxFileUpload() {
-	updateSentTip("Uploading your image...", 10000, "ing");
-	$.ajaxFileUpload({
-			url: 'ajax/uploadPhoto.php',
-			timeout: 60000,
-			secureuri: false,
-			fileElementId: 'imageFile',
-			dataType: 'json',
-			success: function (data, status) {
-				if (typeof(console) !== 'undefined' && console != null) {
-					console.info(data);
-				}
-				if (typeof(data.result) != 'undefined' && data.result == "success") {
-					$("#textbox").val($("#textbox").val() + data.url);
-					updateSentTip("Your image has been uploaded!", 3000, "success");
-					$("#photoArea").slideToggle(100);
-				} else {
+	
+	function ImageUpload() {
+		updateSentTip("Uploading your image...", 10000, "ing");
+		$.ajaxFileUpload({
+				url: 'ajax/uploadImage.php?do=image',
+				timeout: 60000,
+				secureuri: false,
+				fileElementId: 'imageFile',
+				dataType: 'json',
+				success: function (data, status) {
+					if (typeof(console) !== 'undefined' && console != null) {
+						console.info(data);
+					}
+					if (typeof(data.result) != 'undefined' && data.result == "success") {
+						$("#textbox").val($("#textbox").val() + data.url);
+						updateSentTip("Your image has been uploaded!", 3000, "success");
+						$("#photoArea").slideToggle(100);
+					} else {
+						updateSentTip("Failed to upload, please try again.", 3000, "failure");
+						$("#photoArea").slideToggle(100);
+					}
+				},
+				error: function (data, status, e) {
 					updateSentTip("Failed to upload, please try again.", 3000, "failure");
 					$("#photoArea").slideToggle(100);
 				}
-			},
-			error: function (data, status, e) {
-				updateSentTip("Failed to upload, please try again.", 3000, "failure");
-				$("#photoArea").slideToggle(100);
-			}
-		})
-	return false;
-}
+			})
+		return false;
+	}
+	
 function enableFilter() {
 	if ($.cookie(FILTER_COOKIE) != null && $.cookie(FILTER_COOKIE) != "") {
 		$('#iptFilter').val(recoverKeywords());

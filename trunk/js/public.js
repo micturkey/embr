@@ -38,6 +38,7 @@ var formHTML = '<span id="tip"><b>140</b></span><form action="index.php" method=
 formHTML += '<textarea name="status" id="textbox"></textarea>';
 formHTML += '<input type="hidden" id="in_reply_to" name="in_reply_to" value="0" />';
 formHTML += '<div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
+
 function rabrTweet(objs) {
 	if(typeof objs === 'undefined'){
 		var objs = $('#statuses .timeline .source a');
@@ -278,7 +279,7 @@ var formFunc = function(){
 	$("#textbox").keyup(function () {
 			leaveWord();
 		}).bind("keyup", "keydown", function(event){
-				if (event.ctrlKey && event.keyCode == 13) {
+				if ((event.ctrlKey || event.metaKey) && event.which == 13) {
 					if (PAUSE_UPDATE !== true) {
 						updateStatus();
 					} else {
@@ -978,13 +979,8 @@ var formFunc = function(){
 						type: "GET",
 						dataType: "json",
 						success: function(msg) {
-							if (msg.statuses >= 0) { 
-								$(".count").eq(0).text(msg.friends).end()
-									.eq(1).text(msg.followers).end()
-									.eq(2).text(msg.listed);
-								$("#update_count").text(msg.statuses);
-								$("#side_name").text(msg.name);
-								$("[herf='profile.php']").filter(":first").html("<img id=\"sideimg\" src=\" " + msg.imgurl + "\" />");
+							if (msg.result == 'success') { 
+								freshProfile();
 								updateSentTip("Profile updated successfully!", 3000, "success");
 							}
 							else {
@@ -1029,10 +1025,12 @@ var formFunc = function(){
 			$(".timeline img").lazyload({threshold : 100, effect : "fadeIn"});
 		});
 	var freshProfile = function(){
-		$('#update_count').text($.cookie('statuses_count'));
-		$('#user_stats a[href*=friends] span.count').text(parseInt($.cookie('friends_count')));
-		$('#user_stats a[href*=followers] span.count').text(parseInt($.cookie('followers_count')));
-		$('#user_stats a[href*=lists] span.count').text(parseInt($.cookie('listed_count')));
+		$(".count").eq(0).text($.cookie('friends_count')).end()
+			.eq(1).text($.cookie('followers_count')).end()
+			.eq(2).text($.cookie('listed_count'));
+		$("#update_count").text($.cookie('statuses_count'));
+		$("#side_name").text($.cookie('name'));
+		$('#sideimg').attr("src",$.cookie('imgurl'));
 	};
 	var markReply = function(obj){
 		obj.each(function (i, o) {

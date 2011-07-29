@@ -6,6 +6,7 @@
 ?>
 <script src="js/colorpicker.js"></script>
 <script src="js/setting.js"></script>
+<script src="js/ajaxfileupload.js"></script>
 <link rel="stylesheet" href="css/colorpicker.css" />
 <div id="statuses" class="column round-left">
 	<div id="setting">
@@ -22,23 +23,24 @@
 		if ($result) echo "<div id=\"otherTip\">Your profile has been updated!</div>";
 		else echo "<div id=\"otherTip\">Update failed. Please try again.</div>";
 	}
+	
 ?>
 <div id="setting_nav">
 <?php
 	switch($settingType){
 		case 'profile':
 ?>
-			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavNormal">Edit Profile</span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
+			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavNormal">Profile</span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
 <?php			
 			break;
 		case 'advanced':
 ?>
-			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavLink"><a href="setting.php?t=profile">Edit Profile</a></span><span class="subnavNormal">Advanced</span>
+			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavLink"><a href="setting.php?t=profile">Profile</a></span><span class="subnavNormal">Advanced</span>
 <?php		
 			break;
 		default:
 ?>
-			<span class="subnavNormal">Customize</span><span class="subnavLink"><a href="setting.php?t=profile">Edit Profile</a></span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
+			<span class="subnavNormal">Customize</span><span class="subnavLink"><a href="setting.php?t=profile">Profile</a></span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
 <?php	
 	} // end switch
 ?>
@@ -46,9 +48,22 @@
 <?php
 	switch($settingType){
 		case 'profile':
-			$user = getTwitter()->veverify();
+			$user = getTwitter()->veverify(true);
 ?>
+			<form id="setting_form" action="ajax/uploadImage.php?do=profile" method="post" enctype="multipart/form-data">
+				<fieldset class="settings">
+				<legend>Avatar</legend>
+				<ol>
+				<li style="display:inline-block"><img src="<?php echo isset($_COOKIE['imgurl']) ? $_COOKIE['imgurl'] : getAvatar($user->profile_image_url)?>"></img></li>
+				<ol style="margin-left:29px">
+					<li><input type="file" name="image" id="profile_image"/></li>
+					<li><input type="submit" id="AvatarUpload" class="btn" value="Upload"/></li>
+				</ol></ol>
+				</fieldset>
+			</form>
 			<form id="setting_form" action="setting.php?t=profile" method="post">
+				<fieldset class="settings">
+				<legend>Literature</legend>
 				<table id="setting_table">
 				<tr>
 				<td class="setting_title">Name：</td>
@@ -63,14 +78,13 @@
 				<td><input class="setting_input" type="text" name="location" value="<?php echo isset($user->location) ? $user->location : '' ?>" /></td>
 				</tr>
 				<tr>
-				<td class="setting_title">Bio：</td>
-				<td><textarea id="setting_text" name="description"><?php echo isset($user->description) ? $user->description : '' ?></textarea><small style="margin-left:5px;vertical-align: top;">*Max 160 chars</small></td>
-				</tr>
-				<tr>
-				<td colspan="2"><input type="submit" class="btn" style="margin-left:62px !important" id="save_button" value="Save"></input></td>
+				<td class="setting_title">Bio：</td><td><small style="margin-left:5px;vertical-align: top;">*Max 160 chars</small></td>
+				</tr><tr>
+				<td></td>
+				<td><textarea id="setting_text" name="description"><?php echo isset($user->description) ? $user->description : '' ?></textarea></td>
 				</tr>
 				</table>
-				</form>
+				</fieldset>
 <?php
 			break;
 		case 'advanced':
@@ -201,20 +215,21 @@
 
 			</fieldset>
 
-			<table>
-			<tr>
-			<td colspan="2">
-			<input type="submit" class="btn" id="save_button" value="Save" />
-			<a id="reset_link" href="setting.php?reset=true" title="You will lose all customized settings!">Reset to default</a>
-			</td>
-			</tr>
-			</table>
 
-		</form>
 <?php
 	} // end switch
 ?>
 
+	<table>
+	<tr>
+	<td colspan="2">
+	<input type="submit" class="btn" id="save_button" value="Save" />
+	<a id="reset_link" href="setting.php?reset=true" title="You will lose all customized settings!">Reset to default</a>
+	</td>
+	</tr>
+	</table>
+
+</form>
 	</div>
 </div>
 

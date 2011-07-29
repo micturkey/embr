@@ -42,14 +42,18 @@ class TwitterOAuth {
 	public $username;
 	public $screen_name;
 	public $user_id;
+	
+	//for debug use
+	public $curl_info;
+	public $http_header;
 
 	/**
 	 * Set API URLS
 	 */
-	function accessTokenURL()  { return 'https://twitter.com/oauth/access_token'; }
-	function authenticateURL() { return 'https://twitter.com/oauth/authenticate'; }
-	function authorizeURL()    { return 'https://twitter.com/oauth/authorize'; }
-	function requestTokenURL() { return 'https://twitter.com/oauth/request_token'; }
+	function accessTokenURL()  { return 'https://api.twitter.com/oauth/access_token'; }
+	function authenticateURL() { return 'https://api.twitter.com/oauth/authenticate'; }
+	function authorizeURL()    { return 'https://api.twitter.com/oauth/authorize'; }
+	function requestTokenURL() { return 'https://api.twitter.com/oauth/request_token'; }
 
 	/**
 	 * Debug helpers
@@ -95,11 +99,11 @@ class TwitterOAuth {
 	 *
 	 * @returns a string
 	 */
-	function getAuthorizeURL($token, $sign_in_with_twitter = TRUE) {
+	function getAuthorizeURL($token) {
 		if (is_array($token)) {
 			$token = $token['oauth_token'];
 		}
-		return $this->authorizeURL() . "?oauth_token={$token}&force_login=1";
+		return $this->authorizeURL() . "?oauth_token={$token}";
 	}
 
 	/**
@@ -139,8 +143,8 @@ class TwitterOAuth {
 	/**
 	 * POST wreapper for oAuthRequest.
 	 */
-	function post($url, $parameters = array()) {
-		$response = $this->oAuthRequest($url, 'POST', $parameters);
+	function post($url, $parameters = array(), $multipart = NULL) {
+		$response = $this->oAuthRequest($url, 'POST', $parameters, $multipart);
 		if($response === false){
 			return false;
 		}
@@ -169,55 +173,56 @@ class TwitterOAuth {
 	}
 
 	/**
-	 * Format and sign an OAuth / API request
+	 * Format and sign an OAuth / API request, then make an HTTP request
 	 */
-	function oAuthRequest($url, $method, $parameters) {
+	function oAuthRequest($url, $method, $parameters, $multipart=NULL) {
 		if ($url[0] == '/') { //non-twitter.com api shall offer the entire url.
 			$url = "{$this->host}{$url}.{$this->type}";
 		}
 		$request = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $parameters);
 		$request->sign_request($this->sha1_method, $this->consumer, $this->token);
-		switch ($method) {
-		case 'GET':
-			return $this->http($request->to_url(), 'GET');
-		default:
-			return $this->http($request->get_normalized_http_url(), $method, $request->to_postdata());
-		}
-	}
-
-	/**
-	 * Make an HTTP request
-	 *
-	 * @return API results
-	 */
-	function http($url, $method, $postfields = NULL) {
+		$request->set_http_header(&$multipart);
+		
 		$ci = curl_init();
 		/* Curl settings */
 		curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout);
 		curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
 		curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
 
 		switch ($method) {
+		case 'GET':
+			curl_setopt($ci, CURLOPT_URL, $request->to_url());
+			curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
+			break;
 		case 'POST':
+			$postfields = $multipart ? $multipart : $request->to_postdata();
+			curl_setopt($ci, CURLOPT_URL, $request->get_normalized_http_url());
+			curl_setopt($ci, CURLOPT_HTTPHEADER, $request->http_header);
 			curl_setopt($ci, CURLOPT_POST, TRUE);
 			if (!empty($postfields)) {
 				curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
 			}
 			break;
 		case 'DELETE':
+			$postfields = $request->to_postdata($multipart);
+			$url = $request->get_normalized_http_url();
 			curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
+			curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
 			if (!empty($postfields)) {
 				$url = "{$url}?{$postfields}";
+				curl_setopt($ci, CURLOPT_URL, $url);
 			}
 		}
 
-		curl_setopt($ci, CURLOPT_URL, $url);
 		$response = curl_exec($ci);
+		$this->http_header = $request->http_header;
+		$this->curl_info = curl_getinfo($ci);
 		$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
-		$this->last_api_call = $url;
+		$this->last_api_call = curl_getinfo($ci, CURLINFO_EFFECTIVE_URL);
+		
 		curl_close ($ci);
+		
 		return $response;
 	}
 
@@ -750,7 +755,7 @@ class TwitterOAuth {
 		return false;
 	}
 
-	function updateProfile($fields = array()){
+	function updateProfile($fields = array(), $skip_status = true){
 		$url = '/account/update_profile';
 		$args = array();
 		foreach( $fields as $pk => $pv ){
@@ -774,13 +779,35 @@ class TwitterOAuth {
 			default :
 				break;
 			}
+			$args['skip_status'] = $skip_status;
 		}
 		return $this->post($url, $args);
 	}
-
-	function veverify(){
+	
+	function updateProfileImage($image, $skip_status=true) {
+		$url = '/account/update_profile_image';
+		$mul = array();
+		if($image){
+			$mul['image']=$image;
+			$mul['skip_status']=$skip_status;
+		}
+		return $this->post($url, NULL, $mul);
+	}
+	
+	function updateProfileBackground($image, $skip_status=true) {
+		$url = '/account/update_profile_background_image';
+		$mul = array();
+		if($image){
+			$mul['image']=$image;
+			$mul['skip_status']=$skip_status;
+		}
+		return $this->post($url, NULL, $mul);
+	}
+	
+	function veverify($skip_status = false){
 		$url = '/account/verify_credentials';
-		return $this->get($url);
+		$args = array('skip_status' => $skip_status);
+		return $this->get($url,$args);
 	}
 
 	/* ---------- twitese method ---------- */
