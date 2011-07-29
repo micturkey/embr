@@ -19,6 +19,11 @@ $(function(){
 			$.cookie('bodyBg', '');
 			location.reload();
 		}
+	});
+	
+	$("#AvatarUpload").click(function (e) {
+		e.preventDefault();
+		ProfileImageUpload();
 	});	
 
 	var style = {
@@ -78,4 +83,38 @@ function selectbox(c,id){
 	if($.cookie(c)){
 		$(id).setSelectedValue($.cookie(c));
 	}
+}
+
+function ProfileImageUpload() {
+	updateSentTip("Uploading your profile image...", 10000, "ing");
+	$.ajaxFileUpload({
+			url: 'ajax/uploadImage.php?do=profile',
+			timeout: 60000,
+			secureuri: false,
+			fileElementId: 'profile_image',
+			dataType: 'json',
+			success: function (data, status) {
+				if (typeof(console) !== 'undefined' && console != null) {
+					console.info(data);
+				}
+				if (typeof(data.result) != 'undefined' && data.result == "success") {
+					$.ajax({
+						url: '../ajax/updateProfile.php',
+						type: "GET",
+						dataType: "json",
+						success: function(msg){
+							freshProfile();
+							$(".settings > img").attr("src",$.cookie("imgurl"));
+						}
+					});
+					updateSentTip("Your profile image has been uploaded!", 3000, "success");
+				} else {
+					updateSentTip("Failed to upload, please try again.", 3000, "failure");
+				}
+			},
+			error: function (data, status, e) {
+				updateSentTip("Failed to upload, please try again.", 3000, "failure");
+			}
+		})
+	return false;
 }

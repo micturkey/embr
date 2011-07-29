@@ -240,7 +240,7 @@
 		
 		/**** request method ****/ 
 		$url = 'http://img.ly/api/2/upload.xml';
-		$postdata = array('media' => "@$image");
+		$postdata = array('media' => $image);
 		$header = array('X-Auth-Service-Provider: '.$signingurl,'X-Verify-Credentials-'.$r_header);
 		
 		$ch = curl_init($url);

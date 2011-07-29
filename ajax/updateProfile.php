@@ -13,6 +13,8 @@
 		setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
 		setcookie('name', $user->screen_name, $time, '/');
 		setcookie('listed_count', GetListed($t), $time, '/');
+		echo '{"result": "success"}';
+		/*
 		$callback = array(
 			'friends' => $user->friends_count,
 			'followers' => $user->followers_count,
@@ -21,9 +23,10 @@
 			'imgurl' => getAvatar($user->profile_image_url),
 			'name' => $user->screen_name,
 		);
-		echo json_encode($callback);		
+		echo json_encode($callback);
+		*/	
 	} else {
-		echo '{"error": 1}';
+		echo '{"result": "error"}';
 	}
 	
 ?>
