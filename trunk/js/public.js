@@ -39,7 +39,7 @@ formHTML += '<textarea name="status" id="textbox"></textarea>';
 formHTML += '<input type="hidden" id="in_reply_to" name="in_reply_to" value="0" />';
 formHTML += '<div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
 
-function rabrTweet(objs) {
+function embrTweet(objs) {
 	if(typeof objs === 'undefined'){
 		var objs = $('#statuses .timeline .source a');
 	}else{
@@ -1001,7 +1001,7 @@ var formFunc = function(){
 
 	//init global functions
 	$(document).ready(function () {
-			rabrTweet();
+			embrTweet();
 			$("#statuses .mine").live("mouseout", function (e) {
 					$(this).removeClass("mine").addClass("myTweet");
 				});

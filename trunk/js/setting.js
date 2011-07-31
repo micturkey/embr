@@ -1,4 +1,14 @@
 $(function(){
+	checkbox('showpic',"#showpic",true);
+	checkbox('mediaPre',"#mediaPreSelect",true);
+	checkbox('p_avatar',"#proxifyAvatar",false);
+	selectbox('homeInterval',"#homeInterval",function(){
+		$.cookie('intervalChanged','true',{expires:365});
+	});
+	selectbox('updatesInterval',"#updatesInterval",function(){
+		$.cookie('intervalChanged','true',{expires:365});
+	});
+	selectbox('fontsize',"#fontsize");
 	$('.bg_input').ColorPicker({ 
 		onBeforeShow: function () {
 			$(this).ColorPickerSetColor(this.value);
@@ -6,26 +16,28 @@ $(function(){
 		onSubmit: function(hsb, hex, rgb, el) {
 			$(el).val("#" + hex);
 			$(el).ColorPickerHide();
+			$.cookie('bodyBg',"#" + hex,{expires:365});
+			location.reload();
+			updateSentTip('Setting saved successfully!',3000,'success');
 		}
 	}).bind('keyup', function(){
 		$(this).ColorPickerSetColor(this.value);
 	});
-
 	$('#reset_link').bind('click', function(e){
 		e.preventDefault();
 		if(confirm("You will lose all customized settings!")){
 			$.cookie('myCSS', '');
 			$.cookie('fontsize', '');
 			$.cookie('bodyBg', '');
+			$.cookie('showpic','true');
+			$.cookie('mediaPre','true');
+			$.cookie('p_avatar','false');
+			$.cookie('homeInterval',1);
+			$.cookie('updatesInterval',3);
 			location.reload();
+			updateSentTip('Setting Reset successfully!',3000,'success');
 		}
 	});
-	
-	$("#AvatarUpload").click(function (e) {
-		e.preventDefault();
-		ProfileImageUpload();
-	});	
-
 	var style = {
 		"Twitter Default":{myCSS:"/*default*/ "}, 
 		"Dark Rabr":{myCSS:"@import url(themes/1.css);"}, 
@@ -54,18 +66,44 @@ $(function(){
 		if ($(this).val() != "n/a") {
 			$.each(style[$(this).val()], function (i,o) {
 				$("#"+i).val(o);
+				location.reload();
+				updateSentTip('Themes Saved Successfully!',3000,'success');
 			});
 		}
 	});
-});
-
-$(function(){
-	checkbox('showpic',"#showpic",true);
-	checkbox('mediaPre',"#mediaPreSelect",true);
-	checkbox('p_avatar',"#proxifyAvatar",false);
-	selectbox('homeInterval',"#homeInterval");
-	selectbox('updatesInterval',"#updatesInterval");
-	selectbox('fontsize',"#fontsize");
+	$("textarea#myCSS").change(function(){
+		$.cookie('myCSS',$(this).text(),{expires:365});
+		location.reload();
+		updateSentTip('Themes saved successfully!',3000,'success');
+	});
+	$("#AvatarUpload").click(function (e) {
+		e.preventDefault();
+		ProfileImageUpload();
+	});
+	$("#saveProfile").click(function(e){
+		e.preventDefault();
+		$.ajax({
+			url: 'ajax/updateProfile.php',
+			type: 'POST',
+			data: {
+				'name': $('input[name="name"]').val(),
+				'url' : $('input[name="url"]').val(),
+				'location': $('input[name="location"]').val(),
+				'description': $('textarea[name="description"]').text()
+			},
+			success: function(msg) {
+				if (msg == 'success') {
+					freshProfile();
+					updateSentTip ('Profile updated successfully!',3000,'success');
+				} else {
+					updateSentTip ('Fail to update your profile, please try again',3000,'failure');
+				}
+			},
+			error: function() {
+				updateSentTip ('Fail to update your profile, please try again',3000,'failure');
+			}
+		});
+	});
 });
 function checkbox(c,id,d){
 	if ($.cookie (c) === null) {
@@ -76,13 +114,19 @@ function checkbox(c,id,d){
 		$(id).attr('checked', false);
 	}
 	$(id).click(function (){
-		$.cookie(c, $(id).attr("checked"), { expires: 30 });
+		$.cookie(c,$(id).attr("checked"),{expires:365});
+		updateSentTip('Setting saved successfully!',1000,'success');
 	});
 }
-function selectbox(c,id){
-	if($.cookie(c)){
+function selectbox(c,id,extra){
+	if($.cookie(c) != undefined){
 		$(id).setSelectedValue($.cookie(c));
 	}
+	$('select'+id).change(function (){
+		$.cookie(c,$('select'+id+' option:selected').val(),{expires:365});
+		if (extra != undefined) extra();
+		updateSentTip('Setting saved successfully!',1000,'success');
+	})
 }
 
 function ProfileImageUpload() {

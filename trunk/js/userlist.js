@@ -150,3 +150,12 @@ function uldm($this, e) {
 			leaveWord();
 		}
 }
+$(document).ready(function(){
+	$.ajax({
+		url: '../ajax/updateProfile.php',
+		type: "GET",
+		success: function(){
+			freshProfile();
+		}
+	});
+});

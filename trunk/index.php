@@ -9,17 +9,11 @@
 
 	if (isset($_POST['status']) && isset($_POST['in_reply_to']))
 	{
-		if (trim($_POST['status']) == '')
-		{
-			setUpdateCookie('empty');
-		}
-		else
+		if (trim($_POST['status']) !== '')
 		{
 			$result = $t->update($_POST['status'], $_POST['in_reply_to']);
 			if ($result)
 			{
-				setUpdateCookie('success');
-
 				$user = $result->user;
 				$time = $_SERVER['REQUEST_TIME']+3600*24*365;
 				if ($user)
@@ -30,10 +24,6 @@
 					setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
 					setcookie('name', $user->name, $time, '/');
 				}
-			}
-			else
-			{
-				setUpdateCookie('error');
 			}
 		}
 		header('location: index.php');

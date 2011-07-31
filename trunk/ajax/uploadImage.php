@@ -7,7 +7,6 @@
 		$image = "@{$_FILES['image']['tmp_name']};type={$_FILES['image']['type']};filename={$_FILES['image']['name']}";
 		switch($_GET['do']) {
 			case 'image':
-			//$image = $_FILES["image"]['tmp_name'];
 			$result = imageUpload($image);
 			if (isset($result->url)) {
 				echo '{"result": "success" , "url" : "' . $result->url . '"}';
