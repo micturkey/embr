@@ -10,39 +10,20 @@
 <link rel="stylesheet" href="css/colorpicker.css" />
 <div id="statuses" class="column round-left">
 	<div id="setting">
-<?php 
-	$settingType = isset($_GET['t'])? $_GET['t'] : 1;
-	if (isset($_POST['name'])) {
-		$t = getTwitter();
-		$args = array();
-		$args['name'] = $_POST['name'];
-		$args['url'] = $_POST['url'];
-		$args['location'] = $_POST['location'];
-		$args['description'] = $_POST['description'];
-		$result = $t->updateProfile($args);
-		if ($result) echo "<div id=\"otherTip\">Your profile has been updated!</div>";
-		else echo "<div id=\"otherTip\">Update failed. Please try again.</div>";
-	}
-	
-?>
 <div id="setting_nav">
 <?php
+	$settingType = isset($_GET['t'])? $_GET['t'] : 1;
 	switch($settingType){
 		case 'profile':
 ?>
-			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavNormal">Profile</span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
+			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavNormal">Profile</span>
 <?php			
-			break;
-		case 'advanced':
-?>
-			<span class="subnavLink"><a href="setting.php">Customize</a></span><span class="subnavLink"><a href="setting.php?t=profile">Profile</a></span><span class="subnavNormal">Advanced</span>
-<?php		
 			break;
 		default:
 ?>
-			<span class="subnavNormal">Customize</span><span class="subnavLink"><a href="setting.php?t=profile">Profile</a></span><span class="subnavLink"><a href="setting.php?t=advanced">Advanced</a></span>
+			<span class="subnavNormal">Customize</span><span class="subnavLink"><a href="setting.php?t=profile">Profile</a></span>
 <?php	
-	} // end switch
+	}
 ?>
 </div>
 <?php
@@ -57,11 +38,11 @@
 				<li style="display:inline-block"><img src="<?php echo isset($_COOKIE['imgurl']) ? $_COOKIE['imgurl'] : getAvatar($user->profile_image_url)?>"></img></li>
 				<ol style="margin-left:29px">
 					<li><input type="file" name="image" id="profile_image"/></li>
-					<li><input type="submit" id="AvatarUpload" class="btn" value="Upload"/></li>
+					<li><input type="submit" id="AvatarUpload" class="btn" value="Upload"/><small style="margin-left:10px;vertical-align: middle;">BMP,JPG or PNG accepted, less than 800K.</small></li>
 				</ol></ol>
 				</fieldset>
 			</form>
-			<form id="setting_form" action="setting.php?t=profile" method="post">
+			<form id="setting_form" action="ajax/updateProfile.php" method="post">
 				<fieldset class="settings">
 				<legend>Literature</legend>
 				<table id="setting_table">
@@ -84,70 +65,34 @@
 				<td><textarea id="setting_text" name="description"><?php echo isset($user->description) ? $user->description : '' ?></textarea></td>
 				</tr>
 				</table>
+				<input type="submit" id="saveProfile" class="btn" value="Save" />
 				</fieldset>
 <?php
 			break;
-		case 'advanced':
-		
+		default:
 ?>
-		<form id="style_form" action="setting.php?t=advanced" method="post">
+		<form id="style_form" action="setting.php" method="post">
+			
 			<fieldset class="settings">
 
 			<legend>Proxify</legend>
 
 			<input id="proxifyAvatar" type="checkbox" />
-			<label>Proxify the twitter avatar</label>
-			<br />
-
+			<label>Proxify the Avatar</label>
 			</fieldset>
 			
-			<table>
-			<tr>
-			<td colspan="2">
-			<input type="submit" class="btn" id="save_button" value="Save" />
-			</td>
-			</tr>
-			</table>
-		</form>
-
-<?php
-			break;
-		default:
-			if ( isset($_POST['myCSS']) ) {
-				try {
-					saveStyle($_POST['myCSS'], $_POST['fontsize'], $_POST['bodyBg']);
-					echo "<div id=\"otherTip\">Your styles have been updated!</div>";
-				} catch (Exception $e) {
-					echo "<div id=\"otherTip\">Update failed. Please try again.</div>";
-				}
-			}
-			if ( isset($_GET['reset']) ) {
-				resetStyle();
-				echo "<div id=\"otherTip\">Your styles have been reseted!</div>";
-			}
-			if(isset($_POST['homeInterval'])){
-				setcookie('homeInterval', $_POST['homeInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
-				setcookie('intervalChanged', 'true', $_SERVER['REQUEST_TIME']+3600*24*365, '/');
-			}
-			if(isset($_POST['updatesInterval'])){
-				setcookie('updatesInterval', $_POST['updatesInterval'], $_SERVER['REQUEST_TIME']+3600*24*365, '/');
-				setcookie('intervalChanged', 'true', $_SERVER['REQUEST_TIME']+3600*24*365, '/');
-			}
-?>
-		<form id="style_form" action="setting.php" method="post">
-
 			<fieldset class="settings">
 
-			<legend>Enhancements</legend>
+			<legend>Media Preview</legend>
 
 			<input id="showpic" type="checkbox" checked="checked" />
-			<label>Enable Auto Images Preview</label>
+			<label>Enable Images Preview</label>
 			<small>(Supports mainstream image hostings)</small>
 
 			<br /><br />
 
 			<input id="mediaPreSelect" type="checkbox" checked="checked" />
-			<label>Enable Auto Medias Preview</label>
+			<label>Enable Videos Preview</label>
 			<small>(Supports Xiami and Tudou)</small><br />
 
 			</fieldset>
@@ -165,7 +110,6 @@
 				<option value="10">10 min</option>
 				<option value="0">Never</option>
 			</select>
-			&nbsp;&nbsp;
 			<label>Updates Page</label>
 			<select id="updatesInterval" name="updatesInterval" value="<?php echo getCookie('updatesInterval')?>">
 				<option value="0.5">30 sec</option>
@@ -212,22 +156,12 @@
 			<small>You must use <a href="http://i.zou.lu/csstidy/" target="_blank" title="Powered by Showfom">CSSTidy</a> to compress your stylesheet.</small>
 			<br />
 			<textarea type="text" id="myCSS" name="myCSS" value="" /><?php echo getColor("myCSS","") ?></textarea>
-
 			</fieldset>
 
-
 <?php
-	} // end switch
+	}
 ?>
-
-	<table>
-	<tr>
-	<td colspan="2">
-	<input type="submit" class="btn" id="save_button" value="Save" />
-	<a id="reset_link" href="setting.php?reset=true" title="You will lose all customized settings!">Reset to default</a>
-	</td>
-	</tr>
-	</table>
+	<a id="reset_link" href="#" title="You will lose all customized settings!">Reset to default</a>
 
 </form>
 	</div>
@@ -235,8 +169,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

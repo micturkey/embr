@@ -9,7 +9,7 @@
 	$test_var = false;
 
 	$t = getTwitter();
-	refreshProfile($t);
+	//refreshProfile($t);
 	$p = -1;
 	if (isset($_GET['p'])) {
 		$p = $_GET['p'] = '' ? -1 : $_GET['p']; // 如果出现 p= 的情况会异常

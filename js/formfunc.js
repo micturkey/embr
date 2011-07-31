@@ -109,7 +109,7 @@ $(function () {
 					if (typeof(console) !== 'undefined' && console != null) {
 						console.info(data);
 					}
-					if (typeof(data.result) != 'undefined' && data.result == "success") {
+					if (data.result != undefined && data.result == "success") {
 						$("#textbox").val($("#textbox").val() + data.url);
 						updateSentTip("Your image has been uploaded!", 3000, "success");
 						$("#photoArea").slideToggle(100);

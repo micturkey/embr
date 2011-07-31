@@ -22,40 +22,9 @@
 		setcookie('listed_count', GetListed($t), $time, '/');
 	}
 
-	function saveStyle($myCSS, $fontsize, $bodyBg) {
-		$time = $_SERVER['REQUEST_TIME'] + 3600*24*30;
-		setcookie('myCSS', $myCSS, $time);
-		setcookie('fontsize', $fontsize, $time);
-		setcookie('bodyBg', $bodyBg, $time);
-	}
-
-	function resetStyle() {
-		delCookie('myCSS');
-		delCookie('fontsize');
-		delCookie('bodyBg');
-	}
-
 	function getColor($name, $default) {
 		if (getCookie($name)) return getCookie($name);
 		else return $default;
-	}
-
-	function shortUrl($url) {
-		return $url;
-	}
-
-	function setUpdateCookie($value) {
-		setcookie('update_status', $value);
-	}
-
-	function getUpdateCookie() {
-		if ( isset($_COOKIE['update_status']) ) {
-			$update_status = $_COOKIE['update_status'];
-			setcookie('update_status', '', $_SERVER['REQUEST_TIME']-300);
-			return $update_status;
-		} else {
-			return null;
-		}
 	}
 
 	function formatText($text) {
@@ -228,29 +197,23 @@
 		return false;
 	}
 
-	
-	/* ---------- image upload ---------- */
+
 	function imageUpload($image){
 		$t = getTwitter();
 		$signingurl = 'https://api.twitter.com/1/account/verify_credentials.json';
 		$request = OAuthRequest::from_consumer_and_token($t->consumer, $t->token, 'GET', $signingurl, array());
 		$request->sign_request($t->sha1_method, $t->consumer, $t->token);
-		// header
 		$r_header = $request->to_header("http://api.twitter.com/");
 		
-		/**** request method ****/ 
-		$url = 'http://img.ly/api/2/upload.xml';
-		$postdata = array('media' => $image);
-		$header = array('X-Auth-Service-Provider: '.$signingurl,'X-Verify-Credentials-'.$r_header);
-		
-		$ch = curl_init($url);
-		
+		$url = 'http://img.ly/api/2/upload.json';
+		$postdata = array('media' => $image);		
+		$ch = curl_init($url);		
 		if($postdata !== false)
 		{
 			curl_setopt ($ch, CURLOPT_POST, true);
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata);
 		}
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-Auth-Service-Provider: '.$signingurl,'X-Verify-Credentials-'.$header)); 
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-Auth-Service-Provider: '.$signingurl,'X-Verify-Credentials-'.$r_header)); 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'embr');
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -262,11 +225,10 @@
 		curl_close($ch);
 		
 		if ($response_info['http_code'] == 200) {
-			return objectifyXml($response);
+			return objectifyJson($response);
 		} else {
 			return null;
 		}
-		
 	}
 	
 	function getTwitter() {
