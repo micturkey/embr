@@ -83,6 +83,7 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 .ing{color:#2276BB}
 .success{color:green}
 .failure{color:red}
+#otherTip{-moz-border-radius:5px;border-radius:5px;background:#F5F5F5 none repeat scroll 0 0;border:1px solid #EEE;clear:both;color:red;font-size:12px;margin:10px 20px;padding:5px 10px;text-align:center;width:483px}
 
 /*timeline*/
 #allTimeline,#allReplies,#allMessage{margin:10px;padding:0;clear:both}
@@ -131,10 +132,12 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 /*pagination*/
 #pagination{margin:5px}
 #pagination p.no-more-tweets{font-size:1.1em;text-align:center}
-.more{background-color:#FFF;background-image:url(../img/more.gif);background-position:left top;background-repeat:repeat-x;border-color:#DDD #AAA #AAA #DDD;border-style:solid;border-width:1px;display:block;font-size:14px;font-weight:700;height:22px;line-height:1.5em;margin-bottom:6px;outline-color:0;outline-style:none;outline-width:medium;padding:6px 0;text-align:center;text-shadow:1px 1px 1px #FFF;width:45%}
-.more:hover{background-position:left -78px;border:1px solid #bbb;text-decoration:none}
+.more{background-color:#FFF;background-image:url(../img/more.gif);background-position:left top;background-repeat:repeat-x;border-color:#DDD #AAA #AAA #DDD;border-style:solid;border-width:1px;display:inline;font-size:14px;font-weight:700;height:22px;line-height:1.5em;margin-bottom:6px;outline-color:0;outline-style:none;outline-width:medium;padding:6px 0;text-align:center;text-shadow:1px 1px 1px #FFF;width:45%}
+.scro{border-style:solid none;border:1px #DDD;text-shadow:1px 1px 1px #FFF;text-align:center}
+.more:hover, .scro:hover;{background-position:left -78px;border:1px solid #bbb;text-decoration:none}
 .more:active{background-position:left -38px;color:#666}
 .more.loading{background-color:#fff;background-image:url(../img/ajax.gif);background-position:50% 50%;background-repeat:no-repeat;border:1px solid #eee;cursor:default!important}
+.scro img{margin-right:10px}
 .more::-moz-focus-inner{border:0}
 #pagination.pagination{height:1.5em}
 #pagination.pagination a,#pagination.pagination .link-like{border:1px solid #cecece;float:right;margin:0 0 0 10px;padding:.25em 1em}

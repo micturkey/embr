@@ -181,7 +181,7 @@ class TwitterOAuth {
 		}
 		$request = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $parameters);
 		$request->sign_request($this->sha1_method, $this->consumer, $this->token);
-		$request->set_http_header(&$multipart);
+		$request->set_http_header($multipart);
 		
 		$ci = curl_init();
 		/* Curl settings */

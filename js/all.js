@@ -147,7 +147,7 @@ function updateFunc(type, name, pw) {
 					var source = $(msg).prependTo(div);
 					if (div === "#allTimeline") {
 						$(div + " li.myTweet:not(:first)").removeClass("myTweet");
-						$("#allTimeline li.myTweet").fadeIn("fast");
+						$("#allTimeline li.myTweet").fadeOut("fast");
 						markReply($('#allTimeline > li'));
 					}
 					var num = 0;
@@ -162,7 +162,7 @@ function updateFunc(type, name, pw) {
 					}
 					$(btnDiv).text($(btnDiv).text().replace(/(\([0-9]+\))/g, "") + "(" + (navNum + len) + ")");
 					filterEle();
-					rabrTweet(source);
+					embrTweet(source);
 					$(".new").slideDown("fast");
 					$(".big-retweet-icon").tipsy({
 							gravity: 's'

@@ -346,7 +346,7 @@ var formFunc = function(){
 								source.hide().slideDown('fast');
 								var statusid = $.trim($(msg).find('.status_id').text());
 								var statusText = $.trim($(msg).find('.tweet').html());
-								rabrTweet(source);
+								embrTweet(source);
 								$(".mine").slideDown("fast");
 								$("#full_status").fadeIn("fast");
 								$("#currently .status-text").hide().text(limitation(text)).fadeIn("fast");
@@ -957,10 +957,16 @@ var formFunc = function(){
 				}
 			});
 	};
-	
 	//sidebar functions
 	
 	$(function () {
+		if($("#allTimeline").length > 0) {
+			$("#allTimeline").infinitescroll({
+				nextSelector:"a#more:last",
+				navSelector:"a#more:last",
+				itemSelector:"#allTimeline li"
+			});
+		}
 			$("#sidebarTip").toggle(
 				function () {
 					$('#sidebarTip_more').slideDown('fast');

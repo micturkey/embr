@@ -73,7 +73,7 @@ function update() {
 			data: "since_id=" + since_id,
 			success: function (msg) {
 				if ($.trim(msg).indexOf("</li>") > 0) {
-					$("#allTimeline li.myTweet").fadeIn("fast");
+					$("#allTimeline li.myTweet").fadeOut("fast");
 					var source = $(msg).prependTo($(".timeline"));
 					var num = 0;
 					if (document.title.match(/\d+/) != null) {
@@ -82,7 +82,7 @@ function update() {
 					document.title = "(" + (num + $(msg).length - 1) + ") " + document.title.replace(/(\([0-9]+\))/g, "");
 					markReply($('#allTimeline > li'));
 					filterEle();
-					rabrTweet(source);
+					embrTweet(source);
 					if($(".new").length == 1) {
 						$(".new").css("display","block");
 						$(".new").slideDown("fast");

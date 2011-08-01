@@ -269,7 +269,7 @@ class OAuthRequest {
   }
   
 
-  public function set_http_header($multipart = NULL) {
+  public function set_http_header(&$multipart = NULL) {
 	if (empty($this->parameters)) {
 		$this->http_header[] = 'Content-Type:';
       $this->http_header[] = 'Content-Length:';

@@ -48,7 +48,7 @@
 		$userinfo['statuses_count'] = $user->statuses_count;
 		$userinfo['followers_count'] = $user->followers_count;
 		$userinfo['url'] = $user->url;
-		$userinfo['description'] = $user->description;
+		$userinfo['description'] = formatText($user->description);
 		$userinfo['location'] = $user->location;
 		$userinfo['date_joined'] = date('Y-m-d', strtotime($user->created_at)); //from dabr
 		$userinfo['protected'] = $user->url;
