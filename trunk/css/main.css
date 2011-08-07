@@ -52,7 +52,7 @@ a.a-btn:active{background-image:none;outline:medium none}
 #statuses form{margin-bottom:10px}
 #tip{color:#CCC;float:right;font-size:24px;margin:5px 10px 0 0;font-family:'Helvetica Neue','Helvetica','Arial',sans-serif}
 #tip.loading{background:url("../img/spinner.gif") no-repeat scroll center center transparent!important;color:transparent!important}
-#textbox{-moz-border-radius:3px;border-radius:3px;border:1px solid #A7A6AA;font-size:14px;height:80px;margin:2px 0 5px 10px;overflow-x:hidden;overflow-y:auto;padding:5px;width:510px}
+#textbox{-moz-border-radius:3px;border-radius:3px;border:1px solid #A7A6AA;font-size:14px;height:80px;margin:2px 0 5px 10px;overflow-x:hidden;overflow-y:auto;padding:5px;width:510px;-webkit-transition:border .5s,-webkit-box-shadow .5s;-moz-transition:border .5s,-moz-box-shadow .5s}
 textarea#textbox:focus{outline:none;border:1px solid rgba(82,168,236,.75)!important;-moz-box-shadow:0 0 5px rgba(82,168,236,.5)!important;-webkit-box-shadow:0 0 8px rgba(82,168,236,.5)!important}
 textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-box-shadow:0 0 5px rgba(167,166,170,.5);-webkit-box-shadow:0 0 8px rgba(167,166,170,.5)}
 #submit_btn,.submit_btn{background:transparent url(../img/round-btn.gif) repeat scroll 0 0;border:medium none;color:#666;float:right;font-size:14px;height:32px;margin:5px 13px 0 0;width:115px}
@@ -83,7 +83,6 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 .ing{color:#2276BB}
 .success{color:green}
 .failure{color:red}
-#otherTip{-moz-border-radius:5px;border-radius:5px;background:#F5F5F5 none repeat scroll 0 0;border:1px solid #EEE;clear:both;color:red;font-size:12px;margin:10px 20px;padding:5px 10px;text-align:center;width:483px}
 
 /*timeline*/
 #allTimeline,#allReplies,#allMessage{margin:10px;padding:0;clear:both}
@@ -132,12 +131,10 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 /*pagination*/
 #pagination{margin:5px}
 #pagination p.no-more-tweets{font-size:1.1em;text-align:center}
-.more{background-color:#FFF;background-image:url(../img/more.gif);background-position:left top;background-repeat:repeat-x;border-color:#DDD #AAA #AAA #DDD;border-style:solid;border-width:1px;display:inline;font-size:14px;font-weight:700;height:22px;line-height:1.5em;margin-bottom:6px;outline-color:0;outline-style:none;outline-width:medium;padding:6px 0;text-align:center;text-shadow:1px 1px 1px #FFF;width:45%}
-.scro{border-style:solid none;border:1px #DDD;text-shadow:1px 1px 1px #FFF;text-align:center}
-.more:hover, .scro:hover;{background-position:left -78px;border:1px solid #bbb;text-decoration:none}
+.more{background-color:#FFF;background-image:url(../img/more.gif);background-position:left top;background-repeat:repeat-x;border-color:#DDD #AAA #AAA #DDD;border-style:solid;border-width:1px;display:block;font-size:14px;font-weight:700;height:22px;line-height:1.5em;margin-bottom:6px;outline-color:0;outline-style:none;outline-width:medium;padding:6px 0;text-align:center;text-shadow:1px 1px 1px #FFF;width:45%}
+.more:hover{background-position:left -78px;border:1px solid #bbb;text-decoration:none}
 .more:active{background-position:left -38px;color:#666}
 .more.loading{background-color:#fff;background-image:url(../img/ajax.gif);background-position:50% 50%;background-repeat:no-repeat;border:1px solid #eee;cursor:default!important}
-.scro img{margin-right:10px}
 .more::-moz-focus-inner{border:0}
 #pagination.pagination{height:1.5em}
 #pagination.pagination a,#pagination.pagination .link-like{border:1px solid #cecece;float:right;margin:0 0 0 10px;padding:.25em 1em}
@@ -313,7 +310,7 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .subnavLink:hover{background-color:#E6E6E6;text-decoration:none}
 
 /*actions button*/
-.actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0px;visibility:hidden;z-index:9}
+.actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0;visibility:hidden;z-index:9;-moz-transition:visibility .3s;-webkit-transition:visibility .3s}
 .rt_btn,.replie_btn,.favor_btn,.delete_btn,.msg_replie_btn,.msg_delete_btn,.retw_btn,.trans_btn{display:inline-block;height:16px;width:21px;margin:-7px 0;overflow:hidden;text-indent:-9999em}
 .replie_btn,.msg_replie_btn{background:url("../img/sprite_icons.png") no-repeat scroll 4px 1px transparent}
 .replie_btn:hover,.msg_replie_btn:hover{background:url("../img/sprite_icons.png") no-repeat scroll -17px 1px transparent}
@@ -364,7 +361,7 @@ fieldset.settings{-moz-border-radius:3px;border-radius:3px;border:1px solid #CEC
 fieldset.settings legend{padding:0 5px}
 fieldset.settings select{border:1px solid #CECECE;padding:2px;vertical-align:middle;font-size:12px;margin:0 20px 0 5px}
 fieldset.settings select::-moz-focus-inner{border:0}
-fieldset.settings input{-moz-border-radius:3px;border-radius:3px;border:1px solid #CECECE;padding:2px;font-size:12px;margin-top:-8px;}
+fieldset.settings input{-moz-border-radius:3px;border-radius:3px;border:1px solid #CECECE;padding:2px;font-size:12px;margin-top:-8px}
 fieldset.settings textarea{-moz-border-radius:3px;border-radius:3px;border:1px solid #CECECE;font-size:12px;height:100px;margin-top:10px;width:455px}
 fieldset.settings label, fieldset.settings small{vertical-align:middle;margin-right:2px;margin-top:1px}
 fieldset.settings ol{display:inline-block}
@@ -425,7 +422,7 @@ fieldset.common-form td[colspan=2]{text-align:right}
 
 /*Tipsy*/
 .tipsy{color:#333;cursor:default;font-size:11px;line-height:18px;position:absolute;background-image:url("../img/tipsy.gif");background-repeat:no-repeat;opacity:0.8;padding:5px;display:none}
-.tipsy-inner{-moz-border-radius:4px;border-radius:4px;-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color:#000;color:#DDD;max-width:200px;padding:8px;text-align:left}
+.tipsy-inner{-moz-border-radius:4px;border-radius:4px;-moz-box-shadow:0 1px 2px rgba(0, 0, 0, .5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, .5);box-shadow:0 1px 2px rgba(0, 0, 0, .5);background-color:#000;color:#DDD;max-width:200px;padding:8px;text-align:left}
 .tipsy-inner span{-moz-border-radius:3px;border-radius:3px;background-color:#333;font-size:12px;padding:2px 4px}
 .tipsy-inner strong{font-size:12px}
 .tipsy-north{background-position:center top}

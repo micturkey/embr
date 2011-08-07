@@ -34,7 +34,7 @@
 		}
 
 		//添加url链接
-		$urlReg = '/(((http|https|ftp):\/\/){1}([[:alnum:]\-\.])+(\.)(([[:alnum:]]){2,4})?([[:alnum:]\/+=%#&\:\;_\.~\?\!\-\,]*))/i';
+		$urlReg = '/(((http|https|ftp):\/\/){1}([[:alnum:]\-\.])+(\.)(([[:alnum:]]){2,4})?([[:alnum:]\/+=%#&@\:\;_\.~\?\!\-\,]*))/i';
 		$text = preg_replace($urlReg, '<a href="\1" target="_blank" rel="noreferrer">\1</a>', $text);
 
 		//添加@链接
@@ -55,7 +55,7 @@
 	}
 
 	function formatTweetID($text){
-		$reg = '/(\<a[\w+=\:\%\#\&\.~\?\"\'\/\-\! ]+\>[\S]+<\/a\>)/i';
+		$reg = '/(\<a[\w+=@\:\%\#\&\.~\?\"\'\/\-\! ]+\>[\S]+<\/a\>)/i';
 		preg_match_all($reg, $text, $tmpMatches);
 		if(count($tmpMatches) > 0){
 			$text = preg_replace($reg, '$_holder_$', $text);

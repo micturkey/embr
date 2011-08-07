@@ -960,7 +960,7 @@ var formFunc = function(){
 	//sidebar functions
 	
 	$(function () {
-		if($("#allTimeline").length > 0) {
+		if($("a#more").length > 0 && $("#allTimeline").length > 0) {
 			$("#allTimeline").infinitescroll({
 				nextSelector:"a#more:last",
 				navSelector:"a#more:last",
@@ -1031,11 +1031,12 @@ var formFunc = function(){
 			$(".timeline img").lazyload({threshold : 100, effect : "fadeIn"});
 		});
 	var freshProfile = function(){
+		$("#side_name").text($.cookie('name'));
+		$.cookie('name',null);
 		$(".count").eq(0).text($.cookie('friends_count')).end()
 			.eq(1).text($.cookie('followers_count')).end()
 			.eq(2).text($.cookie('listed_count'));
 		$("#update_count").text($.cookie('statuses_count'));
-		$("#side_name").text($.cookie('name'));
 		$('#sideimg').attr("src",$.cookie('imgurl'));
 	};
 	var markReply = function(obj){

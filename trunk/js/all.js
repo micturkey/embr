@@ -49,6 +49,7 @@ $(function () {
 		$("#allMessage").hide();
 		$("#allTimelineBtn").click(function () {
 				$("#allTimeline").show();
+				$("#allTimeline img").lazyload({threshold : 100, effect : "fadeIn"});
 				$("#allReplies").hide();
 				$("#allMessage").hide();
 				$("#allTimelineBtn").addClass("allHighLight");
@@ -59,6 +60,7 @@ $(function () {
 		$("#allRepliesBtn").click(function () {
 				$("#allTimeline").hide();
 				$("#allReplies").show();
+				$("#allReplies img").lazyload({threshold : 100, effect : "fadeIn"});
 				$("#allMessage").hide();
 				$("#allRepliesBtn").addClass("allHighLight");
 				if ($("#allTimelineBtn").hasClass("allHighLight")) $("#allTimelineBtn").removeClass("allHighLight");
@@ -69,6 +71,7 @@ $(function () {
 				$("#allTimeline").hide();
 				$("#allReplies").hide();
 				$("#allMessage").show();
+				$("#allMessage img").lazyload({threshold : 100, effect : "fadeIn"});
 				$("#allMessageBtn").addClass("allHighLight");
 				if ($("#allRepliesBtn").hasClass("allHighLight")) $("#allRepliesBtn").removeClass("allHighLight");
 				else $("#allTimelineBtn").removeClass("allHighLight");
