@@ -65,7 +65,7 @@ $(function(){
 	$("#styleSelect").change(function(){
 		if ($(this).val() != "n/a") {
 			$.each(style[$(this).val()], function (i,o) {
-				$("#"+i).val(o);
+				$.cookie('myCSS',o,{expires:365});
 				location.reload();
 				updateSentTip('Themes Saved Successfully!',3000,'success');
 			});

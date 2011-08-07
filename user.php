@@ -82,7 +82,6 @@
 			<a class="btn" id="info_reply_btn" href="#">Reply</a>
 			<a class="btn" id="info_hide_btn" href="#">Hide @</a>
 			<a class="btn " id="report_btn" href="#" style="color:#a22">Report Spam</a>
-			<!-- <a class="btn btn-mint" id="nexus_btn" href="nexus.php?target=<?php echo $userid ?>&source=<?php echo getEncryptCookie('twitese_name')?>">Nexus</a> -->
 		</div>
 <?php } ?>
 	</div>
