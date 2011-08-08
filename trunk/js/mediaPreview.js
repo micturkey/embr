@@ -240,13 +240,14 @@ var previewImg = function (obj) {
 	}
 }
 var previewMedia = function (objs) {
-	$(objs).find(".tweet a:not(:hidden), .unshorturl").each(function () {
+	$(objs).find(".tweet a:not(:hidden), .unshorturl").not('.previewed').each(function () {
 		if ($.cookie('showpic') === 'true') {
 			previewImg($(this));
 		}
 		if ($.cookie('mediaPre') === 'true') {
 			previewFlash($(this));
 		}
+		$(this).addClass('previewed');
 	});
 }
 // Check if jQuery's loaded

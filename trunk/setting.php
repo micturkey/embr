@@ -75,10 +75,15 @@
 			
 			<fieldset class="settings">
 
-			<legend>Proxify</legend>
+			<legend>Utility</legend>
 
 			<input id="proxifyAvatar" type="checkbox" />
 			<label>Proxify the Avatar</label>
+			
+			<br /><br />			
+			<input id="autoscroll" type="checkbox" />
+			<label>Auto Scroll</label>
+			
 			</fieldset>
 			
 			<fieldset class="settings">

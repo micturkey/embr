@@ -96,7 +96,7 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 .faved{background:transparent url(../img/faved.png) no-repeat scroll 500px 10px}
 .user_name{font-weight:bold}
 .timeline{margin:0 10px}
-.timeline li{border-top:1px solid #EFEFEF;cursor:default;display:block;float:left;margin:0;overflow:visible;padding:10px 25px 5px 2px;position:relative;width:497px}
+.timeline li{border-top:1px solid #EFEFEF;cursor:default;display:block;float:left;margin:0;overflow:visible;padding:10px 25px 5px 2px;position:relative;width:497px;-moz-transition:background-color .5s;-webkit-transition:background-color .5s}
 .timeline li:hover .actions{visibility:visible}
 .ajax_timeline li{cursor:default;display:block;float:left;margin:0;overflow:visible;padding:5px 0;width:520px;position:relative}
 .ajax_timeline li .status_body{margin-left:50px!important;margin-right:5px!important}
@@ -310,7 +310,7 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .subnavLink:hover{background-color:#E6E6E6;text-decoration:none}
 
 /*actions button*/
-.actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0;visibility:hidden;z-index:9;-moz-transition:visibility .3s;-webkit-transition:visibility .3s}
+.actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0;visibility:hidden;z-index:9}
 .rt_btn,.replie_btn,.favor_btn,.delete_btn,.msg_replie_btn,.msg_delete_btn,.retw_btn,.trans_btn{display:inline-block;height:16px;width:21px;margin:-7px 0;overflow:hidden;text-indent:-9999em}
 .replie_btn,.msg_replie_btn{background:url("../img/sprite_icons.png") no-repeat scroll 4px 1px transparent}
 .replie_btn:hover,.msg_replie_btn:hover{background:url("../img/sprite_icons.png") no-repeat scroll -17px 1px transparent}
@@ -374,7 +374,7 @@ fieldset.settings .btn{padding: 4px 8px 4px;}
 
 /*all.php*/
 #allNav{margin-left:10px;float:left}
-.allBtn{-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px;background-color:#E0E0E0;border-left:1px solid #ADADAD;border-right:1px solid #ADADAD;border-top:1px solid #ADADAD;color:#75715E;display:inline-block;float:left;font-size:12px;margin:10px 5px 0 0;padding:2px 20px;text-align:center}
+.allBtn{-moz-border-radius:3px 3px 0 0;border-radius:3px 3px 0 0;background-color:#E0E0E0;border-left:1px solid #ADADAD;border-right:1px solid #ADADAD;border-top:1px solid #ADADAD;color:#75715E;display:inline-block;float:left;font-size:12px;margin:10px 5px 0 0;padding:2px 20px;text-align:center}
 .allBtn:hover{background-color:#F2F2F2;text-decoration:none}
 .allHighLight{background-color:#FFF}
 

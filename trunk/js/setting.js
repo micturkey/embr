@@ -2,6 +2,7 @@ $(function(){
 	checkbox('showpic',"#showpic",true);
 	checkbox('mediaPre',"#mediaPreSelect",true);
 	checkbox('p_avatar',"#proxifyAvatar",false);
+	checkbox('autoscroll',"#autoscroll",true);
 	selectbox('homeInterval',"#homeInterval",function(){
 		$.cookie('intervalChanged','true',{expires:365});
 	});
