@@ -1,5 +1,6 @@
 $(function(){
-	$(".rt_btn").click(function(){
+	$(".rt_btn").click(function(e){
+		e.preventDefault();
 		if ($("#textbox").length > 0) {
 			onRT($(this));
 		} else {
@@ -18,7 +19,8 @@ $(function(){
 			onReplie($(this),e);
 		}
 	});
-	$(".favor_btn").live("click", function(){
+	$(".favor_btn").live("click", function(e){
+		e.preventDefault();
 		onFavor($(this));
 	});
 });

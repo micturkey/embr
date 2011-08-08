@@ -46,7 +46,7 @@
 				$output .= recoverShortens($text);
 				$output .= "
 							<span class=\"actions\">
-								<a class=\"replie_btn\" href=\"a_reply.php?id=$status->id\">Reply</a><a class=\"rt_btn\" href=\"a_rt.php?id=$status->id\">Retweet</a><a class=\"favor_btn\" href=\"a_favor.php?id=$status->id\">Favorite</a></span>
+								<a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a><a class=\"favor_btn\" href=\"#\">Favorite</a></span>
 						<span class=\"status_info\">
 								<span class=\"source\">via $status->source</span>
 								<span class=\"date\"><a href=\"status.php?id=$status->id\" target=\"_blank\">$date</a></span>

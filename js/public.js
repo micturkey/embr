@@ -960,7 +960,7 @@ var formFunc = function(){
 	//sidebar functions
 	
 	$(function () {
-		if($("a#more").length > 0 && $("#allTimeline").length > 0) {
+		if($.cookie('autoscroll') !== false && $("a#more").length > 0 && $("#allTimeline").length > 0) {
 			$("#allTimeline").infinitescroll({
 				nextSelector:"a#more:last",
 				navSelector:"a#more:last",
