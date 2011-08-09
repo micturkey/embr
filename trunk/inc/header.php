@@ -15,12 +15,14 @@
 <link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
 <?php 
-	$myCSS = getColor("myCSS","");
+	$myCSS = getDefCookie("myCSS","");
 	$old_css = "ul.sidebar-menu li.active a";
 	$new_css = "ul.sidebar-menu a.active";
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
-	$fontsize = getColor("fontsize","13px");
-	$bodyBg = getColor("bodyBg","");
+	$fontsize = getDefCookie("fontsize","13px");
+	$Bgcolor = getDefCookie("Bgcolor");
+	$Bgimage = getDefCookie("Bgimage",'/img/bg-clouds.png');
+	
 	if ($title != 'Error' ){
 		setcookie('loginPage',$_SERVER['PHP_SELF'],$_SERVER['REQUEST_TIME']+3600*24);
 	}
@@ -28,7 +30,7 @@
 <style type="text/css">
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
-body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>}
+body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $Bgcolor ?>;background-image: url('<?php echo $Bgimage?>')}
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>

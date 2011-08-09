@@ -82,7 +82,7 @@
 			
 			<br /><br />			
 			<input id="autoscroll" type="checkbox" />
-			<label>Auto Scroll</label>
+			<label>Auto Scroll your Timeline</label>
 			
 			</fieldset>
 			
@@ -130,7 +130,11 @@
 			<fieldset class="settings">
 
 			<legend>UI Preferences</legend>
-
+			<input id="twitterbg" type="checkbox" />
+			<label>Use twitter account background</label>
+			
+			<br /><br />
+			
 			<label>Custom Themes</label>
 			<select id="styleSelect"><option value="n/a">Choose one...</option></select>
 			<small>(We have awesome themes for you!)</small>
@@ -138,7 +142,7 @@
 			<br /><br />
 
 			<label>Background Color</label>
-			<input class="bg_input" type="text" id="bodyBg" name="bodyBg" value="<?php echo getColor("bodyBg","") ?>" />
+			<input class="bg_input" type="text" id="bodyBg" name="bodyBg" value="<?php echo getDefCookie("Bgcolor","") ?>" />
 			<small>(Choose your favorite color here)</small>
 
 			<br /><br />
@@ -160,7 +164,7 @@
 			<label>Tips:</label>
 			<small>You must use <a href="http://i.zou.lu/csstidy/" target="_blank" title="Powered by Showfom">CSSTidy</a> to compress your stylesheet.</small>
 			<br />
-			<textarea type="text" id="myCSS" name="myCSS" value="" /><?php echo getColor("myCSS","") ?></textarea>
+			<textarea type="text" id="myCSS" name="myCSS" value="" /><?php echo getDefCookie("myCSS","") ?></textarea>
 			</fieldset>
 
 <?php

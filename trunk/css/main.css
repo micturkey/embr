@@ -78,8 +78,8 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 #latest_meta a{color:#999}
 
 /*tips*/
-#shortcutTip{-moz-border-radius:5px;border-radius:5px;border:2px solid;color:#FFF;cursor:default;display:block;font-size:20px;font-weight:bold;left:20px;opacity:0.8;padding:8px 16px;position:fixed;top:20px}
-#sentTip{background:#FFF;-moz-border-radius:0 0 5px 5px;border-radius:0 0 5px 5px;font-size:11px!important;font-weight:700;left:auto;right:auto;padding:4px 0 6px;margin:-1px 0 0 233px;position:fixed;text-align:center;top:0;width:300px;min-height:13px;z-index:1000;opacity:0.8;filter:alpha(opacity=80)}
+#shortcutTip{-moz-border-radius:5px;border-radius:5px;border:2px solid #FFF;color:#FFF;cursor:default;display:block;font-size:20px;font-weight:bold;left:20px;opacity:0.8;padding:8px 16px;position:fixed;top:20px}
+#sentTip{background:#FFF;-moz-border-radius:0 0 5px 5px;border-radius:0 0 5px 5px;font-size:11px!important;font-weight:700;left:auto;right:auto;padding:4px 0 6px;margin:-1px 0 0 233px;position:fixed;text-align:center;top:0;width:300px;min-height:13px;z-index:1000;opacity:0.8}
 .ing{color:#2276BB}
 .success{color:green}
 .failure{color:red}
@@ -100,7 +100,6 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);-moz-
 .timeline li:hover .actions{visibility:visible}
 .ajax_timeline li{cursor:default;display:block;float:left;margin:0;overflow:visible;padding:5px 0;width:520px;position:relative}
 .ajax_timeline li .status_body{margin-left:50px!important;margin-right:5px!important}
-.xmas_tweet{background:transparent url(../img/jingle_bell.png) no-repeat scroll 510px 5px}
 .status_body{display:block;line-height:22px;margin-left:60px;overflow:hidden;position:relative}
 .status_info{color:#999;display:block;font-size:11px;height:22px;margin:5px 0 0;overflow:hidden;text-align:left;width:100%}
 .status_info a{color:#999;font-size:11px;text-decoration:none}

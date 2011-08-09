@@ -31,16 +31,18 @@
 <link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / Tweet</title>
 <?php 
-	$myCSS = getColor("myCSS","");
+	$myCSS = getDefCookie("myCSS","");
 	$old_css = "ul.sidebar-menu li.active a";
 	$new_css = "ul.sidebar-menu a.active";
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
-	$fontsize = getColor("fontsize","13px");
+	$fontsize = getDefCookie("fontsize","13px");
+	$bodyBg = getDefCookie("bodyBg");
+	$Bgcolor = getDefCookie("Bgcolor");
 ?>
 <style>
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
-body {font-size:<?php echo $fontsize ?> !important}
+body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>;background-image:<?php echo $Bgcolor?>}
 #header {
 margin:1em auto;
 text-align:right;

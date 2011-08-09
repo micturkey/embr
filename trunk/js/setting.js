@@ -3,6 +3,21 @@ $(function(){
 	checkbox('mediaPre',"#mediaPreSelect",true);
 	checkbox('p_avatar',"#proxifyAvatar",false);
 	checkbox('autoscroll',"#autoscroll",true);
+	checkbox('twitterbg',"#twitterbg",false,function(){
+		if($.cookie('twitterbg') === 'true'){
+			$.ajax({
+				url:'ajax/updateProfile.php?extra=bg',
+				dataType:'json',
+				success: function (){
+					location.reload();
+				}
+			});
+		} else {
+			$.cookie('Bgcolor', '');
+			$.cookie('Bgimage','/img/bg-clouds.png');
+			location.reload();
+		}
+	});
 	selectbox('homeInterval',"#homeInterval",function(){
 		$.cookie('intervalChanged','true',{expires:365});
 	});
@@ -29,7 +44,8 @@ $(function(){
 		if(confirm("You will lose all customized settings!")){
 			$.cookie('myCSS', '');
 			$.cookie('fontsize', '');
-			$.cookie('bodyBg', '');
+			$.cookie('Bgcolor', '');
+			$.cookie('Bgimage','');
 			$.cookie('showpic','true');
 			$.cookie('mediaPre','true');
 			$.cookie('p_avatar','false');
@@ -67,6 +83,8 @@ $(function(){
 		if ($(this).val() != "n/a") {
 			$.each(style[$(this).val()], function (i,o) {
 				$.cookie('myCSS',o,{expires:365});
+				$('#twitterbg').attr('checked', false);
+				$.cookie('twitterbg',false);
 				location.reload();
 				updateSentTip('Themes Saved Successfully!',3000,'success');
 			});
@@ -106,7 +124,7 @@ $(function(){
 		});
 	});
 });
-function checkbox(c,id,d){
+function checkbox(c,id,d,extra){
 	if ($.cookie (c) === null) {
 		$.cookie (c, d, { expires: 30 });
 	} else if ($.cookie (c) === 'true') {
@@ -116,6 +134,7 @@ function checkbox(c,id,d){
 	}
 	$(id).click(function (){
 		$.cookie(c,$(id).attr("checked"),{expires:365});
+		if (extra != undefined) extra();
 		updateSentTip('Setting saved successfully!',1000,'success');
 	});
 }
