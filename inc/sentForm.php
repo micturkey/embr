@@ -97,11 +97,11 @@
 <input type="hidden" id="in_reply_to" name="in_reply_to" value="<?php echo isset($_sentInReplyTo) ? $_sentInReplyTo : 0 ?>" />
 <?php
 	$t = getTwitter();
-	$current_user = $t->veverify();
-	if ($current_user === false) {
+	$user = $t->veverify();
+	if ($user === false) {
 		header('location: error.php');exit();
 	} 
-	$empty = count($current_user) == 0? true: false;
+	$empty = count($user) == 0? true: false;
 	if ($empty) {
 		echo "<div id=\"currently\">
 			<span id=\"full_status\" title=\"Click to view the full tweet\"><strong >Latest:</strong></span>
@@ -115,7 +115,7 @@
 			</span>
 			</div>";
 	} else {
-			$status = $current_user->status;
+			$status = $user->status;
 			$date = formatDate($status->created_at);
 			$text = formatText($status->text);
 			$output = "

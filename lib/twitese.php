@@ -22,7 +22,7 @@
 		setcookie('listed_count', GetListed($t), $time, '/');
 	}
 
-	function getColor($name, $default) {
+	function getDefCookie($name, $default="") {
 		if (getCookie($name)) return getCookie($name);
 		else return $default;
 	}

@@ -266,7 +266,7 @@ var updateSentTip = function(message, duration, className){
 	sentTip.css({
 			"border-style": "solid",
 			"border-width": "1px",
-			"border-color": bgColor
+			"border-color": "transparent"
 		});
 	sentTip.slideDown("fast");
 	window.setTimeout(function () {
@@ -960,7 +960,7 @@ var formFunc = function(){
 	//sidebar functions
 	
 	$(function () {
-		if($.cookie('autoscroll') !== false && $("a#more").length > 0 && $("#allTimeline").length > 0) {
+		if($.cookie('autoscroll') != 'false' && $("a#more").length > 0 && $("#allTimeline").length > 0) {
 			$("#allTimeline").infinitescroll({
 				nextSelector:"a#more:last",
 				navSelector:"a#more:last",

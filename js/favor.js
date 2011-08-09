@@ -8,7 +8,7 @@ $(function(){
 		e.preventDefault();
 		onReplie($(this),e);
 	});
-	$(".delete_btn").click(function(e){
+	$(".delete_btn").live("click",function(e){
 		e.preventDefault();
 		onDelete($(this), "favor");
 	});
