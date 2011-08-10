@@ -9,7 +9,14 @@ $(function(){
 			onRT($(this));
 		}
 	});
-	
+	$(".retw_btn").live("click", function(e){
+			e.preventDefault();
+			onNwRT($(this));
+	});
+	$(".rt_undo").live("click", function(e){
+		e.preventDefault();
+		onUndoRt($(this));
+	});
 	$(".replie_btn").live("click", function(e){
 		e.preventDefault();
 		var replie_id = $(this).parent().parent().find(".status_word").find(".user_name").text();

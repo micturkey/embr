@@ -1041,7 +1041,7 @@ var formFunc = function(){
 	};
 	var markReply = function(obj){
 		obj.each(function (i, o) {
-				if ($(this).find("> span").find('.tweet').text().toLowerCase().indexOf("@" + $("#sideid").text().toLowerCase()) > -1) {
+				if ($(this).find("> span").find('.tweet').text().toLowerCase().indexOf("@" + $("#side_name").text().toLowerCase()) > -1) {
 					$(this).addClass("reply");
 				}
 			});

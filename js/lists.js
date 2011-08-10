@@ -12,8 +12,7 @@ $(function(){
 		e.preventDefault();
 		onFavor($(this));
 	});
-	
-	$(".unfollow_list").click(function(e){
+	$(".unfollow_list").live("click",function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $(this).parent().parent().find(".rank_name").text().substr(1);
