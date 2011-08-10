@@ -91,7 +91,7 @@ $(function(){
 		}
 	});
 	$("textarea#myCSS").change(function(){
-		$.cookie('myCSS',$(this).text(),{expires:365});
+		$.cookie('myCSS',$(this).val(),{expires:365});
 		location.reload();
 		updateSentTip('Themes saved successfully!',3000,'success');
 	});
