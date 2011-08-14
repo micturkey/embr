@@ -15,20 +15,9 @@
 		setcookie('listed_count', GetListed($t), $time, '/');
 		if($_GET['extra'] == 'bg') {
 			setcookie('Bgcolor', '#'.$user->profile_background_color,$time,'/');
-			setcookie('Bgimage', preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$user->profile_background_image_url),$time,'/');
+			setcookie('Bgimage', getAvatar($user->profile_background_image_url),$time,'/');
 		}
 		echo '{"result": "success"}';
-		/*
-		$callback = array(
-			'friends' => $user->friends_count,
-			'followers' => $user->followers_count,
-			'statuses' => $user->statuses_count,
-			'listed' => GetListed($t),
-			'imgurl' => getAvatar($user->profile_image_url),
-			'name' => $user->screen_name,
-		);
-		echo json_encode($callback);
-		*/	
 	} else {
 		echo '{"result": "error"}';
 	}

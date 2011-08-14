@@ -403,9 +403,9 @@ var formFunc = function(){
 		var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 		var in_reply_id = $this.parent().parent().find(".status_id").text();
 		var text = "@" + replie_id;
+		var selectionStart = text.length + 1;
 		var mode = "In reply to ";
-		if (e.ctrlKey) {
-			mode = "Reply to all: ";
+		if (!e.ctrlKey && !e.metaKey) {
 			var temp = {
 				text: true
 			};
@@ -419,14 +419,21 @@ var formFunc = function(){
 					}
 					text = mentionArray.join(' ');
 				});
+
+			if (mentions.length > 0) {
+				mode = "Reply to all: ";
+			}
 		}
 		if (e.altKey) {
 			mode = "Non-conversational reply to ";
 			in_reply_id = "";
 		}
 		scroll(0, 0);
-		$("#textbox").focus();
-		$("#textbox").val($("#textbox").val() + text + ' ');
+		var textbox = $("#textbox");
+		var oldText = textbox.val();
+		textbox.focus()
+			.val(oldText + text + ' ')[0]
+			.selectionStart = oldText.length + selectionStart;
 		$("#in_reply_to").val(in_reply_id);
 		$("#full_status").hide();
 		$("#latest_meta").html("").hide();

@@ -54,14 +54,22 @@
 			$output = '<ol class="timeline" id="allTimeline">';
 			
 			foreach ($messages as $message) {
-				$name = $message->sender_screen_name;
-				$imgurl = getAvatar($message->sender->profile_image_url);
+				if (!$isSentPage) {
+					$name = $message->sender_screen_name;
+					$imgurl = getAvatar($message->sender->profile_image_url);
+					$messenger = $message->sender;
+				}
+				else{
+					$name = $message->recipient_screen_name;
+					$imgurl = getAvatar($message->recipient->profile_image_url);
+					$messenger = $message->recipient;
+				}
 				$date = formatDate($message->created_at);
 				$text = formatText($message->text);
 				
 				$output .= "
 					<li>
-						<span class=\"status_author\">".initShortcutMenu($message->sender)."
+						<span class=\"status_author\">".initShortcutMenu($messenger)."
 							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"$name\" /></a>
 						</span>
 						<span class=\"status_body\">
@@ -106,8 +114,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>
