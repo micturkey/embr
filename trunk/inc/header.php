@@ -21,7 +21,7 @@
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
 	$fontsize = getDefCookie("fontsize","13px");
 	$Bgcolor = getDefCookie("Bgcolor");
-	$Bgimage = getDefCookie("Bgimage",'/img/bg-clouds.png');
+	$Bgimage = getDefCookie("Bgimage",'img/bg-clouds.png');
 	
 	if ($title != 'Error' ){
 		setcookie('loginPage',$_SERVER['PHP_SELF'],$_SERVER['REQUEST_TIME']+3600*24);

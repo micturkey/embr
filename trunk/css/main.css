@@ -304,9 +304,9 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .info_btn_hover{background:#FFF none repeat scroll 0 0;text-decoration:none}
 .info_btn:hover{background:#FFF none repeat scroll 0 0;text-decoration:none}
 .subnavNormal{-moz-border-radius:2px 0 0 2px;border-radius:2px 0 0 2px;background:#FFF none repeat scroll 0 0;border-color:#C4C4C4 #C4C4C4 #FFF;border-style:solid;border-width:1px;padding:5px 12px;margin:0 5px 0 0}
-.subnavLink{background-color:#F0F0F0;cursor:pointer;font-size:12px;margin:0 5px 0 0;padding:6px 12px 5px}
+.subnavLink, .ac_over{background-color:#F0F0F0;cursor:pointer;font-size:12px;margin:0 5px 0 0;padding:6px 12px 5px}
 .subnavLink a, .subnavNormal a, .subnavLink a:hover, .subnavNormal a:hover{text-decoration:none}
-.subnavLink:hover{background-color:#E6E6E6;text-decoration:none}
+.subnavLink:hover, .ac_over:hover{background-color:#E6E6E6;text-decoration:none}
 
 /*actions button*/
 .actions{border-width:0;bottom:8px;line-height:1.25em;position:absolute;right:0;visibility:hidden;z-index:9}
@@ -416,8 +416,11 @@ fieldset.common-form .example{font-style:oblique}
 fieldset.common-form .suggestion{color:red}
 fieldset.vertical-form input[type=text]{width:165px}
 div.direct-message-box fieldset.standard-form{padding:10px 90px;width:548px}
-.ie6 .standard-form .info{background:transparent none repeat scroll 0 0;border:0 none}
 fieldset.common-form td[colspan=2]{text-align:right}
+.ac_results ul{width:100%;list-style-position:outside;list-style:none;margin:0;padding:0;} 
+.ac_results li{cursor:default;display:block;font:menu;font-size:12px;line-height:16px;overflow:hidden;margin:0;padding:2px 5px;} 
+.ac_loading{background:#FFF url(img/ajax.gif) right center no-repeat;}
+.ac_odd{background-color:#eee;}
 
 /*Tipsy*/
 .tipsy{color:#333;cursor:default;font-size:11px;line-height:18px;position:absolute;background-image:url("../img/tipsy.gif");background-repeat:no-repeat;opacity:0.8;padding:5px;display:none}
