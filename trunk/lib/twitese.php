@@ -74,28 +74,6 @@
 		return $text;
 	}
 
-	function formatDate($date, $is_raw = false){
-		date_default_timezone_set('Asia/Chongqing');
-		$differ = $_SERVER['REQUEST_TIME'] - strtotime($date);
-
-		if ($is_raw) {
-			$dateFormated = date('Y-m-d H:i:s', strtotime($date)); 
-		} else {
-			if ($differ < 0) $differ = 0;
-			if ($differ < 60) {
-				$dateFormated = ceil($differ) . ' seconds ago';
-			} else if ($differ < 3600) {
-				$dateFormated = ceil($differ/60) . ' minutes ago';
-			} else if ($differ < 3600*24) {
-				$dateFormated = 'about ' . ceil($differ/3600) . ' hours ago';
-			} else {
-				$dateFormated = date('Y-m-d H:i:s', strtotime($date)); 
-			}
-		}
-		
-		return $dateFormated;
-	}
-
 	/* ---------- Recover unshorten urls ---------- */
 	function recoverShortens($text){
 		$patten = '/(http[s]?\:\/\/[\w]+[\w\.]*\/[\w\/+=%#&\:_\.~\?\!\-\,]+)/i';

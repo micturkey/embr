@@ -1,6 +1,6 @@
 $(function(){
 	formHTML = "<h2>What are you doing?</h2>" + formHTML + "<div class=\"clear\"></div>";
-	$(".rt_btn").click(function(e){
+	$(".rt_btn").live("click",function(e){
 		e.preventDefault();
 		if ($("#textbox").length > 0) {
 			onRT($(this));
@@ -10,7 +10,7 @@ $(function(){
 			onRT($(this));
 		}
 	});
-	$(".replie_btn").click(function(e){
+	$(".replie_btn").live("click",function(e){
 		e.preventDefault();
 		if ($("#textbox").length > 0) {
 			onReplie($(this),e);

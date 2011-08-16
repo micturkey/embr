@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	if(!isset($_SESSION)){
 		session_start();
 	}
@@ -17,7 +17,7 @@
 			foreach ($statuses as $status) {
 				
 				$user = $status->user;
-				$date = formatDate($status->created_at);
+				$date = $status->created_at;
 				$text = formatText($status->text);
 
 				if(strpos("@$t->username", $text) > -1) {

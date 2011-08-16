@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 	include ('lib/twitese.php');
 	$title = "Public";
 	include ('inc/header.php');
@@ -31,7 +31,7 @@
 			$output = '<ol class="timeline" id="allTimeline">';
 			
 			foreach ($statuses as $status) {
-				$date = formatDate($status->created_at);
+				$date = $status->created_at;
 				$text = formatText($status->text);
 				
 				$output .= "

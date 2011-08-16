@@ -32,7 +32,8 @@
 		header('location: error.php');exit();
 	}
 	$user = $t->showUser($userid);
-	$isProtected = $statuses->error == 'Not authorized';
+	//header('location: ../pr.php?pr='.urlencode(print_r($statuses,true)));
+	$isProtected = $statuses == 'protected';
 	$friendship = $t->friendship($t->username,$userid);
 	$isFriend = $friendship->relationship->source->following;
 	$isFollower = $friendship->relationship->source->followed_by;

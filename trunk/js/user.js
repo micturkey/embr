@@ -1,16 +1,10 @@
 $(function(){
-/*
-	$("#submit_btn").click(function(e){
-		updateStatus();
-		e.preventDefault();
-	});
-*/
 	$(".retw_btn").live("click", function(e){
 		e.preventDefault();
 		onNwRT($(this));
 	});
 
-	$(".rt_btn").click(function(e){
+	$(".rt_btn").live("click",function(e){
 		e.preventDefault();
 		if ($("#textbox").length > 0) {
 			onInfoRT($(this));
@@ -33,7 +27,7 @@ $(function(){
 		}
 	});
 
-	$("#info_reply_btn").click(function(){
+	$("#info_reply_btn").live("click",function(){
 		var replie_id = $("#info_name").text();
 		if ($("#textbox").length > 0) {
 			$("#textbox").val($("#textbox").val() + "@" + replie_id + " ");

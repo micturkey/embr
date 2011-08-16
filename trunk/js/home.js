@@ -28,15 +28,13 @@ $(function () {
 	});
 	markReply($("#allTimeline > li"));
 	$("#submit_btn").click(function (e) {
-		updateStatus();
 		e.preventDefault();
+		updateStatus();
 	});
-	document.onclick = function () {
+	$("body").live("click", function (e) {
 		document.title = document.title.replace(/(\([0-9]+\))/g, "");
-		$(".new").each(function () {
-			$(".new").remove();
-		});
-	}
+		$(".new").remove();
+	});
 	setUpdateInterval();
 });
 var setUpdateInterval = function () {

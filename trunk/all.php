@@ -72,7 +72,7 @@
 		foreach ($messages as $message) {
 			$name = $message->sender_screen_name;
 			$imgurl = getAvatar($message->sender->profile_image_url);
-			$date = formatDate($message->created_at);
+			$date = $message->created_at;
 			$text = formatText($message->text);
 
 			$output .= "<li>
