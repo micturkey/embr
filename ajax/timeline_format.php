@@ -1,9 +1,9 @@
-<?php
+﻿<?php
 	function format_retweet($status, $retweetByMe = false){
 		$retweeter = $status->user;
 		$rt_status = $status->retweeted_status;
 		$status_owner = $rt_status->user;
-		$date = formatDate($status->created_at);
+		$date = $status->created_at;
 		$text = formatText($rt_status->text);
 		$html = '<li>
 			<span class="status_author">'.initShortcutMenu($status_owner).'
@@ -37,7 +37,7 @@
 
 	function format_retweet_of_me($status){
 		$status_owner = $status->user;
-		$date = formatDate($status->created_at);
+		$date = $status->created_at;
 		$text = formatText($status->text);
 		$html = '<li>
 			<span class="status_author">
@@ -81,7 +81,7 @@
 	// $updateStatus 标识是否为发推, 是则应用指定 css
 	function format_timeline($status, $screen_name, $updateStatus = false){
 		$user = $status->user;
-		$date = formatDate($status->created_at);
+		$date = $status->created_at;
 		$text = formatText($status->text);
 
 		if(preg_match('/^\@'.getTwitter()->username.'/i', $text) == 1){

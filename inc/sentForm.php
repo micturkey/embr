@@ -1,4 +1,4 @@
-<script src="js/formfunc.js"></script>
+﻿<script src="js/formfunc.js"></script>
 <script src="js/ajaxfileupload.js"></script>
 <?php if (!isset($_sentText)) { 
 	if ($title != 'Direct Messages') {
@@ -116,7 +116,7 @@
 			</div>";
 	} else {
 			$status = $user->status;
-			$date = formatDate($status->created_at);
+			$date = $status->created_at;
 			$text = formatText($status->text);
 			$output = "
 				<div id=\"currently\">

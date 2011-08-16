@@ -2,7 +2,9 @@ var UPDATE_INTERVAL;
 var PAUSE_UPDATE = false;
 var PAUSE_TIMELINE = false;
 function register() {
-	window.open("signup.php", "registerwindow", "height=450, width=550, toolbar=no, menubar=no, scrollbars=no, resizable=yes, location=yes, status=yes")
+	if (window.confirm("Make sure you can get access to twitter.com!")) {
+		window.open("https://mobile.twitter.com/signup", "registerwindow", "height=450, width=600, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=yes, status=yes");
+	}
 };
 function leaveWord(num) {
 	if(!num){
@@ -39,7 +41,7 @@ formHTML += '<textarea name="status" id="textbox"></textarea>';
 formHTML += '<input type="hidden" id="in_reply_to" name="in_reply_to" value="0" />';
 formHTML += '<div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
 
-function embrTweet(objs) {
+var embrTweet=function(objs) {
 	if(typeof objs === 'undefined'){
 		var objs = $('#statuses .timeline .source a');
 	}else{
@@ -49,6 +51,11 @@ function embrTweet(objs) {
 		if (/embr/i.test($(objs[i]).text())) {
 			$(objs[i]).css("color", "#33CCFF");
 		}
+	}
+	if($(".date a").length > 0) {
+		$(".date a,#latest_meta a").timeago();
+	} else {
+		$(".date,#latest_meta a").timeago();
 	}
 }
 var getConversation = function (obj) {
@@ -73,60 +80,57 @@ var getConversation = function (obj) {
 		});
 }
 $(function () {
-		$(".ajax_reply").live("click", function (e) {
-				var obj = $(this).parent().parent().parent().parent();
-				var thread = obj.find(".ajax_form");
-				if (thread.size() > 0) {
-					thread.slideToggle("fast");
-				} else {
-					obj.addClass("loading");
-					getConversation($(this));
-				}
-				e.preventDefault();
-			});
+	$(".ajax_reply").live("click", function (e) {
+		e.preventDefault();
+		var obj = $(this).parent().parent().parent().parent();
+		var thread = obj.find(".ajax_form");
+		if (thread.size() > 0) {
+			thread.slideToggle("fast");
+		} else {
+			obj.addClass("loading");
+			getConversation($(this));
+		}
 	});
-$(function(){
-		$("#statuses .trans_btn").live("click", function(){
-				var tBody = $(this).parent().parent();
-				if(tBody.find(".trans_body").size() !== 0){
-					return;
-				}
-				var id = $.trim(tBody.find('.status_id').text());
-				var text = $.trim(tBody.find('.tweet').text());
-				var lang = $.cookie('transLang');
-				if(lang === null){
-					lang = 'zh';
-				}
-				tBody.parent().addClass('loading');
-				translate(text, id, lang, 'transCallback');
-			});
-		$("#statuses .trans_close").live("click", function(){
-				$(this).parent().parent().parent().parent().find(".translated").remove();
-			});
-		$("#translateMy").live("click", function(){
-				var orig = $("#textbox").val();
-					ORIG_TEXT = orig;
-				var lang = $.cookie('myLangs')
-				if(lang === null){
-					lang = 'en';
-				}
-				$('#tip').addClass('loading');
-				translate(orig, '', lang, 'transMyCallback');
-			});
-		$("#transRecover").live("click", function(){
-			$("#textbox").val(ORIG_TEXT);
-			$("#transRecover").fadeOut('fast');
-			});
+	$("#statuses .trans_btn").live("click", function(e){
+		e.preventDefault();
+			var tBody = $(this).parent().parent();
+			if(tBody.find(".trans_body").length !== 0){
+				return;
+			}
+			var id = $.trim(tBody.find('.status_id').text());
+			var text = $.trim(tBody.find('.tweet').text());
+			var lang = $.cookie('transLang');
+			if(lang === null){
+				lang = 'zh';
+			}
+			tBody.parent().addClass('loading');
+			translate(text, id, lang, 'transCallback');
+		});
+	$("#statuses .trans_close").live("click", function(){
+			$(this).parent().parent().parent().parent().find(".translated").remove();
+		});
+	$("#translateMy").live("click", function(){
+			var orig = $("#textbox").val();
+				ORIG_TEXT = orig;
+			var lang = $.cookie('myLangs')
+			if(lang === null){
+				lang = 'en';
+			}
+			$('#tip').addClass('loading');
+			translate(orig, '', lang, 'transMyCallback');
+		});
+	$("#transRecover").live("click", function(){
+		$("#textbox").val(ORIG_TEXT);
+		$("#transRecover").fadeOut('fast');
+		});
 	});
 var translate = function(text, context, lang, callback) {
 	var a = "http://www.google.com/uds/Gtranslate";
 	a += "?callback=" + callback;
 	a += "&context=" + context;
 	a += "&q=" + encodeURIComponent(text);
-	a += "&key=notsupplied";
-	a += "&v=1.0";
-	a += "&nocache=1240207680396";
-	a += "&langpair=%7C" + lang;
+	a += "&key=notsupplied&v=1.0&nocache=1240207680396&langpair=%7C";
+	a += lang;
 	$.getScript(a);
 };
 var transMyCallback = function(content, translation){
@@ -255,9 +259,6 @@ $(window).load(function(){
 					}
 				}
 			});
-	});
-$(document).ready(function () {
-		$("<div id='sentTip' style='display:none;' />").prependTo("#header .wrapper");
 	});
 var updateSentTip = function(message, duration, className){
 	var sentTip = $("#sentTip");
@@ -403,7 +404,6 @@ var formFunc = function(){
 		var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 		var in_reply_id = $this.parent().parent().find(".status_id").text();
 		var text = "@" + replie_id;
-		var selectionStart = text.length + 1;
 		var mode = "In reply to ";
 		if (!e.ctrlKey && !e.metaKey) {
 			var temp = {
@@ -411,9 +411,10 @@ var formFunc = function(){
 			};
 			var mentionArray = [text];
 			var mentions = $this.parent().parent().find('a[href^="user.php"][innerHTML^=@]');
+			var self = '@'+$("#side_name").text();
 			$.each(mentions, function () {
 					var t = $(this).text();
-					if (!(t in temp)) {
+					if (!(t == self || t in temp)) {
 						temp[t] = true;
 						mentionArray.push(t);
 					}
@@ -429,11 +430,7 @@ var formFunc = function(){
 			in_reply_id = "";
 		}
 		scroll(0, 0);
-		var textbox = $("#textbox");
-		var oldText = textbox.val();
-		textbox.focus()
-			.val(oldText + text + ' ')[0]
-			.selectionStart = oldText.length + selectionStart;
+		$("#textbox").focus().val($("#textbox").val() + text + ' ');
 		$("#in_reply_to").val(in_reply_id);
 		$("#full_status").hide();
 		$("#latest_meta").html("").hide();
@@ -785,105 +782,102 @@ var formFunc = function(){
 	}
 	
 	$(function () {
-			$("#apiquota_title").toggle(
-				function () {
-					$("#apiquota_title").removeClass().addClass("loading");
-					updateAPIQuota();
-					$("#apiquota_title").removeClass().addClass("open");
-					$("#apiquota_list").slideDown("fast");
-				}, function () {
-					$("#apiquota_list").slideUp("fast");
-					$("#apiquota_title").removeClass();
-				});
-		});
-	$(function () {
-			$(".status_author img, .rank_img img").live("click", function (e) {
-					$(".right_menu").hide();
-					$(this).parent().parent().find(".right_menu").css("display", "block");
-					e.preventDefault();
-				});
-			$('body').click(function () {
-					$(".right_menu").hide();
-				});
-			$('.status_author li a').click(function () {
-					$(".right_menu").hide();
-				});
-			$(".rm_mention").live("click", function (e) {
-					e.preventDefault();
-					rmmention($(this), e);
-				});
-			$(".rm_dm").live("click", function (e) {
-					e.preventDefault();
-					rmdm($(this), e);
-				});
-			$(".rm_follow").live("click", function (e) {
-					e.preventDefault();
-					var $this = $(this);
-					var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
-					updateSentTip("Following " + id + "...", 5000, "ing");
+		$("#apiquota_title").toggle(
+			function () {
+				$("#apiquota_title").removeClass().addClass("loading");
+				updateAPIQuota();
+				$("#apiquota_title").removeClass().addClass("open");
+				$("#apiquota_list").slideDown("fast");
+			}, function () {
+				$("#apiquota_list").slideUp("fast");
+				$("#apiquota_title").removeClass();
+			});
+		$(".status_author img, .rank_img img").live("click", function (e) {
+				$(".right_menu").hide();
+				$(this).parent().parent().find(".right_menu").css("display", "block");
+				e.preventDefault();
+			});
+		$('body').click(function () {
+				$(".right_menu").hide();
+			});
+		$('.status_author li a').click(function () {
+				$(".right_menu").hide();
+			});
+		$(".rm_mention").live("click", function (e) {
+				e.preventDefault();
+				rmmention($(this), e);
+			});
+		$(".rm_dm").live("click", function (e) {
+				e.preventDefault();
+				rmdm($(this), e);
+			});
+		$(".rm_follow").live("click", function (e) {
+				e.preventDefault();
+				var $this = $(this);
+				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				updateSentTip("Following " + id + "...", 5000, "ing");
+				$.ajax({
+						url: "ajax/relation.php",
+						type: "POST",
+						data: "action=create&id=" + id,
+						success: function (msg) {
+							if (msg.indexOf("success") >= 0) {
+								updateSentTip("You have followed " + id + "!", 3000, "success");
+							} else {
+								updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
+							}
+						},
+						error: function (msg) {
+							updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
+						}
+					});
+			});
+		$(".rm_unfollow").live("click", function (e) {
+				e.preventDefault();
+				var $this = $(this);
+				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				if (confirm("Are you sure to unfollow " + id + " ?")) {
+					updateSentTip("Unfollowing " + id + "...", 5000, "ing");
 					$.ajax({
 							url: "ajax/relation.php",
 							type: "POST",
-							data: "action=create&id=" + id,
+							data: "action=destory&id=" + id,
 							success: function (msg) {
 								if (msg.indexOf("success") >= 0) {
-									updateSentTip("You have followed " + id + "!", 3000, "success");
+									updateSentTip("You have unfollowed " + id + "!", 3000, "success");
 								} else {
-									updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
+									updateSentTip("Failed to unfollow " + id + ", please try again.", 3000, "failure");
 								}
 							},
 							error: function (msg) {
-								updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
+								updateSentTip("Failed to unfollow " + id + ", please try again.", 3000, "failure");
 							}
 						});
-				});
-			$(".rm_unfollow").live("click", function (e) {
-					e.preventDefault();
-					var $this = $(this);
-					var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
-					if (confirm("Are you sure to unfollow " + id + " ?")) {
-						updateSentTip("Unfollowing " + id + "...", 5000, "ing");
-						$.ajax({
-								url: "ajax/relation.php",
-								type: "POST",
-								data: "action=destory&id=" + id,
-								success: function (msg) {
-									if (msg.indexOf("success") >= 0) {
-										updateSentTip("You have unfollowed " + id + "!", 3000, "success");
-									} else {
-										updateSentTip("Failed to unfollow " + id + ", please try again.", 3000, "failure");
-									}
-								},
-								error: function (msg) {
-									updateSentTip("Failed to unfollow " + id + ", please try again.", 3000, "failure");
-								}
-							});
-					}
-				});
-			$(".rm_block").live("click", function (e) {
-					e.preventDefault();
-					var $this = $(this);
-					var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
-					if (confirm("Are you sure to block " + id + " ?")) {
-						updateSentTip("Blocking " + id + "...", 5000, "ing");
-						$.ajax({
-								url: "ajax/relation.php",
-								type: "POST",
-								data: "action=block&id=" + id,
-								success: function (msg) {
-									if (msg.indexOf("success") >= 0) {
-										updateSentTip("You have blocked " + id + "!", 3000, "success");
-									} else {
-										updateSentTip("Failed to block " + id + ", please try again.", 3000, "failure");
-									}
-								},
-								error: function (msg) {
+				}
+			});
+		$(".rm_block").live("click", function (e) {
+				e.preventDefault();
+				var $this = $(this);
+				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				if (confirm("Are you sure to block " + id + " ?")) {
+					updateSentTip("Blocking " + id + "...", 5000, "ing");
+					$.ajax({
+							url: "ajax/relation.php",
+							type: "POST",
+							data: "action=block&id=" + id,
+							success: function (msg) {
+								if (msg.indexOf("success") >= 0) {
+									updateSentTip("You have blocked " + id + "!", 3000, "success");
+								} else {
 									updateSentTip("Failed to block " + id + ", please try again.", 3000, "failure");
 								}
-							});
-					}
-				});
-		})
+							},
+							error: function (msg) {
+								updateSentTip("Failed to block " + id + ", please try again.", 3000, "failure");
+							}
+						});
+				}
+			});
 	$(".rm_spam").live("click", function (e) {
 			e.preventDefault();
 			var $this = $(this);
@@ -907,6 +901,7 @@ var formFunc = function(){
 					});
 			}
 		});
+	});
 	function rmmention($this, e) {
 		var replie_id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
 		var in_reply_id = $this.parent().parent().parent().find(".status_id").text();
@@ -1014,29 +1009,30 @@ var formFunc = function(){
 
 	//init global functions
 	$(document).ready(function () {
-			embrTweet();
-			$("#statuses .mine").live("mouseout", function (e) {
-					$(this).removeClass("mine").addClass("myTweet");
-				});
-			$("#primary_nav li a").bind("click", function () {
-					$("#primary_nav li a").each(function (i, o) {
-							if ($(this).hasClass("active")) {
-								$(this).removeClass()
-							}
-						});
-					$(this).removeClass().addClass("active").css("background", "transparent url('../img/spinner.gif') no-repeat scroll 173px center")
-				});
-			$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
-					gravity: 's'
-				});
-			$('#symbols span').tipsy({
-					gravity: $.fn.tipsy.autoNS
-				});
-			if ($.cookie('followus') == 1 && $.cookie('whofollowedus') == $("#sideid").html()) {
-				$("#follow_us").hide();
-			}
-			$(".timeline img").lazyload({threshold : 100, effect : "fadeIn"});
-		});
+		$("<div id='sentTip' style='display:none;' />").prependTo("#header .wrapper");
+		embrTweet();
+		$("#statuses .mine").live("mouseout", function (e) {
+				$(this).removeClass("mine").addClass("myTweet");
+			});
+		$("#primary_nav li a").bind("click", function () {
+				$("#primary_nav li a").each(function (i, o) {
+						if ($(this).hasClass("active")) {
+							$(this).removeClass()
+						}
+					});
+				$(this).removeClass().addClass("active").css("background", "transparent url('../img/spinner.gif') no-repeat scroll 173px center")
+			});
+		$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
+				gravity: 's'
+			});
+		$('#symbols span').tipsy({
+				gravity: $.fn.tipsy.autoNS
+			});
+		if ($.cookie('followus') == 1 && $.cookie('whofollowedus') == $("#sideid").html()) {
+			$("#follow_us").hide();
+		}
+		$(".timeline img + #sideimg").lazyload({threshold : 100, effect : "fadeIn"});
+	});
 	var freshProfile = function(){
 		$("#side_name").text($.cookie('name'));
 		$.cookie('name',null);

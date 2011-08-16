@@ -1,14 +1,14 @@
 $(function () {
 	$(".rank_img img").tipsy({gravity: 's'});
 	$(".rank_img img").live("click", function (e) {
-		$(".right_menu").hide();
+		$(".right_menu").show();
 		$(this).parent().parent().parent().find(".right_menu").css("display", "block");
 		e.preventDefault();
 	});
 	$('body').click(function () {
 		$(".right_menu").hide();
 	});
-	$('.status_author li a').click(function () {
+	$('.status_author li a').live("click",function () {
 		$(".right_menu").hide();
 	});
 	$(".ul_mention").live("click", function (e) {

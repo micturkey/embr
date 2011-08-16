@@ -64,7 +64,7 @@
 					$imgurl = getAvatar($message->recipient->profile_image_url);
 					$messenger = $message->recipient;
 				}
-				$date = formatDate($message->created_at);
+				$date = $message->created_at;
 				$text = formatText($message->text);
 				
 				$output .= "

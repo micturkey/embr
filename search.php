@@ -22,7 +22,7 @@
 			include_once('ajax/timeline_format.php');
 			$output = '<ol class="timeline" id="allTimeline">';
 			foreach ($statuses->results as $status) {
-				$date = formatDate($status->created_at);
+				$date = $status->created_at;
 				$text = formatText($status->text);
 
 				$output .= "
@@ -37,7 +37,7 @@
 				$output .="<span class=\"actions\">
 					<a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a>
 					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-					<a class=\"favor_btn\" href=\"#\">Fav</a></span><span class=\"status_info\">";
+					<a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\">";
 				$output .=	"<span class=\"source\">via ".html_entity_decode($status->source)."</span>
 					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
 					</span>
@@ -93,8 +93,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

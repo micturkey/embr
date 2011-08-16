@@ -31,7 +31,7 @@
 		if($reply_to_id == ""){
 			$reply_to_id = $user->id;
 		}
-		$date = formatDate($status->created_at);
+		$date = $status->created_at;
 		$text = formatText($status->text);
 		$end = (!isset($status->in_reply_to_user_id) || ($user_id != $status->in_reply_to_user_id && $reply_to_id != $status->in_reply_to_user_id));
 		$html = '<li class="round">

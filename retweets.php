@@ -7,7 +7,7 @@
 
 	$type = 'retweets';
 	$retweetsType = isset($_GET['type']) ? $_GET['type'] : 'to';
-	$page = isset($_GET['page']) ? $_GET['page'] : false;
+	$page = isset($_GET['p']) ? $_GET['p'] : 1;
 	$count = isset($_GET['count']) ? $_GET['count'] : 20;
 	$since_id = isset($_GET['since']) ? $_GET['since'] : false;
 	$max_id = isset($_GET['maxid']) ? $_GET['maxid'] : false;
@@ -53,7 +53,7 @@
 	if ($empty) {
 		$html .= "<div id=\"empty\">No retweets to display.</div>";
 	} else {
-		$html .= '<ol class="timeline">';
+		$html .= '<ol class="timeline" id="allTimeline">';
 		if($retweetsType == 'mine'){
 			foreach($retweets as $retweet){
 				$html .= format_retweet_of_me($retweet);
@@ -68,8 +68,8 @@
 			}
 		}
 		$html .= '</ol><div id="pagination">';
-			if ($p >1) $html .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"replies.php?p=" . ($p-1) . "\">Back</a>";
-			if (!$empty) $html .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"replies.php?p=" . ($p+1) . "\">Next</a>";
+			if ($page >1) $html .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"retweets.php?type=".$retweetsType."&p=" . ($page-1) . "\">Back</a>";
+			if (!$empty) $html .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"retweets.php?type=".$retweetsType."&p=" . ($page+1) . "\">Next</a>";
 		$html .= "</div>";
 	}
 	echo $html;
