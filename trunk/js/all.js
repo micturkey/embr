@@ -19,7 +19,7 @@ $(function () {
 			});
 		$(".delete_btn").live("click", function (e) {
 				e.preventDefault();
-				onDelete($(this), "Tweet");
+				onDelete($(this));
 			});
 		$(".msg_replie_btn").live("click", function (e) {
 				e.preventDefault();
@@ -139,9 +139,8 @@ function updateFunc(type, name, pw) {
 	} else {
 		since_id = $(div + " li:first-child").find("span.status_id").text();
 	}
-	param = "?since_id=" + since_id;
 	$.ajax({
-			url: url + param,
+			url: url,
 			type: "GET",
 			dataType: "text",
 			data: "since_id=" + since_id,

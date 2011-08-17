@@ -67,17 +67,17 @@ var getConversation = function (obj) {
 			dataType: "text",
 			success: function(msg){
 				if ($.trim(msg).indexOf("</li>") > 0) {
-					$(msg).appendTo(target);
+					var source = $(msg).appendTo(target);
+					embrTweet(source);
 				}else{
 					updateSentTip('Get thread failed.', 5000, 'failure');
 				}
-				target.removeClass("loading");
 			},
 			error: function(msg){
 				updateSentTip('Get thread failed.', 5000, 'failure');
-				target.removeClass("loading");
 			}
 		});
+	target.removeClass("loading");
 }
 $(function () {
 	$(".ajax_reply").live("click", function (e) {
@@ -166,100 +166,6 @@ var transCallback = function(content, translation){
 		li.removeClass("loading");
 	}
 };
-$(window).load(function(){
-		var scrollTo = function (top, duration, callback) {
-			var w = $(window);
-			var FPS = 50;
-			var currentTop = w.scrollTop();
-			var offset = (currentTop - top) / (duration * FPS / 1000);
-			var n = 0;
-			var prevTop = currentTop;
-			var t = setInterval(function () {
-					if ((prevTop - top) * (currentTop - top) <= 0) {
-						clearInterval(t);
-						currentTop = prevTop = top;
-						w.scrollTop(top);
-						if (callback) callback();
-					} else {
-						prevTop = currentTop;
-						w.scrollTop(currentTop -= offset);
-					}
-				}, 1000 / FPS);
-		}
-		var scrollToTop = function(){
-			scrollTo(0, 200, function () {
-					scrollTo(30, 50, function () {
-							scrollTo(0, 50);
-						});
-				});
-		};
-		var scrollToBottom = function(){
-			var height = document.body.clientHeight;
-			scrollTo(height, 200, function () {
-					scrollTo(height + 30, 50, function () {
-							scrollTo(height, 50);
-						});
-				});
-
-		};
-		$('body').dblclick(function () {
-				scrollToTop();
-				$("#textbox").focus();
-			});
-		$('#content').dblclick(function (e) {
-				e.stopPropagation();
-			});
-		var hkFadeIn = function(text){
-			$("#shortcutTip").fadeIn("fast").html(text);
-		};
-		var hkFadeOut = function(){
-			setTimeout(function () {$("#shortcutTip").fadeOut("fast");}, 2000);
-		};
-		// hotkeys
-		var hotkeyHandler = function(code){
-			switch(code){
-			case 82: // R - refresh
-				hkFadeIn("Refresh");
-				update();
-				hkFadeOut();
-				break;
-			case 67: // C - focus textbox
-			case 85: // U
-				hkFadeIn("Compose");
-				scrollTo(0, 1, function () {
-						$("#textbox").focus();
-					});
-				hkFadeOut();
-				break;
-			case 66: // B - scroll to bottom
-				hkFadeIn("Boom!");
-				scrollToBottom();
-				hkFadeOut();
-				break;
-			case 84: // T - scroll to top
-				hkFadeIn("Whiz!");
-				scrollToTop();
-				hkFadeOut();
-				break;
-			case 83: // S - search
-				hkFadeIn("Search");
-				$("#sidepost").animate({backgroundColor: "#FF6347"}, 500, function(){
-						$("#header_search_query").focus();
-						$("#sidepost").animate({backgroundColor: $("#side_base").css("background-color")}, 1000);
-					});
-				hkFadeOut();
-				break;
-			}
-		};
-		$(document).keydown(function(e){
-				var tag = e.target.tagName;
-				if(tag === "BODY" || tag === "HTML"){
-					if(!e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey){
-						hotkeyHandler(e.keyCode);
-					}
-				}
-			});
-	});
 var updateSentTip = function(message, duration, className){
 	var sentTip = $("#sentTip");
 	var bgColor = $("body").css("background-color");
@@ -268,8 +174,7 @@ var updateSentTip = function(message, duration, className){
 			"border-style": "solid",
 			"border-width": "1px",
 			"border-color": "transparent"
-		});
-	sentTip.slideDown("fast");
+		}).slideDown("fast");
 	window.setTimeout(function () {
 			sentTip.slideUp('fast');
 		}, duration);
@@ -293,8 +198,8 @@ var formFunc = function(){
 		if ($("#textbox").val().length >0 ) {
 			updateStatus();
 		}		
-		});		
-	};
+	});		
+};
 	//update button core
 
 	var updateStatus = function(){
@@ -303,10 +208,8 @@ var formFunc = function(){
 		PAUSE_UPDATE = true;
 
 		var text = $("#textbox").val();
-				
 		if($("#sent_id").val()) {
-			var dm = "D " + $("#sent_id").val();
-			text = dm + ' ' + text; 
+			text = "D " + $("#sent_id").val() + ' ' + text; 
 		}
 		
 		var wordsCount = text.length;
@@ -329,7 +232,6 @@ var formFunc = function(){
 					},
 					success: function (msg) {
 						if ($.trim(msg).indexOf("</li>") > 0) {
-							$.cookie('recover', text, {'expire': 30});
 							$('#tip').removeClass('loading');
 							if ( (text.substring(0,2)).toUpperCase() == "D "){ //exclude the DMs. the exam of user_name is omitted.
 								updateSentTip("Your DM has been sent!", 3000, "success");
@@ -338,29 +240,28 @@ var formFunc = function(){
 								$("#tip").html("<b>140</b>");
 								leaveWord();
 							} else {
-							updateSentTip("Your status has been updated!", 3000, "success");
-							$("#textbox").val("");
-							$("#tip").html("<b>140</b>");
-							leaveWord();
-							if(typeof INTERVAL_COOKIE !== "undefined"){
-								var source = $(msg).prependTo($("#allTimeline"));
-								source.hide().slideDown('fast');
-								var statusid = $.trim($(msg).find('.status_id').text());
-								var statusText = $.trim($(msg).find('.tweet').html());
-								embrTweet(source);
-								$(".mine").slideDown("fast");
-								$("#full_status").fadeIn("fast");
-								$("#currently .status-text").hide().text(limitation(text)).fadeIn("fast");
-								$("#latest_meta").hide().html("<a target=\"_blank\" href=\"status.php?id=" + statusid + "\">less than 5 seconds ago</a>").fadeIn("fast");
-								$("#currently .full-text").hide().html(statusText);
-								$("#full_meta").hide().html("<a target=\"_blank\" href=\"status.php?id=" + statusid + "\">less than 5 seconds ago</a>");
-								$("#full_meta a, .full-text a").click(function (e) {e.stopPropagation();});
-								previewMedia(source);
-								freshProfile();
-							}
+								updateSentTip("Your status has been updated!", 3000, "success");
+								$("#textbox").val("");
+								$("#tip").html("<b>140</b>");
+								leaveWord();
+								if(typeof INTERVAL_COOKIE !== "undefined"){
+									var source = $(msg).prependTo($("#allTimeline"));
+									source.hide().slideDown('fast');
+									var statusid = $.trim($(msg).find('.status_id').text());
+									var statusText = $.trim($(msg).find('.tweet').html());
+									embrTweet(source);
+									$(".mine").slideDown("fast");
+									$("#full_status").fadeIn("fast");
+									$("#currently .status-text").hide().text(limitation(text)).fadeIn("fast");
+									$("#latest_meta").hide().html("<a target=\"_blank\" href=\"status.php?id=" + statusid + "\">less than 5 seconds ago</a>").fadeIn("fast");
+									$("#currently .full-text").hide().html(statusText);
+									$("#full_meta").hide().html("<a target=\"_blank\" href=\"status.php?id=" + statusid + "\">less than 5 seconds ago</a>");
+									$("#full_meta a, .full-text a").click(function (e) {e.stopPropagation();});
+									previewMedia(source);
+									freshProfile();
+								}
 							}
 						} else {
-							$.cookie('recover', text, {'expire': 30});
 							$('#tip').removeClass('loading');
 							updateSentTip("Update failed. Please try again.", 3000, "failure");
 							$('#tweeting_button').removeClass('btn-disabled');
@@ -368,7 +269,6 @@ var formFunc = function(){
 						PAUSE_UPDATE = false;
 					},
 					error: function (msg) {
-						$.cookie('recover', text, {'expire': 30});
 						$('#tip').removeClass('loading');
 						updateSentTip("Update failed. Please try again.", 3000, "failure");
 						$('#tweeting_button').removeClass('btn-disabled');
@@ -376,9 +276,8 @@ var formFunc = function(){
 						leaveWord();
 					}
 				});
+				$.cookie('recover', text, {'expire': 300});
 		}
-		
-		
 	};
 	function onFavor($this) {
 		var status_id = $.trim($this.parent().parent().find(".status_id").text());
@@ -431,40 +330,25 @@ var formFunc = function(){
 		}
 		scroll(0, 0);
 		$("#textbox").focus().val($("#textbox").val() + text + ' ');
-		$("#in_reply_to").val(in_reply_id);
-		$("#full_status").hide();
-		$("#latest_meta").html("").hide();
-		$("#full_meta").hide();
-		$("#currently .full-text").hide();
-		$("#latest_meta").hide();
+		$("#full_status,#latest_meta,#full_meta,#currently .full-text,#latest_meta").hide();
 		$("#currently .status-text").html(mode + text);
 		leaveWord();
 	}
 	function onRT($this) {
 		var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 		scroll(0, 0);
-		$("#textbox").focus();
-		$("#textbox").val("RT @" + replie_id + ":" + $this.parent().parent().find(".status_word").text().replace(replie_id, ""));
-		$("#full_status").hide();
-		$("#latest_meta").hide();
-		$("#full_meta").hide();
-		$("#currently .full-text").hide();
-		$("#latest_meta").hide();
+		$("#textbox").focus().val("RT @" + replie_id + ":" + $this.parent().parent().find(".status_word").text().replace(replie_id, ""));
+		$("#full_status,#latest_meta,#full_meta,#currently .full-text,#latest_meta").hide();
 		$("#currently .status-text").html("Retweet @" + replie_id + "'s tweet with comment.");
 		leaveWord();
 	}
-	function onReplieDM($this, e) {
+	function onReplieDM($this) {
 		var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 		var text = "D " + replie_id;
 		scroll(0, 0);
-		$("#textbox").focus();
-		$("#textbox").val($("#textbox").val() + text + ' ');
+		$("#textbox").focus().val($("#textbox").val() + text + ' ');
 		$("#in_reply_to").val($this.parent().parent().find(".status_id").text());
-		$("#full_status").hide();
-		$("#latest_meta").hide();
-		$("#full_meta").hide();
-		$("#currently .full-text").hide();
-		$("#latest_meta").hide();
+		$("#full_status,#latest_meta,#full_meta,#currently .full-text,#latest_meta").hide();
 		$("#currently .status-text").html("Reply direct message to @" + replie_id);
 		leaveWord();
 	}
@@ -504,41 +388,61 @@ var formFunc = function(){
 				});
 		}
 	}
-	function onDelete($this, type) {
-		var status_id = $.trim($this.parent().parent().find(".status_id").text());
-		$this.parent().parent().parent().css("background-color", "#FF3300");
-		var confirm = window.confirm("Are you sure to delete this tweet?");
-		if (confirm) {
-			updateSentTip("Deleting tweet...", 5000, "ing");
-			var postData = (type == "Tweet") ? "status_id=" : "favor_id=";
+	function UnFavor($this){
+		var $this=$this.parent().parent();
+		var status_id = $.trim($this.find(".status_id").text());
+		$this.parent().css("background-color", "#FF3300");
+		if (window.confirm("Are you sure to unfavor this tweet?")) {
+			updateSentTip("Unfavoring tweet...", 5000, "ing");
 			$.ajax({
 					url: "ajax/delete.php",
 					type: "POST",
-					data: postData + status_id,
+					data: "favor_id=" + status_id,
 					success: function (msg) {
 						if (msg.indexOf("success") >= 0) {
-							$this.parent().parent().parent().css("background-color", "#FF3300");
-							$this.parent().parent().parent().fadeOut("fast");
+							$this.parent().fadeOut("fast");
+							updateSentTip("This tweet has been unfavored!", 3000, "success");
+						} else {
+							updateSentTip("Unfavor failed. Please try again.", 3000, "failure");
+						}
+					},
+					error: function (msg) {
+						updateSentTip("Unfavor failed. Please try again.", 3000, "failure");
+					}
+				});
+		}
+		$this.parent().css("background-color", "");
+	}
+	function onDelete($this) {
+		var $this=$this.parent().parent();
+		var status_id = $.trim($this.find(".status_id").text());
+		$this.parent().css("background-color", "#FF3300");
+		if (window.confirm("Are you sure to delete this tweet?")) {
+			updateSentTip("Deleting tweet...", 5000, "ing");
+			$.ajax({
+					url: "ajax/delete.php",
+					type: "POST",
+					data: "status_id=" + status_id,
+					success: function (msg) {
+						if (msg.indexOf("success") >= 0) {
+							$this.parent().fadeOut("fast");
 							updateSentTip("Your tweet has been destroyed!", 3000, "success");
 						} else {
-							$this.parent().parent().parent().css("background-color", "");
 							updateSentTip("Delete failed. Please try again.", 3000, "failure");
 						}
 					},
 					error: function (msg) {
-						$this.parent().parent().parent().css("background-color", "");
 						updateSentTip("Delete failed. Please try again.", 3000, "failure");
 					}
 				});
 		}
-		$this.parent().parent().parent().css("background-color", "");
+		$this.parent().css("background-color", "");
 	}
 	function onUndoRt($this) {
 		var status_id = $.trim($this.parent().find(".rt_id").text());
 		var statusBody = $this.parent().parent().parent();
 		statusBody.css("background-color", "#FF3300");
-		var confirm = window.confirm("Are you sure to undo this retweet?");
-		if (confirm) {
+		if (window.confirm("Are you sure to undo this retweet?")) {
 			updateSentTip("Undoing retweet...", 5000, "ing");
 			$.ajax({
 					url: "ajax/delete.php",
@@ -546,26 +450,21 @@ var formFunc = function(){
 					data: "status_id=" + status_id,
 					success: function (msg) {
 						if (msg.indexOf("success") >= 0) {
-							statusBody.css("background-color", "#FF3300");
 							statusInfo = $this.parent().parent();
 							if (statusInfo.find(".rt_source").size() === 1) {
-								statusInfo.find(".source").show();
-								statusInfo.find(".date").show();
-								statusInfo.find(".rt_source").remove();
+								statusInfo.find(".source").show().find(".date").show();
+								statusInfo.find(".rt_source").remove()
 								statusInfo.find(".rt_undo").remove();
 								statusBody.removeClass("retweet");
-								statusBody.css("background-color", "");
 							} else {
 								statusBody.fadeOut("fast");
 							}
 							updateSentTip("Your retweet has been undo!", 3000, "success");
 						} else {
-							statusBody.css("background-color", "");
 							updateSentTip("Undo failed. Please try again.", 3000, "failure");
 						}
 					},
 					error: function (msg) {
-						statusBody.css("background-color", "");
 						updateSentTip("Undo failed. Please try again.", 3000, "failure");
 					}
 				});
@@ -573,10 +472,10 @@ var formFunc = function(){
 		statusBody.css("background-color", "");
 	}
 	function onDeleteMsg($this) {
-		var message_id = $.trim($this.parent().parent().find(".status_id").text());
-		$this.parent().parent().parent().css("background-color", "#FF3300");
-		var confirm = window.confirm("Are you sure to delete this message?");
-		if (confirm) {
+		var $this=$this.parent().parent();
+		var message_id = $.trim($this.find(".status_id").text());
+		$this.parent().css("background-color", "#FF3300");
+		if (window.confirm("Are you sure to delete this message?")) {
 			updateSentTip("Deleting message...", 5000, "ing");
 			$.ajax({
 					url: "ajax/delete.php",
@@ -584,21 +483,18 @@ var formFunc = function(){
 					data: "message_id=" + message_id,
 					success: function (msg) {
 						if (msg.indexOf("success") >= 0) {
-							$this.parent().parent().parent().css("background-color", "#FF3300");
-							$this.parent().parent().parent().fadeOut("fast");
+							$this.parent().fadeOut("fast");
 							updateSentTip("Message deleted.", 3000, "success");
 						} else {
-							$this.parent().parent().parent().css("background-color", "");
 							updateSentTip("Failed to delete this message!", 3000, "failure");
 						}
 					},
 					error: function (msg) {
-						$this.parent().parent().parent().css("background-color", "");
 						updateSentTip("Failed to delete this message!", 3000, "failure");
 					}
 				});
 		}
-		$this.parent().parent().parent().css("background-color", "");
+		$this.parent().css("background-color", "");
 	}
 	function shortUrlDisplay() {
 		var stringVar = "";
@@ -687,13 +583,6 @@ var formFunc = function(){
 						updateSentTip("Failed to shorten your tweet.", 5000, "failure");
 					}
 				});
-			/* JSON FAILS!
-			 $.getJSON("http://tweetshrink.com/shrink?text=" + tweet, function(data){
-			 $("#textbox").val(data.text);
-			 leaveWord();
-			 updateSentTip("Reduced " + data.difference + " letters!" , 5000, "success");
-		 });
-		 */
 		}
 	}
 	$(function () {
@@ -794,27 +683,23 @@ var formFunc = function(){
 			});
 		$(".status_author img, .rank_img img").live("click", function (e) {
 				$(".right_menu").hide();
-				$(this).parent().parent().find(".right_menu").css("display", "block");
+				e.target.parent().parent().find(".right_menu").css("display", "block");
 				e.preventDefault();
 			});
-		$('body').click(function () {
-				$(".right_menu").hide();
-			});
-		$('.status_author li a').click(function () {
+		$('body,.status_author li a').click(function () {
 				$(".right_menu").hide();
 			});
 		$(".rm_mention").live("click", function (e) {
 				e.preventDefault();
-				rmmention($(this), e);
+				rmmention(e);
 			});
 		$(".rm_dm").live("click", function (e) {
 				e.preventDefault();
-				rmdm($(this), e);
+				rmdm(e);
 			});
 		$(".rm_follow").live("click", function (e) {
 				e.preventDefault();
-				var $this = $(this);
-				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
 				updateSentTip("Following " + id + "...", 5000, "ing");
 				$.ajax({
 						url: "ajax/relation.php",
@@ -834,8 +719,7 @@ var formFunc = function(){
 			});
 		$(".rm_unfollow").live("click", function (e) {
 				e.preventDefault();
-				var $this = $(this);
-				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
 				if (confirm("Are you sure to unfollow " + id + " ?")) {
 					updateSentTip("Unfollowing " + id + "...", 5000, "ing");
 					$.ajax({
@@ -857,8 +741,7 @@ var formFunc = function(){
 			});
 		$(".rm_block").live("click", function (e) {
 				e.preventDefault();
-				var $this = $(this);
-				var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
 				if (confirm("Are you sure to block " + id + " ?")) {
 					updateSentTip("Blocking " + id + "...", 5000, "ing");
 					$.ajax({
@@ -880,8 +763,7 @@ var formFunc = function(){
 			});
 	$(".rm_spam").live("click", function (e) {
 			e.preventDefault();
-			var $this = $(this);
-			var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+			var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
 			if (confirm("Are you sure to report " + id + " ?")) {
 				updateSentTip("Reporting " + id + " as a spammer...", 5000, "ing");
 				$.ajax({
@@ -902,35 +784,31 @@ var formFunc = function(){
 			}
 		});
 	});
-	function rmmention($this, e) {
-		var replie_id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
-		var in_reply_id = $this.parent().parent().parent().find(".status_id").text();
+	function rmmention(e) {
+		var replie_id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+		var in_reply_id = e.target.parent().parent().parent().find(".status_id").text();
 		var text = "@" + replie_id;
 		var mode = "In reply to ";
 		scroll(0, 0);
-		$("#textbox").focus();
-		$("#textbox").val($("#textbox").val() + text + ' ');
+		$("#textbox").focus().val($("#textbox").val() + text + ' ');
 		$("#in_reply_to").val(in_reply_id);
 		$("#full_status").hide();
 		$("#latest_meta").html("").hide();
 		$("#full_meta").hide();
 		$("#currently .full-text").hide();
-		$("#latest_meta").hide();
 		$("#currently .status-text").html(mode + text);
 		leaveWord();
 	}
-	function rmdm($this, e) {
-		var replie_id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+	function rmdm(e) {
+		var replie_id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
 		var text = "D " + replie_id;
 		scroll(0, 0);
-		$("#textbox").focus();
-		$("#textbox").val($("#textbox").val() + text + ' ');
-		$("#in_reply_to").val($this.parent().parent().parent().find(".status_id").text());
+		$("#textbox").focus().val($("#textbox").val() + text + ' ');;
+		$("#in_reply_to").val(e.target.parent().parent().parent().find(".status_id").text());
 		$("#full_status").hide();
 		$("#latest_meta").hide();
 		$("#full_meta").hide();
 		$("#currently .full-text").hide();
-		$("#latest_meta").hide();
 		$("#currently .status-text").html("Reply direct message to @" + replie_id);
 		leaveWord();
 	}
@@ -969,69 +847,160 @@ var formFunc = function(){
 				itemSelector:"#allTimeline li"
 			});
 		}
-			$("#sidebarTip").toggle(
-				function () {
-					$('#sidebarTip_more').slideDown('fast');
-					$('#indicator').html('[-]');
-				}, function () {
-					$('#sidebarTip_more').slideUp('fast');
-					$('#indicator').html('[+]');
-				});
-			$("#profileRefresh").click(function(e) {
-				e.preventDefault();
-				var that = $(this);
-				if (!that.hasClass('refreshing')) {
-					that.addClass('refreshing').html("<img src=\"img/ajax.gif\" />");
-					$.ajax({
-						url: "ajax/updateProfile.php",
-						type: "GET",
-						dataType: "json",
-						success: function(msg) {
-							if (msg.result == 'success') { 
-								freshProfile();
-								updateSentTip("Profile updated successfully!", 3000, "success");
-							}
-							else {
-								updateSentTip("Failed to update your profile!", 3000, "failure");
-							}
-							that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
-						},
-						error: function (msg) {
-							updateSentTip("Failed to update your profile!", 3000, "failure");
-						},
-						complete: function() {
-							that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
-						}
-					});
-				}
+		$("#sidebarTip").toggle(
+			function () {
+				$('#sidebarTip_more').slideDown('fast');
+				$('#indicator').html('[-]');
+			}, function () {
+				$('#sidebarTip_more').slideUp('fast');
+				$('#indicator').html('[+]');
 			});
+		$("#profileRefresh").click(function(e) {
+			e.preventDefault();
+			var that = $(this);
+			if (!that.hasClass('refreshing')) {
+				that.addClass('refreshing').html("<img src=\"img/ajax.gif\" />");
+				$.ajax({
+					url: "ajax/updateProfile.php",
+					type: "GET",
+					dataType: "json",
+					success: function(msg) {
+						if (msg.result == 'success') { 
+							freshProfile();
+							updateSentTip("Profile updated successfully!", 3000, "success");
+						}
+						else {
+							updateSentTip("Failed to update your profile!", 3000, "failure");
+						}
+						that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
+					},
+					error: function (msg) {
+						updateSentTip("Failed to update your profile!", 3000, "failure");
+					},
+					complete: function() {
+						that.removeClass('refreshing').html("<img src=\"img/refresh.png\" />");
+					}
+				});
+			}
 		});
+	});
+	$(window).load(function(){
+		var scrollTo = function (top, duration, callback) {
+		var w = $(window);
+		var FPS = 50;
+		var currentTop = w.scrollTop();
+		var offset = (currentTop - top) / (duration * FPS / 1000);
+		var n = 0;
+		var prevTop = currentTop;
+		var t = setInterval(function () {
+				if ((prevTop - top) * (currentTop - top) <= 0) {
+					clearInterval(t);
+					currentTop = prevTop = top;
+					w.scrollTop(top);
+					if (callback) callback();
+				} else {
+					prevTop = currentTop;
+					w.scrollTop(currentTop -= offset);
+				}
+			}, 1000 / FPS);
+		}
+		var scrollToTop = function(){
+			scrollTo(0, 200, function () {
+					scrollTo(30, 50, function () {
+							scrollTo(0, 50);
+						});
+				});
+		};
+		var scrollToBottom = function(){
+			var height = document.body.clientHeight;
+			scrollTo(height, 200, function () {
+					scrollTo(height + 30, 50, function () {
+							scrollTo(height, 50);
+						});
+				});
 
+		};
+		$('body').dblclick(function () {
+				scrollToTop();
+				$("#textbox").focus();
+			});
+		$('#content').dblclick(function (e) {
+				e.stopPropagation();
+			});
+		var hkFadeIn = function(text){
+			$("#shortcutTip").fadeIn("fast").html(text);
+		};
+		var hkFadeOut = function(){
+			setTimeout(function () {$("#shortcutTip").fadeOut("fast");}, 2000);
+		};
+		// hotkeys
+		var hotkeyHandler = function(code){
+			switch(code){
+			case 82: // R - refresh
+				hkFadeIn("Refresh");
+				update();
+				hkFadeOut();
+				break;
+			case 67: // C - focus textbox
+			case 85: // U
+				hkFadeIn("Compose");
+				scrollTo(0, 1, function () {
+						$("#textbox").focus();
+					});
+				hkFadeOut();
+				break;
+			case 66: // B - scroll to bottom
+				hkFadeIn("Boom!");
+				scrollToBottom();
+				hkFadeOut();
+				break;
+			case 84: // T - scroll to top
+				hkFadeIn("Whiz!");
+				scrollToTop();
+				hkFadeOut();
+				break;
+			case 83: // S - search
+				hkFadeIn("Search");
+				$("#sidepost").animate({backgroundColor: "#FF6347"}, 500, function(){
+						$("#header_search_query").focus();
+						$("#sidepost").animate({backgroundColor: $("#side_base").css("background-color")}, 1000);
+					});
+				hkFadeOut();
+				break;
+			}
+		};
+		$(document).keydown(function(e){
+			var tag = e.target.tagName;
+			if(tag === "BODY" || tag === "HTML"){
+				if(!e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey){
+					hotkeyHandler(e.keyCode);
+				}
+			}
+		});
+		$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
+			gravity: 's'
+		});
+		$('#symbols span').tipsy({
+			gravity: $.fn.tipsy.autoNS
+		});
+		$("#statuses .mine").live("mouseout", function (e) {
+			$(e.target).removeClass("mine").addClass("myTweet");
+		});
+		$("embed").live("click",function(e){alert('OK');});
+	});
 	//init global functions
 	$(document).ready(function () {
 		$("<div id='sentTip' style='display:none;' />").prependTo("#header .wrapper");
 		embrTweet();
-		$("#statuses .mine").live("mouseout", function (e) {
-				$(this).removeClass("mine").addClass("myTweet");
-			});
-		$("#primary_nav li a").bind("click", function () {
-				$("#primary_nav li a").each(function (i, o) {
+		$("#primary_nav li a").bind("click", function (e) {
+				$(e.target).each(function (i, o) {
 						if ($(this).hasClass("active")) {
 							$(this).removeClass()
 						}
 					});
 				$(this).removeClass().addClass("active").css("background", "transparent url('../img/spinner.gif') no-repeat scroll 173px center")
 			});
-		$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
-				gravity: 's'
-			});
-		$('#symbols span').tipsy({
-				gravity: $.fn.tipsy.autoNS
-			});
-		if ($.cookie('followus') == 1 && $.cookie('whofollowedus') == $("#sideid").html()) {
-			$("#follow_us").hide();
-		}
-		$(".timeline img + #sideimg").lazyload({threshold : 100, effect : "fadeIn"});
+		$(".timeline img,#sideimg").lazyload({threshold : 100, effect : "fadeIn"});
 	});
 	var freshProfile = function(){
 		$("#side_name").text($.cookie('name'));

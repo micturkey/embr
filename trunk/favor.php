@@ -48,8 +48,9 @@
 				<a class=\"replie_btn\" href=\"#\">Reply</a>
 				<a class=\"rt_btn\" href=\"#\">Retweet</a>
 				<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
+				<a class=\"unfav_btn\" href=\"#\">UnFav</a>
 				<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>
-				<a class=\"delete_btn\" href=\"#\">Delete</a></span><span class=\"status_info\">
+				</span><span class=\"status_info\">
 				";
 			if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a href=\"/status.php?id=$status->in_reply_to_status_id_str \">in reply to $status->in_reply_to_screen_name</a></span>";
 			$output .= "				

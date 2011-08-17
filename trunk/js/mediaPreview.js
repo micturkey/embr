@@ -240,14 +240,13 @@ var previewImg = function (obj) {
 	}
 }
 var previewMedia = function (objs) {
-	$(objs).find(".tweet a:not(:hidden), .unshorturl").not('.previewed').each(function () {
-		if ($.cookie('showpic') === 'true') {
-			previewImg($(this));
+	$(objs).find(".tweet a:not(:hidden), .unshorturl").each(function () {
+		var t = $(this);
+		if(!t.data("previewed")) {
+			if ($.cookie('showpic') === 'true') previewImg(t);
+			if ($.cookie('mediaPre') === 'true') previewFlash(t);
 		}
-		if ($.cookie('mediaPre') === 'true') {
-			previewFlash($(this));
-		}
-		$(this).addClass('previewed');
+		t.data("previewed",true);
 	});
 }
 // Check if jQuery's loaded
