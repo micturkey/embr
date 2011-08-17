@@ -55,7 +55,7 @@ $(function(){
 			success: function(msg) {
 				if (msg.indexOf("success") >= 0) {
 					updateSentTip("You have followed " + id + ".", 3000, "success");
-					$this.after('<a class="info_btn_hover" id="list_block_btn" href="javascript:void(0)">Unfollow</a>');
+					$this.after('<a class="info_btn_hover" id="list_block_btn" href="#">Unfollow</a>');
 					$this.remove();
 				} else {
 					updateSentTip("Failed to follow list " + id + ".", 3000, "failure");

@@ -30,7 +30,7 @@
 				setcookie('statuses_count', $user->statuses_count, $time, '/');
 				setcookie('followers_count', $user->followers_count, $time, '/');
 				setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
-				setcookie('name', $user->name, $time, '/');
+				setcookie('name', $user->screen_name, $time, '/');
 			}
 			echo format_timeline($result, $t->username, true);
 		}else{

@@ -20,7 +20,7 @@ $(function () {
 	});
 	$(".delete_btn").live("click", function (e) {
 		e.preventDefault();
-		onDelete($(this), "Tweet");
+		onDelete($(this));
 	});
 	$(".rt_undo").live("click", function (e) {
 		e.preventDefault();

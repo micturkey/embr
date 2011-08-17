@@ -18,7 +18,7 @@
 		setcookie('statuses_count', $user->statuses_count, $time, '/');
 		setcookie('followers_count', $user->followers_count, $time, '/');
 		setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
-		setcookie('name', $user->name, $time, '/');
+		setcookie('name', $user->screen_name, $time, '/');
 		setcookie('listed_count', GetListed($t), $time, '/');
 	}
 
@@ -54,6 +54,9 @@
 		return $text;
 	}
 
+	function formatDate($date){
+		return $date;
+	}
 	function formatTweetID($text){
 		$reg = '/(\<a[\w+=@\:\%\#\&\.~\?\"\'\/\-\! ]+\>[\S]+<\/a\>)/i';
 		preg_match_all($reg, $text, $tmpMatches);
@@ -106,7 +109,6 @@
 		$urlRegs[] ='/http:\/\/digg\.com\/([a-z0-9]{6}[a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/goo\.gl\/fb\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/goo\.gl\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/orz\.se\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/zi\.mu\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/knb\.im\/([a-z0-9]*)/i';
 		$urlRegs[] ='/http:\/\/ff\.im\/([a-z0-9]*)/i';

@@ -4,7 +4,6 @@ $(document).ready(function(){
 				e.preventDefault();
 				onRT($(this));
 			});
-
 		$(".replie_btn").live("click", function(e){
 				e.preventDefault();
 				onReplie($(this),e);
@@ -15,7 +14,7 @@ $(document).ready(function(){
 			});
 		$(".delete_btn").live("click", function(e){
 				e.preventDefault();
-				onDelete($(this), "Tweet");
+				onDelete($(this));
 			});
 		$("#submit_btn").click(function(e){
 				updateStatus();

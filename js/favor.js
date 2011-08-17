@@ -8,9 +8,9 @@ $(function(){
 		e.preventDefault();
 		onReplie($(this),e);
 	});
-	$(".delete_btn").live("click",function(e){
+	$(".unfav_btn").live("click",function(e){
 		e.preventDefault();
-		onDelete($(this), "favor");
+		UnFavor($(this));
 	});
 	$(".retw_btn").live("click", function(e){
 		e.preventDefault();

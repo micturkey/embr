@@ -15,7 +15,7 @@
 			if($result->errors){
 				echo 'duplicated';
 			}else{
-				echo $result->id;
+				echo $result->id_str;
 			}
 		}else{
 			echo "error";
