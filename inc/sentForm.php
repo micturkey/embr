@@ -6,7 +6,6 @@
 	} ?> 
 <span id="tip"><b>140</b></span>
 <?php } ?>
-
 <form enctype="multipart/form-data" action="ajax/uploadImage.php?do=image" method="post" id="photoArea">
 <span style="font-weight: bold;">Upload Image</span>
 <p>Powered by Img.ly</p>

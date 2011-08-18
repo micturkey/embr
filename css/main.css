@@ -1,16 +1,15 @@
 /*----------------------------------------
-Rabr main.css
+Embr main.css
 Author:disinfeqt
 Platform:open source
-Version:0083
-Date:2010-10-14
+Version:0084
 ----------------------------------------*/
 
 /*elements*/
 body{background:#C0DEED url(../img/bg-clouds.png) repeat-x scroll 0 0;font-family:"Lucida Grande",Tahoma,Arial,sans-serif;font-size:13px;margin:0;background-attachment:fixed}
 *{margin:0;padding:0}
 a{color:#2276BB;text-decoration:none}
-li{list-style-image:none;list-style-position:outside;list-style-type:none}
+li{list-style-image:none;list-style-position:outside;list-style-type:none;-moz-transition:all .5s ease-out;-webkit-transition:all .5s ease-out}
 img{border:medium none}
 h2{clear:both;display:block;float:left;font-family:'Helvetica Neue','Helvetica','Arial',sans-serif;font-size:20px;font-weight:normal;line-height:1.1;margin:8px 0 0 10px;cursor:default}
 .wrapper{margin:1em auto;position:relative;width:763px}
@@ -94,7 +93,7 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);box-s
 .reply{background-color:#E8FECD}
 .filter{background-color:#FFFFCC}
 .retweet{background-color:#FFFFE5}
-.faved{background:transparent url(../img/faved.png) no-repeat scroll 500px 10px}
+.faved{background:transparent url(../img/sprite-icons.png) no-repeat scroll -64px 0;height:15px;width:15px!important;display:inline-block;outline:medium none;overflow:hidden;position:absolute;top:10px;margin-left:500px}
 .user_name{font-weight:bold}
 .timeline{margin:0 10px}
 .timeline li{border-top:1px solid #EFEFEF;cursor:default;display:block;float:left;margin:0;overflow:visible;padding:10px 25px 5px 2px;position:relative;width:497px;-moz-transition:all .5s ease-out;-webkit-transition:all .5s ease-out}
@@ -106,7 +105,7 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);box-s
 .status_info a{color:#999;font-size:11px;text-decoration:none}
 .status_info span{display:inline-block;margin:0 0 3px;padding:0 1px}
 .status_info span.source{display:inline;max-width:180px;overflow:hidden;padding-right:3px;white-space:nowrap}
-.timeline li:hover,.rank_list li:hover{background-color:#F7F7F7}
+.timeline li:hover,.rank_list li:hover{background-color:#F2F2F2}
 .status_author{height:48px;left:5px;padding:1px;position:absolute;width:48px}
 .timeline li.loading .status_author{background:url("../img/spinner.gif") no-repeat scroll center center transparent!important;outline:4px solid #BBBBBB}
 .timeline li.loading .status_author a{opacity:0.2}
@@ -227,7 +226,7 @@ h2.sidebar-subtitle{font-size:1.3em;font-weight:400;padding:.2em 14px}
 ul#tabMenu li{border-top:1px solid #BDDCAD}
 ul#tabMenu a,#side .section h1{color:#4C4C4C;display:block;font-size:110%;font-weight:700;padding:13px;text-decoration:none}
 #side .section h1{padding:0 0 .25em}
-ul,.ie6 ul.sidebar-menu li{overflow:hidden}
+ul{overflow:hidden}
 td.column,#side .stats td{padding:0;vertical-align:top}
 .status_id,#side #gadgets em,#side .collapsible a.fetch-contents,#side .collapsed .xref,#side .collapsed .sidebar-menu,#rssfeed,#rssfeed .timeline-rss,#rssfeed .search-rss,#rssfeed .favorites-rss,#rssfeed .profile-rss{display:none}
 #side .collapsible h2.sidebar-title:hover,#side .user_icon a{cursor:pointer}
@@ -418,7 +417,7 @@ fieldset.common-form td[colspan=2]{text-align:right}
 .ac_odd{background-color:#eee;}
 
 /*Tipsy*/
-.tipsy{color:#333;cursor:default;font-size:11px;line-height:18px;position:absolute;background-image:url("../img/tipsy.gif");background-repeat:no-repeat;opacity:0.8;padding:5px;display:none}
+.tipsy{color:#333;cursor:default;font-size:11px;line-height:18px;position:absolute;background:url("../img/tipsy.gif") no-repeat;opacity:0.8;padding:5px;display:none}
 .tipsy-inner{border-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.5);-webkit-box-shadow:0 1px 2px rgba(0,0,0,.5);background-color:#000;color:#DDD;max-width:200px;padding:8px;text-align:left}
 .tipsy-inner span{border-radius:3px;background-color:#333;font-size:12px;padding:2px 4px}
 .tipsy-inner strong{font-size:12px}
@@ -429,16 +428,15 @@ fieldset.common-form td[colspan=2]{text-align:right}
 
 /*Avatar Menu*/
 .right_menu .menu button.clicked{background-image:none}
-.right_menu{background-color:#FFF;border:1px solid #666;display:none;margin-left:24px;margin-top:24px;padding:4px 0;position:absolute;text-align:left;width:200px;z-index:9999}
-.right_menu li{margin:0!important;padding:0!important;text-align:left;position:static}
+.right_menu{background-color:#FFF;border:1px solid #666;margin:24px 0 0 24px;padding:4px 0;position:absolute;text-align:left;width:150px;z-index:9999;opacity:.9;box-shadow:0 1px 2px rgba(0,0,0,.3);-webkit-box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.right_menu li{margin:0!important;padding:0!important;text-align:left;position:static;border:none;-moz-transition:all .5s ease-out;-webkit-transition:all .5s ease-out}
 .right_menu li a, .right_menu li label, .right_menu li input[type="checkbox"]{color:#666;display:inline-block;font:11px 'Lucida Grande',Arial,sans-serif;padding:4px 5px;position:relative;vertical-align:top}
-.right_menu li .loading-spinner{display:inline-block;left:1px;margin-left:4px;position:relative;top:4px}
 .right_menu li a{padding:4px 5px 4px 27px;text-decoration:none;color:#666;display:block}
 .right_menu li a:hover{text-decoration:none!important}
 .right_menu li:hover{background-color:#666;color:#FFF}
 .right_menu li:hover *{color:#FFF}
-.right_menu li.divider{border-top:1px solid #DDD}
-.right_menu i{background-image:url("../img/sprite-icons.png");background-repeat:no-repeat;display:inline-block;height:13px;outline:medium none;overflow:hidden;width:13px}
+.right_menu li.divider{border:none/*border-top:1px solid #DDD*/}
+.right_menu i{background:url("../img/sprite-icons.png") no-repeat;display:inline-block;height:13px;outline:medium none;overflow:hidden;width:13px}
 .right_menu a i{left:7px;position:absolute;top:4px;width:15px}
 .right_menu .rm_mention i, .right_menu .ul_mention i{background-position:-16px -32px}
 .right_menu .rm_mention:hover i, .right_menu .ul_mention:hover i{background-position:0 -32px}

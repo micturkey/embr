@@ -11,7 +11,7 @@
 	$t = getTwitter();
 	$p = -1;
 	if (isset($_GET['p'])) {
-		$p = $_GET['p'] = '' ? -1 : $_GET['p']; // 如果出现 p= 的情况会异常
+		$p = $_GET['p'] = '' ? -1 : $_GET['p'];
 	}
 	$c = -1;
 	if (isset($_GET['c'])) {
@@ -147,8 +147,8 @@
 		foreach ($userlist as $user) {
 			$output .= "
 				<li>
-				<span class=\"rank_img\">".initShortcutMenu($user)."
-				<a href=\"user.php?id=".$user->screen_name."\" target=\"_blank\"><img title=\"Click for more functions\" src=\"".getAvatar($user->profile_image_url)."\" /></a>
+				<span class=\"rank_img\">
+				<img title=\"Click for more...\" src=\"".getAvatar($user->profile_image_url)."\" />
 				</span>
 				<div class=\"rank_content\">
 				<span class=\"rank_num\"><span class=\"rank_name\"><a href=\"user.php?id=$user->screen_name\">$user->name</a></span>&nbsp;<span class=\"rank_screenname\">$user->screen_name</span><span id=\"rank_id\" style=\"display: none;\">$user->id</span></span>
@@ -156,7 +156,7 @@
 				";
 			if ($user->description) $output .= "<span class=\"rank_description\"><b>Bio:</b> $user->description</span>";
 			$list_id = explode("/",$id);
-			if ($type == 'list_members' &&  $list_id[0] == $t->username) $output .= "<span class=\"status_info\"><a class=\"delete_btn list_delete_btn\" href=\"javascript:void()\">删除</a></span>";
+			if ($type == 'list_members' &&  $list_id[0] == $t->username) $output .= "<span class=\"status_info\"><a class=\"delete_btn list_delete_btn\" href=\"#\">delete</a></span>";
 			$output .= "
 				</div>
 				</li>

@@ -36,10 +36,7 @@ function leaveWord(num) {
 		$("#tweeting_button").addClass('btn-disabled');
 	}
 }
-var formHTML = '<span id="tip"><b>140</b></span><form action="index.php" method="post">';
-formHTML += '<textarea name="status" id="textbox"></textarea>';
-formHTML += '<input type="hidden" id="in_reply_to" name="in_reply_to" value="0" />';
-formHTML += '<div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
+var formHTML = '<span id="tip"><b>140</b></span><form action="index.php" method="post"><textarea name="status" id="textbox"></textarea><input type="hidden" id="in_reply_to" name="in_reply_to" value="0" /><div id="tweeting_controls"><a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>Send</span></a></div></form>';
 
 var embrTweet=function(objs) {
 	if(typeof objs === 'undefined'){
@@ -47,48 +44,44 @@ var embrTweet=function(objs) {
 	}else{
 		var objs = objs.find('.source a');
 	}
-	for (i = 0; i < objs.length; i++) {
-		if (/embr/i.test($(objs[i]).text())) {
-			$(objs[i]).css("color", "#33CCFF");
-		}
-	}
+	objs.each(function (){
+		var $this = $(this);
+		if (/embr/i.test($this.text())) $this.css("color", "#33CCFF");
+	})
 	if($(".date a").length > 0) {
-		$(".date a,#latest_meta a").timeago();
+		$(".date a,#latest_meta a,#full_meta a").timeago();
 	} else {
-		$(".date,#latest_meta a").timeago();
+		$(".date,#latest_meta a,#full_meta a").timeago();
 	}
-}
-var getConversation = function (obj) {
-	var url = $(obj).attr("href");
-	var target = $(obj).parent().parent().parent().parent();
-	$.ajax({
-			url: url,
-			type: "GET",
-			dataType: "text",
-			success: function(msg){
-				if ($.trim(msg).indexOf("</li>") > 0) {
-					var source = $(msg).appendTo(target);
-					embrTweet(source);
-				}else{
-					updateSentTip('Get thread failed.', 5000, 'failure');
-				}
-			},
-			error: function(msg){
-				updateSentTip('Get thread failed.', 5000, 'failure');
-			}
-		});
-	target.removeClass("loading");
 }
 $(function () {
 	$(".ajax_reply").live("click", function (e) {
 		e.preventDefault();
-		var obj = $(this).parent().parent().parent().parent();
-		var thread = obj.find(".ajax_form");
-		if (thread.size() > 0) {
+		$this = $(this);
+		var $that = $this.parent().parent().parent().parent();
+		var thread = $that.find(".ajax_form");
+		if (thread.length > 0) {
 			thread.slideToggle("fast");
 		} else {
-			obj.addClass("loading");
-			getConversation($(this));
+			$that.addClass("loading");
+			$.ajax({
+					url: $this.attr("href"),
+					type: "GET",
+					dataType: "text",
+					success: function(msg){
+						$that.removeClass("loading");
+						if ($.trim(msg).indexOf("</li>") > 0) {
+							var source = $(msg).appendTo($that);
+							embrTweet(source);
+						}else{
+							updateSentTip('Get thread failed.', 5000, 'failure');
+						}
+					},
+					error: function(msg){
+						updateSentTip('Get thread failed.', 5000, 'failure');
+						$that.removeClass("loading");
+					}
+				});
 		}
 	});
 	$("#statuses .trans_btn").live("click", function(e){
@@ -151,7 +144,7 @@ var transCallback = function(content, translation){
 		if(langTxt === null){
 			langTxt = $('#transArea select[name=langs] option[value=' + lang + ']').text();
 		}
-		var html = '<div class="translated"><a href="javascript:void(0);" title="Hide Translation" class="trans_close">(Hide)</a><span class="trans_header"><strong>Translation <small>(from ' + translation.detectedSourceLanguage;
+		var html = '<div class="translated"><a href="#" title="Hide Translation" class="trans_close">(Hide)</a><span class="trans_header"><strong>Translation <small>(from ' + translation.detectedSourceLanguage;
 		html += ' to ' + langTxt + ')</small> : </strong></span>';
 		html += '<span class="trans_body">' + translation.translatedText + '</span></div>';
 		var li, target;
@@ -185,14 +178,14 @@ var formFunc = function(){
 	$("#textbox").keyup(function () {
 			leaveWord();
 		}).bind("keyup", "keydown", function(event){
-				if ((event.ctrlKey || event.metaKey) && event.which == 13) {
-					if (PAUSE_UPDATE !== true) {
-						updateStatus();
-					} else {
-						return 0;
-					}
+			if ((event.ctrlKey || event.metaKey) && event.which == 13) {
+				if (PAUSE_UPDATE !== true) {
+					updateStatus();
+				} else {
+					return 0;
 				}
-			});
+			}
+		});
 	$("#tweeting_button").click(function (e) {
 		e.preventDefault();
 		if ($("#textbox").val().length >0 ) {
@@ -289,7 +282,8 @@ var formFunc = function(){
 				success: function (msg) {
 					if (msg.indexOf("success") >= 0) {
 						updateSentTip("Favorite added successfully.", 3000, "success");
-						$this.parent().parent().parent().addClass('faved');
+						$this.parent().parent().parent().append('<i class="faved"></i>');
+						$this.removeClass().addClass("unfav_btn").attr("title","UnFav").text("UnFav");
 					} else {
 						updateSentTip("Add failed. Please try again.", 3000, "failure");
 					}
@@ -305,22 +299,22 @@ var formFunc = function(){
 		var text = "@" + replie_id;
 		var mode = "In reply to ";
 		if (!e.ctrlKey && !e.metaKey) {
-			var temp = {
-				text: true
-			};
+			var temp=[];
+			temp[text] = true;
+			var self = '@'+$("#side_name").text();
+			temp[self] = true;
 			var mentionArray = [text];
 			var mentions = $this.parent().parent().find('a[href^="user.php"][innerHTML^=@]');
-			var self = '@'+$("#side_name").text();
 			$.each(mentions, function () {
 					var t = $(this).text();
-					if (!(t == self || t in temp)) {
+					if (!(t in temp)) {
 						temp[t] = true;
 						mentionArray.push(t);
 					}
 					text = mentionArray.join(' ');
 				});
 
-			if (mentions.length > 0) {
+			if (mentionArray.length > 1) {
 				mode = "Reply to all: ";
 			}
 		}
@@ -337,7 +331,7 @@ var formFunc = function(){
 	function onRT($this) {
 		var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 		scroll(0, 0);
-		$("#textbox").focus().val("RT @" + replie_id + ":" + $this.parent().parent().find(".status_word").text().replace(replie_id, ""));
+		$("#textbox").focus().val(" RT @" + replie_id + ":" + $this.parent().parent().find(".status_word").text().replace(replie_id, "")).caret(0);
 		$("#full_status,#latest_meta,#full_meta,#currently .full-text,#latest_meta").hide();
 		$("#currently .status-text").html("Retweet @" + replie_id + "'s tweet with comment.");
 		leaveWord();
@@ -369,7 +363,7 @@ var formFunc = function(){
 							statusBody.find(".source").hide();
 							statusBody.find(".status_info").append("<span class=\"rt_source\">Retweeted by you from <a rel=\"nofollow\" href=\"http://code.google.com/p/embr/\">embr</a></span>").fadeIn("fast");
 							statusBody.find(".date").hide();
-							statusBody.find(".status_info").append("<span class=\"rt_undo\" title=\"Your followers will no longer see the tweet as retweeted by you.\">&nbsp;<a href=\"javascript:void(0);\">(Undo)</a><span class=\"rt_id\" style=\"display: none;\">" + msg + "</span></span>").fadeIn("fast");
+							statusBody.find(".status_info").append("<span class=\"rt_undo\" title=\"Your followers will no longer see the tweet as retweeted by you.\">&nbsp;<a href=\"#\">(Undo)</a><span class=\"rt_id\" style=\"display: none;\">" + msg + "</span></span>").fadeIn("fast");
 							updateSentTip("This tweet has been retweeted!", 3000, "success");
 							$(".rt_undo").tipsy({
 									gravity: 's'
@@ -388,10 +382,10 @@ var formFunc = function(){
 				});
 		}
 	}
-	function UnFavor($this){
-		var $this=$this.parent().parent();
-		var status_id = $.trim($this.find(".status_id").text());
-		$this.parent().css("background-color", "#FF3300");
+	function UnFavor($this,from){
+		var $that=$this.parent().parent();
+		var status_id = $.trim($that.find(".status_id").text());
+		$that.parent().css("background-color", "#FF3300");
 		if (window.confirm("Are you sure to unfavor this tweet?")) {
 			updateSentTip("Unfavoring tweet...", 5000, "ing");
 			$.ajax({
@@ -400,18 +394,24 @@ var formFunc = function(){
 					data: "favor_id=" + status_id,
 					success: function (msg) {
 						if (msg.indexOf("success") >= 0) {
-							$this.parent().fadeOut("fast");
+							if (from === undefined) {
+								$that.parent().fadeOut("fast");
+							} else {
+								$that.parent().find(".faved").fadeOut("fast");
+								$this.removeClass().addClass("favor_btn").attr("title","Fav").text("Fav");
+							}
 							updateSentTip("This tweet has been unfavored!", 3000, "success");
 						} else {
 							updateSentTip("Unfavor failed. Please try again.", 3000, "failure");
 						}
+						$that.parent().css("background-color", "");
 					},
 					error: function (msg) {
 						updateSentTip("Unfavor failed. Please try again.", 3000, "failure");
+						$that.parent().css("background-color", "");
 					}
 				});
 		}
-		$this.parent().css("background-color", "");
 	}
 	function onDelete($this) {
 		var $this=$this.parent().parent();
@@ -430,13 +430,14 @@ var formFunc = function(){
 						} else {
 							updateSentTip("Delete failed. Please try again.", 3000, "failure");
 						}
+						$this.parent().css("background-color", "");
 					},
 					error: function (msg) {
 						updateSentTip("Delete failed. Please try again.", 3000, "failure");
+						$this.parent().css("background-color", "");
 					}
 				});
 		}
-		$this.parent().css("background-color", "");
 	}
 	function onUndoRt($this) {
 		var status_id = $.trim($this.parent().find(".rt_id").text());
@@ -463,13 +464,14 @@ var formFunc = function(){
 						} else {
 							updateSentTip("Undo failed. Please try again.", 3000, "failure");
 						}
+						statusBody.css("background-color", "");
 					},
 					error: function (msg) {
 						updateSentTip("Undo failed. Please try again.", 3000, "failure");
+						statusBody.css("background-color", "");
 					}
 				});
 		}
-		statusBody.css("background-color", "");
 	}
 	function onDeleteMsg($this) {
 		var $this=$this.parent().parent();
@@ -478,23 +480,24 @@ var formFunc = function(){
 		if (window.confirm("Are you sure to delete this message?")) {
 			updateSentTip("Deleting message...", 5000, "ing");
 			$.ajax({
-					url: "ajax/delete.php",
-					type: "POST",
-					data: "message_id=" + message_id,
-					success: function (msg) {
-						if (msg.indexOf("success") >= 0) {
-							$this.parent().fadeOut("fast");
-							updateSentTip("Message deleted.", 3000, "success");
-						} else {
-							updateSentTip("Failed to delete this message!", 3000, "failure");
-						}
-					},
-					error: function (msg) {
+				url: "ajax/delete.php",
+				type: "POST",
+				data: "message_id=" + message_id,
+				success: function (msg) {
+					if (msg.indexOf("success") >= 0) {
+						$this.parent().fadeOut("fast");
+						updateSentTip("Message deleted.", 3000, "success");
+					} else {
 						updateSentTip("Failed to delete this message!", 3000, "failure");
 					}
-				});
+					$this.parent().css("background-color", "");
+				},
+				error: function (msg) {
+					updateSentTip("Failed to delete this message!", 3000, "failure");
+					$this.parent().css("background-color", "");
+				}
+			});
 		}
-		$this.parent().css("background-color", "");
 	}
 	function shortUrlDisplay() {
 		var stringVar = "";
@@ -509,7 +512,7 @@ var formFunc = function(){
 			if (str !== null) {
 				unshorten = 0;
 				for (idx = 0; idx < str.length; idx++) {
-					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/goo.gl\/[\S]+)/gi;
+					regexp2 = /(http:\/\/j.mp\/[\S]+)|(http:\/\/bit.ly\/[\S]+)|(http:\/\/goo.gl\/[\S]+)|(http:\/\/t.co\/[\S]+)/gi;
 					if (!str[idx].match(regexp2)) {
 						l_urls += str[idx] + "|";
 					}
@@ -597,6 +600,8 @@ var formFunc = function(){
 			$("#full_meta a, .full-text a").click(function (e) {
 					e.stopPropagation();
 				});
+			var $temp = $("#currently .status-text");
+			$temp.text(limitation($temp.text()));
 		});
 	var limitation = function (text) {
 		if (text.length > 60) {
@@ -604,16 +609,6 @@ var formFunc = function(){
 		}
 		return text;
 	};
-	$(function () {
-			if (document.location.href.indexOf("index") > 0 || document.location.href.indexOf("all") > 0) {
-				var temp = $("#currently .status-text").text();
-				if (temp.length > 60) {
-					temp = temp.substr(0, 60) + " ...";
-				}
-				$("#currently .status-text").text(temp);
-			}
-		});
-	
 	function updateTrends() {
 		$.ajax({
 				url: "ajax/updateTrends.php",
@@ -681,25 +676,51 @@ var formFunc = function(){
 				$("#apiquota_list").slideUp("fast");
 				$("#apiquota_title").removeClass();
 			});
-		$(".status_author img, .rank_img img").live("click", function (e) {
-				$(".right_menu").hide();
-				e.target.parent().parent().find(".right_menu").css("display", "block");
-				e.preventDefault();
+		$('body').click(function (){
+			$('.right_menu').hide();
+		})
+		$(".status_author img").live("click", function (e){
+			e.preventDefault();
+			var $this = $(this);
+			var id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+			$this.addClass("loading");
+			$.ajax({
+				url: 'ajax/relation.php',
+				type: "POST",
+				data: "action=show&id=" + id,
+				success: function(msg){
+					var html = '<ul class="right_menu round"><li><a class="rm_mention" href="#"><i></i>Mention</a></li>';
+					var r = parseInt(msg);
+					switch(r){
+						case 1:
+						html += '<li><a class="rm_dm" href="#"><i></i>Message</a></li>';
+						case 2:
+						html += '<li><a class="rm_unfollow" href="#"><i></i>Unfollow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+						break;
+						case 3:
+						html += '<li><a class="rm_dm" href="#"><i></i>Message</a></li><li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+						break;
+					}
+					html += '<li><a class="rm_spam" href="#"><i></i>Report Spam</a></li><li><a href="user.php?id='+id+'">View Full Profile</a></ul>';
+					$this.parent().parent().after(html);
+					$this.removeClass("loading");
+				},
+				error: function(){
+					return;
+				}
 			});
-		$('body,.status_author li a').click(function () {
-				$(".right_menu").hide();
-			});
+		});
 		$(".rm_mention").live("click", function (e) {
 				e.preventDefault();
-				rmmention(e);
+				rmmention($(this),e);
 			});
 		$(".rm_dm").live("click", function (e) {
 				e.preventDefault();
-				rmdm(e);
+				rmdm($(this),e);
 			});
 		$(".rm_follow").live("click", function (e) {
 				e.preventDefault();
-				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = $(this).parent().parent().parent().find(".status_word").find(".user_name").text();
 				updateSentTip("Following " + id + "...", 5000, "ing");
 				$.ajax({
 						url: "ajax/relation.php",
@@ -719,7 +740,7 @@ var formFunc = function(){
 			});
 		$(".rm_unfollow").live("click", function (e) {
 				e.preventDefault();
-				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = $(this).parent().parent().parent().find(".status_word").find(".user_name").text();
 				if (confirm("Are you sure to unfollow " + id + " ?")) {
 					updateSentTip("Unfollowing " + id + "...", 5000, "ing");
 					$.ajax({
@@ -741,7 +762,7 @@ var formFunc = function(){
 			});
 		$(".rm_block").live("click", function (e) {
 				e.preventDefault();
-				var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+				var id = $(this).parent().parent().parent().find(".status_word").find(".user_name").text();
 				if (confirm("Are you sure to block " + id + " ?")) {
 					updateSentTip("Blocking " + id + "...", 5000, "ing");
 					$.ajax({
@@ -763,7 +784,7 @@ var formFunc = function(){
 			});
 	$(".rm_spam").live("click", function (e) {
 			e.preventDefault();
-			var id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+			var id = $(this).parent().parent().parent().find(".status_word").find(".user_name").text();
 			if (confirm("Are you sure to report " + id + " ?")) {
 				updateSentTip("Reporting " + id + " as a spammer...", 5000, "ing");
 				$.ajax({
@@ -784,60 +805,28 @@ var formFunc = function(){
 			}
 		});
 	});
-	function rmmention(e) {
-		var replie_id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
-		var in_reply_id = e.target.parent().parent().parent().find(".status_id").text();
+	function rmmention($this,e) {
+		var replie_id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
+		var in_reply_id = $(this).parent().parent().parent().find(".status_id").text();
 		var text = "@" + replie_id;
 		var mode = "In reply to ";
 		scroll(0, 0);
 		$("#textbox").focus().val($("#textbox").val() + text + ' ');
 		$("#in_reply_to").val(in_reply_id);
-		$("#full_status").hide();
-		$("#latest_meta").html("").hide();
-		$("#full_meta").hide();
-		$("#currently .full-text").hide();
+		$("#full_status,#latest_meta,#full_meta,#currently .full-text").hide();
 		$("#currently .status-text").html(mode + text);
 		leaveWord();
 	}
-	function rmdm(e) {
-		var replie_id = e.target.parent().parent().parent().find(".status_word").find(".user_name").text();
+	function rmdm($this,e) {
+		var replie_id = $this.parent().parent().parent().find(".status_word").find(".user_name").text();
 		var text = "D " + replie_id;
 		scroll(0, 0);
 		$("#textbox").focus().val($("#textbox").val() + text + ' ');;
 		$("#in_reply_to").val(e.target.parent().parent().parent().find(".status_id").text());
-		$("#full_status").hide();
-		$("#latest_meta").hide();
-		$("#full_meta").hide();
-		$("#currently .full-text").hide();
+		$("#full_status,#latest_meta,#full_meta,#currently .full-text").hide();
 		$("#currently .status-text").html("Reply direct message to @" + replie_id);
 		leaveWord();
 	}
-	function sidebarFollow(id) {
-		updateSentTip("Following " + id + "...", 5000, "ing");
-		$.ajax({
-				url: "ajax/relation.php",
-				type: "POST",
-				data: "action=create&id=" + id,
-				success: function (msg) {
-					if (msg.indexOf("success") >= 0) {
-						updateSentTip("You have followed " + id + "!", 3000, "success");
-						$.cookie('followus', 1, {
-								expire: 30
-							});
-						$.cookie('whofollowedus', $("#sideid").html(), {
-								expire: 30
-							});
-						$("#follow_us").fadeOut("fast");
-					} else {
-						updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
-					}
-				},
-				error: function (msg) {
-					updateSentTip("Failed to follow " + id + ", please try again.", 3000, "failure");
-				}
-			});
-	};
-	//sidebar functions
 	
 	$(function () {
 		if($.cookie('autoscroll') != 'false' && $("a#more").length > 0 && $("#allTimeline").length > 0) {
@@ -977,7 +966,7 @@ var formFunc = function(){
 				}
 			}
 		});
-		$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh").tipsy({
+		$("#statuses .big-retweet-icon, #func_set .func_btn, #profileRefresh,.status_author img").tipsy({
 			gravity: 's'
 		});
 		$('#symbols span').tipsy({
@@ -986,7 +975,6 @@ var formFunc = function(){
 		$("#statuses .mine").live("mouseout", function (e) {
 			$(e.target).removeClass("mine").addClass("myTweet");
 		});
-		$("embed").live("click",function(e){alert('OK');});
 	});
 	//init global functions
 	$(document).ready(function () {

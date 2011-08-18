@@ -1,15 +1,36 @@
 $(function () {
-	$(".rank_img img").tipsy({gravity: 's'});
-	$(".rank_img img").live("click", function (e) {
-		$(".right_menu").show();
-		$(this).parent().parent().parent().find(".right_menu").css("display", "block");
-		e.preventDefault();
-	});
-	$('body').click(function () {
-		$(".right_menu").hide();
-	});
-	$('.status_author li a').live("click",function () {
-		$(".right_menu").hide();
+	$('body').click(function (e) {
+			$(".right_menu").hide();
+		});
+	$(".rank_img img").live("click",function () {
+		var $this = $(this);
+		var id = getid($this);
+		$this.addClass("loading");
+		$.ajax({
+			url: 'ajax/relation.php',
+			type: "POST",
+			data: "action=show&id=" + id,
+			success: function(msg){
+				var html = '<ul class="right_menu round"><li><a class="ul_mention" href="#"><i></i>Mention</a></li>';
+				var r = parseInt(msg);
+				switch(r){
+					case 1:
+					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
+					case 2:
+					html += '<li><a class="ul_unfollow" href="#"><i></i>Unfollow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+					break;
+					case 3:
+					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li><li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+					break;
+				}
+				html += '<li><a class="ul_spam" href="#"><i></i>Report Spam</a></li><li><a href="user.php?id='+id+'">View Full Profile</a></ul>';
+				$this.parent().after(html);
+				$this.removeClass("loading");
+			},
+			error: function(){
+				return;
+			}
+		});	
 	});
 	$(".ul_mention").live("click", function (e) {
 		e.preventDefault();
@@ -22,7 +43,7 @@ $(function () {
 	$(".ul_follow").live("click", function (e) {
 		e.preventDefault();
 		var $this = $(this);
-		var id = $this.parent().parent().parent().find(".rank_screenname").text();
+		var id = getid($this.parent());
 		updateSentTip("Following " + id + "...", 5000, "ing");
 		$.ajax({
 			url: "ajax/relation.php",
@@ -44,7 +65,7 @@ $(function () {
 	$(".ul_unfollow").live("click", function (e) {
 		e.preventDefault();
 		var $this = $(this);
-		var id = $this.parent().parent().parent().find(".rank_screenname").text();
+		var id = getid($this.parent());;
 		if (confirm("Are you sure to unfollow " + id + " ?")) {
 			updateSentTip("Unfollowing " + id + "...", 5000, "ing");
 			$.ajax({
@@ -68,7 +89,7 @@ $(function () {
 	$(".ul_block").live("click", function (e) {
 		e.preventDefault();
 		var $this = $(this);
-		var id = $this.parent().parent().parent().find(".rank_screenname").text();
+		var id = getid($this.parent());;
 		if (confirm("Are you sure to block " + id + " ?")) {
 			updateSentTip("Blocking " + id + "...", 5000, "ing");
 			$.ajax({
@@ -93,7 +114,7 @@ $(function () {
 $(".ul_spam").live("click", function (e) {
 	e.preventDefault();
 	var $this = $(this);
-	var id = $this.parent().parent().parent().find(".rank_screenname").text();
+	var id = getid($this.parent());
 	if (confirm("Are you sure to report " + id + " ?")) {
 		updateSentTip("Reporting " + id + " as a spammer...", 5000, "ing");
 		$.ajax({
@@ -115,7 +136,7 @@ $(".ul_spam").live("click", function (e) {
 	}
 });
 function ulmention($this, e) {
-	var replie_id = $this.parent().parent().parent().find(".rank_screenname").text();
+	var replie_id = getid($this.parent());;
 	if ($("#textbox").length > 0) {
 			var text = "@" + replie_id;
 			scroll(0, 0);
@@ -133,22 +154,21 @@ function ulmention($this, e) {
 		}
 }
 function uldm($this, e) {
-	var replie_id = $this.parent().parent().parent().find(".rank_screenname").text();
+	var replie_id = getid($this.parent());
 	if ($("#textbox").length > 0) {
-			var text = "D " + replie_id;
-			scroll(0, 0);
-			$("#textbox").focus();
-			$("#textbox").val($("#textbox").val() + text + ' ');
-			leaveWord();
-		} else {
-			$("#statuses h2").before('<h2>Send direct message</h2>' + formHTML);
-			formFunc();
-			var text = "D " + replie_id;
-			scroll(0, 0);
-			$("#textbox").focus();
-			$("#textbox").val($("#textbox").val() + text + ' ');
-			leaveWord();
-		}
+		var text = "D " + replie_id;
+	} else {
+		$("#statuses h2").before('<h2>Send direct message</h2>' + formHTML);
+		formFunc();
+		var text = "D " + replie_id;
+	}
+	scroll(0, 0);
+	$("#textbox").focus();
+	$("#textbox").val($("#textbox").val() + text + ' ');
+	leaveWord();
+}
+var getid = function ($this) {
+	return $this.parent().parent().find(".rank_screenname").text();
 }
 $(document).ready(function(){
 	$.ajax({
@@ -158,4 +178,5 @@ $(document).ready(function(){
 			freshProfile();
 		}
 	});
+	$(".rank_img img").tipsy({gravity: 's'});
 });
