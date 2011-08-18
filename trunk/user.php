@@ -32,13 +32,13 @@
 		header('location: error.php');exit();
 	}
 	$user = $t->showUser($userid);
+	if (strcasecmp($userid,$t->username) == 0) {header('location: profile.php');exit();}
 	//header('location: ../pr.php?pr='.urlencode(print_r($statuses,true)));
 	$isProtected = $statuses == 'protected';
-	$friendship = $t->friendship($t->username,$userid);
-	$isFriend = $friendship->relationship->source->following;
-	$isFollower = $friendship->relationship->source->followed_by;
-	$block_error = $t->isBlocked($userid)->error;
-	$isBlocked = !$block_error;
+	$r = getRelationship($user->screen_name);
+	$isFriend = $r == 2 || $r == 1;
+	$isFollower = $r == 3 || $r == 1;
+	$isBlocked = $r == 4;
 
 	if (!$isProtected) {
 
@@ -60,11 +60,10 @@
 	<div id="info_head" class="round">
 		<a href="https://twitter.com/<?php echo $userid ?>"><img id="info_headimg" src="<?php echo $userinfo['image_url'] ?>" /></a>
 		<div id="info_name"><?php echo $userid ?></div>
-		<?php if ($t->isFriend($userid, $t->username)) {?>
+		<?php if ($isFollower) {?>
 		<span style="position: absolute; margin-left: 8px; font-size: 11px; margin-top: 10px;"><img style="margin: 0pt 5px 3px 0pt; vertical-align: middle;" src="img/yes.gif" alt="" class="icon"/><span>Following me</span></span>
 <?php 
 		}
-		if($userid != $t->username){
 ?>
 		<div id="info_relation">
 		<?php if ($isFriend) {?>
@@ -84,7 +83,6 @@
 			<a class="btn" id="info_hide_btn" href="#">Hide @</a>
 			<a class="btn " id="report_btn" href="#" style="color:#a22">Report Spam</a>
 		</div>
-<?php } ?>
 	</div>
 	<div class="clear"></div>
 <?php 

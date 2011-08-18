@@ -8,7 +8,8 @@
 ?>
 
 <script src="js/message.js"></script>
-<style>.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
+<style>.timeline li{border-bottom:1px solid #EFEFEF;border-top:none !important}
+#statuses{padding-top:0;margin-top:-5px}</style>
 
 <?php 
 	$isSentPage = isset($_GET['t'])? true : false;
@@ -69,12 +70,12 @@
 				
 				$output .= "
 					<li>
-						<span class=\"status_author\">".initShortcutMenu($messenger)."
-							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"$name\" /></a>
+						<span class=\"status_author\">
+							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"Click for more...\" /></a>
 						</span>
 						<span class=\"status_body\">
 							<span class=\"status_id\">$message->id </span>
-							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name </a> $text </span>
+							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a> $text </span>
 							<span class=\"actions\">
 				";
 				
@@ -102,13 +103,9 @@
 				if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"message.php?p=" . ($p+1) . "\">Next</a>";
 			}
 			
-			$output .= "</div>";
-			
+			$output .= "</div>";	
 			echo $output;
 		}
-		
-		
-		
 	?>
 </div>
 

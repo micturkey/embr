@@ -20,9 +20,14 @@
 				$result = $t->unblockUser($_POST['id']);
 				break;
 			case 'report':
-			/* uncomment for test */
-				//$result = true;
 				$result = $t->reportSpam($_POST['id']);
+				break;
+			case 'show':
+				$result = getRelationship($_POST['id']);
+				if ($result) {
+					echo $result;
+					return;
+				}
 				break;
 		}
 		if ($result){

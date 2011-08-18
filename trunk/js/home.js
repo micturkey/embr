@@ -18,6 +18,10 @@ $(function () {
 		e.preventDefault();
 		onFavor($(this));
 	});
+	$(".unfav_btn").live("click", function (e) {
+		e.preventDefault();
+		UnFavor($(this),'home.js');
+	})
 	$(".delete_btn").live("click", function (e) {
 		e.preventDefault();
 		onDelete($(this));

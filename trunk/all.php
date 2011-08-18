@@ -76,7 +76,7 @@
 			$text = formatText($message->text);
 
 			$output .= "<li>
-				<span class=\"status_author\">".initShortcutMenu($message->sender)."
+				<span class=\"status_author\">
 				<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"$name\" /></a>
 				</span>
 				<span class=\"status_body\">
@@ -99,8 +99,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

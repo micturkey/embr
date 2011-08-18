@@ -41,17 +41,12 @@ $(function(){
 			leaveWord();
 		}
 	});
-
 	if (getCookie("infoShow") == "hide") {
 		onHide();
 	}
-
-
 	$("#info_hide_btn").live("click", function(){
 		onHide();
 	});
-
-
 	$(".favor_btn").live("click", function(e){
 		e.preventDefault();
 		onFavor($(this));
@@ -218,8 +213,8 @@ function onInfoReplie($this) {
 
 function onInfoRT($this) {
 	var replie_id = $("#info_name").text();
-	$("#textbox").val("RT @" + replie_id + ":" + $this.parent().parent().find(".tweet").text());
-	$("#textbox").focus();
+	$("#textbox").val(" RT @" + replie_id + ":" + $this.parent().parent().find(".tweet").text());
+	$("#textbox").focus().caret(0);
 	leaveWord();
 }
 function getCookie(name){

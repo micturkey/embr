@@ -18,7 +18,7 @@ $t = getTwitter();
 		<li><span>Name</span> <?php echo $user->name ?></li>
 		<?php if ($user->location) echo "<li><span>Location</span> $user->location</li>"; ?>
 		<?php if (($user->url) and (strlen($user->url)>20)) echo '<li><span>Web</span> <a href="' .$user->url. '" target="_blank">' .substr($user->url, 0, 20). '...</a></li>'; else if (($user->url) and (strlen($user->url)<=20)) echo '<li><span>Web</span> <a href="' .$user->url. '" target="_blank">' .$user->url. '</a></li>';?>
-		<?php if ($user->description) echo "<li><span>Bio</span>".formatText($user->description)."</li>"; ?>
+		<?php if ($user->description) echo "<li><span>Bio</span> ".formatText($user->description)."</li>"; ?>
 		</ul>
 	<?php }?>
 	<ul id="user_stats">

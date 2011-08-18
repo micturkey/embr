@@ -20,8 +20,8 @@
 				$date = $message->created_at;
 				$text = formatText($message->text);
 				$output = "<li>";
-				$output .= "<span class=\"status_author\">".initShortcutMenu($message->sender)."
-					<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"$name\" /></a>
+				$output .= "<span class=\"status_author\">
+					<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"Click for more...\" /></a>
 					</span>
 					<span class=\"status_body\">
 					<span class=\"status_id\">$message->id </span>
