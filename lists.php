@@ -139,7 +139,7 @@
 				
 				$output .= "
 				<li>
-					<span class=\"rank_img\"><a href=\"https://twitter.com/$user->screen_name\"><img src=\"".getAvatar($user->profile_image_url)."\" /></a></span>
+					<span class=\"rank_img\"><img src=\"".getAvatar($user->profile_image_url)."\" />></span>
 					<div class=\"rank_content\">
 						<span class=\"rank_num\"><span class=\"rank_name\"><a href=\"list.php?id=$listurl\"><em>$listname[0]/</em>$listname[1]</a></span></span>
 						<span class=\"rank_count\">Followers：$list->subscriber_count 　Members：$list->member_count 　$mode</span> 
@@ -195,8 +195,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

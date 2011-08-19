@@ -38,10 +38,11 @@ body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $
 </head>
 <body>
 <div id="shortcutTip" style="display:none"></div>
-	<div id="header">
+	<header>
 		<div class="wrapper">
 			<a href="index.php"><img id="logo" style="float:left" width="155" height="49" src="img/logo.png" /></a>
-			<ul id="nav" class="round">
+			<nav class="round">
+			<ul>
 				<?php $scheme=(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http://' : 'https://';
 				$base_url=str_replace('http://',$scheme,BASE_URL);
 				?> 
@@ -52,8 +53,9 @@ body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $
 				<li><a href="setting.php">Settings</a></li>
 				<li><a href="logout.php">Logout</a></li>			
 			</ul>
+			</nav>
 		</div>
-	</div>
+	</header>
 	<div id="content">
 		<div class="wrapper">
 			<div class="content-bubble-arrow"></div>

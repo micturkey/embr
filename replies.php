@@ -59,7 +59,7 @@
 				$output .= "
 					<li>
 						<span class=\"status_author\">
-							<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"$user->screen_name\" /></a>
+							<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"Click for more...\" /></a>
 						</span>
 						<span class=\"status_body\">
 							<span class=\"status_id\">$status->id_str</span>

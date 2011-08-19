@@ -86,8 +86,7 @@ function update() {
 					filterEle();
 					embrTweet(source);
 					if($(".new").length == 1) {
-						$(".new").css("display","block");
-						$(".new").slideDown("fast");
+						$(".new").show().slideDown("fast");
 					} else {
 						$(".tweetcount").filter(":last").text(num + $(msg).length - 1);
 					}
