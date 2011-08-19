@@ -20,7 +20,12 @@ $(function () {
 					html += '<li><a class="ul_unfollow" href="#"><i></i>Unfollow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
 					break;
 					case 3:
-					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li><li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
+					case 9:
+					html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+					break;
+					case 4:
+					html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_unblock" href="#"><i></i>UnBlock</a></li>';
 					break;
 				}
 				html += '<li><a class="ul_spam" href="#"><i></i>Report Spam</a></li><li><a href="user.php?id='+id+'">View Full Profile</a></ul>';
@@ -110,31 +115,55 @@ $(function () {
 			});
 		}
 	});
-})
-$(".ul_spam").live("click", function (e) {
-	e.preventDefault();
-	var $this = $(this);
-	var id = getid($this.parent());
-	if (confirm("Are you sure to report " + id + " ?")) {
-		updateSentTip("Reporting " + id + " as a spammer...", 5000, "ing");
-		$.ajax({
-			url: "ajax/reportSpam.php",
-			type: "POST",
-			data: "spammer=" + id,
-			success: function (msg) {
-				if (msg.indexOf("success") >= 0) {
-					$this.parent().parent().parent().fadeOut("normal");
-					updateSentTip("Successfully reported!", 3000, "success");
-				} else {
+	$(".ul_unblock").live("click", function (e) {
+		e.preventDefault();
+		var $this = $(this);
+		var id = getid($this.parent());;
+		if (confirm("Are you sure to unblock " + id + " ?")) {
+			updateSentTip("Unblocking " + id + "...", 5000, "ing");
+			$.ajax({
+				url: "ajax/relation.php",
+				type: "POST",
+				data: "action=unblock&id=" + id,
+				success: function (msg) {
+					if (msg.indexOf("success") >= 0) {
+						$this.parent().parent().parent().fadeOut("normal");
+						updateSentTip("You have unblocked " + id + "!", 3000, "success");
+					} else {
+						updateSentTip("Failed to unblock " + id + ", please try again.", 3000, "failure");
+					}
+				},
+				error: function (msg) {
+					updateSentTip("Failed to unblock " + id + ", please try again.", 3000, "failure");
+				}
+			});
+		}
+	});
+	$(".ul_spam").live("click", function (e) {
+		e.preventDefault();
+		var $this = $(this);
+		var id = getid($this.parent());
+		if (confirm("Are you sure to report " + id + " ?")) {
+			updateSentTip("Reporting " + id + " as a spammer...", 5000, "ing");
+			$.ajax({
+				url: "ajax/reportSpam.php",
+				type: "POST",
+				data: "spammer=" + id,
+				success: function (msg) {
+					if (msg.indexOf("success") >= 0) {
+						$this.parent().parent().parent().fadeOut("normal");
+						updateSentTip("Successfully reported!", 3000, "success");
+					} else {
+						updateSentTip("Failed to report " + id + ", please try again.", 3000, "failure");
+					}
+				},
+				error: function (msg) {
 					updateSentTip("Failed to report " + id + ", please try again.", 3000, "failure");
 				}
-			},
-			error: function (msg) {
-				updateSentTip("Failed to report " + id + ", please try again.", 3000, "failure");
-			}
-		});
-	}
-});
+			});
+		}
+	});
+})
 function ulmention($this, e) {
 	var replie_id = getid($this.parent());;
 	if ($("#textbox").length > 0) {

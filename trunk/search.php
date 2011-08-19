@@ -28,7 +28,7 @@
 				$output .= "
 					<li>
 					<span class=\"status_author\">
-					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"$status->from_user\" /></a>
+					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user.\" /></a>
 					</span>
 					<span class=\"status_body\">
 					<span class=\"status_id\">$status->id_str</span>
@@ -64,17 +64,6 @@
 		<input type="text" name="q" id="query" value="<?php echo $_GET['q'] ?>" />
 		<input type="submit" class="more round" style="width: 103px; margin-left: 10px; display: block; float: left; height: 34px; font-family: tahoma; color: rgb(51, 51, 51);" value="Search">
 	</form>
-
-	<!-- Google Custom Search Element 
-	<div id="cse" style="width:100%;">Loading</div>
-	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
-	<script type="text/javascript">
-	google.load('search', '1');
-	google.setOnLoadCallback(function(){
-		new google.search.CustomSearchControl('011932393486939676874:dgglbf75l0o').draw('cse');
-	  }, true);
-	</script>
--->	
 <?php 
 	$t = getTwitter();
 	$p = 1;

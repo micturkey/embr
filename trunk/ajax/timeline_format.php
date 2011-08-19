@@ -7,7 +7,7 @@
 		$text = formatText($rt_status->text);
 		$html = '<li>
 			<span class="status_author">
-			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="'.$status_owner->screen_name.'" /></a>
+			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
@@ -40,7 +40,7 @@
 		$text = formatText($status->text);
 		$html = '<li>
 			<span class="status_author">
-			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="'.$status_owner->screen_name.'" /></a>
+			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span><span class="status_id">'.$status->id_str.'</span>

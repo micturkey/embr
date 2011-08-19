@@ -43,58 +43,16 @@
 <?php echo $myCSS ?>
 a:active, a:focus {outline:none}
 body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $bodyBg ?>;background-image:<?php echo $Bgcolor?>}
-#header {
-margin:1em auto;
-text-align:right;
-width:600px;
-}
-#content {
-margin:1em auto;
-width:600px;
-}
-.wrapper {
-margin:1em auto;
-position:relative;
-width:600px;
-}
-#statuses{
-background-color:#FFFFFF;
-float:left;
-padding:10px;
-width:580px;
-}
-.timeline li:hover, .rank_list li:hover {
-background-color:transparent !important;
-}
-.timeline, .ajax_timeline {
-border-bottom:1px solid #FFF !important;
-border-top:1px solid #FFF !important;
-}
-.timeline li, .ajax_timeline li {
-border-bottom:1px solid #FFF !important;
-border-top:1px solid #FFF !important;
-}
-.status_body {
-display:block;
-font-size:2em;
-line-height:30px;
-margin-left:58px;
-overflow:hidden;
-position:relative;
-}
-.timeline li {
-cursor:default;
-margin:0px;
-overflow:hidden;
-padding:10px;
-position:relative;
-}
-.status_author, .rank_img {
-left:10px;
-position:absolute;
-top:15px;
-width:50px;
-}
+header {margin:1em auto;text-align:right;width:600px}
+#content {margin:1em auto;width:600px}
+.wrapper {margin:1em auto;position:relative;width:600px}
+#statuses{background-color:#FFFFFF;float:left;padding:10px;width:580px}
+.timeline li:hover, .rank_list li:hover {background-color:transparent !important}
+.timeline, .ajax_timeline {border-bottom:1px solid #FFF !important;border-top:1px solid #FFF !important}
+.timeline li, .ajax_timeline li {border-bottom:1px solid #FFF !important;border-top:1px solid #FFF !important}
+.status_body {display:block;font-size:2em;line-height:30px;margin-left:58px;overflow:hidden;position:relative}
+.timeline li {cursor:default;margin:0px;overflow:hidden;padding:10px;position:relative}
+.status_author, .rank_img {left:10px;position:absolute;top:15px;width:50px}
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
@@ -102,18 +60,20 @@ width:50px;
 </head>
 
 <body>
-	<div id="header">
+	<header>
 		<div class="wrapper">
 			<a href="index.php"><img id="logo" style="float:left" src="img/logo.png" /></a>
-			<ul id="nav" class="round">
+			<nav class="round">
+			<ul>
 				<li><a href="index.php">Home</a></li>
 				<li><a href="profile.php">Profile</a></li>
 				<li><a href="browse.php">Public</a></li>
 				<li><a href="setting.php">Settings</a></li>
 				<li><a href="logout.php">Logout</a></li>			
 			</ul>
+			</nav>
 		</div>
-	</div>
+	</header>
 	<div id="content">
 		<div class="wrapper">
 			<div class="content-bubble-arrow"></div>
