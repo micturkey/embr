@@ -20,7 +20,7 @@ $(function () {
 	});
 	$(".unfav_btn").live("click", function (e) {
 		e.preventDefault();
-		UnFavor($(this),'home.js');
+		UnFavor($(this));
 	})
 	$(".delete_btn").live("click", function (e) {
 		e.preventDefault();

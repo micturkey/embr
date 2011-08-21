@@ -115,7 +115,7 @@
 			</div>";
 	} else {
 			$status = $user->status;
-			$date = $status->created_at;
+			$date = strtotime($status->created_at);
 			$text = formatText($status->text);
 			$output = "
 				<div id=\"currently\">
@@ -124,8 +124,8 @@
 				<span id=\"latest_text\">
 				<span class=\"status-text\">" . $text . "</span>
 				<span class=\"full-text\" style=\"display:none\">" . $text . "</span>
-				<span class=\"entry-meta\" id=\"latest_meta\"><a href=\"status.php?id=$status->id_str\" target=\"_blank\">" . $date . "</a></span>
-				<span class=\"entry-meta\" id=\"full_meta\" style=\"display:none\"><a href=\"status.php?id=$status->id_str\" target=\"_blank\">" . $date . "</a></span>
+				<span class=\"entry-meta\" id=\"latest_meta\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
+				<span class=\"entry-meta\" id=\"full_meta\" style=\"display:none\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
 				</span>
 				</span>
 				</div>
@@ -168,4 +168,4 @@
 	<a id="refreshBtn" title="Refresh the timeline" class="func_btn" style="background-position: -62px -80px;">Refresh</a>
 	</div>
 	</form>
-	<div class="clear"></div>
+	<div class="clear"></div>   

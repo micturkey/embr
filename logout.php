@@ -17,6 +17,12 @@
 	setcookie('homeInterval',"",$time);
 	setcookie('updatesInterval',"",$time);
 	setcookie('proxify',"",$time);	
+	setcookie('Bgimage',"",$time);
+	setcookie('BgColor',"",$time);
+	setcookie('Bgrepeat',"",$time);
+	setcookie('Tip_Title',"",$time);
+	setcookie('Tip_Content',"",$time);
+	setcookie('Tip_More',"",$time);
 	session_destroy();
 	header('location: login.php');
 ?>

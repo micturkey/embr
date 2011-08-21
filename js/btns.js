@@ -19,10 +19,13 @@ $(function(){
 				e.preventDefault();
 				onFavor($(this));
 			});
-
+		$('.unfav_btn').live("click", function(e){
+			e.preventDefault();
+			UnFavor($(this));
+		});
 		$(".delete_btn").live("click", function(e){
 				e.preventDefault();
-				onDelete($(this), "Tweet");
+				onDelete($(this));
 			});
 			
 		$(".msg_replie_btn").live("click", function(e){
@@ -35,7 +38,7 @@ $(function(){
 				onDeleteMsg($(this));
 			});
 
-		$(".rt_undo").live("click", function(e){
+		$(".rt_undo,.unrt_btn").live("click", function(e){
 				e.preventDefault();
 				onUndoRt($(this));
 			});

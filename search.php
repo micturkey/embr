@@ -22,13 +22,13 @@
 			include_once('ajax/timeline_format.php');
 			$output = '<ol class="timeline" id="allTimeline">';
 			foreach ($statuses->results as $status) {
-				$date = $status->created_at;
+				$date = strtotime($status->created_at);
 				$text = formatText($status->text);
 
 				$output .= "
 					<li>
 					<span class=\"status_author\">
-					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user.\" /></a>
+					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
 					</span>
 					<span class=\"status_body\">
 					<span class=\"status_id\">$status->id_str</span>
@@ -39,7 +39,7 @@
 					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
 					<a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\">";
 				$output .=	"<span class=\"source\">via ".html_entity_decode($status->source)."</span>
-					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" title=\"".date('Y-m-d H:i:s', strtotime($status->created_at))."\" target=\"_blank\">$date</a></span>
+					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', strtotime($status->created_at))."</a></span>
 					</span>
 					</span>
 					</li>

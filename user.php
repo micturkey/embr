@@ -33,7 +33,7 @@
 	}
 	$user = $t->showUser($userid);
 	if (strcasecmp($userid,$t->username) == 0) {header('location: profile.php');exit();}
-	//header('location: ../pr.php?pr='.urlencode(print_r($statuses,true)));
+
 	$isProtected = $statuses == 'protected';
 	$r = getRelationship($user->screen_name);
 	$isFriend = $r == 2 || $r == 1;
@@ -59,9 +59,9 @@
 ?>
 	<div id="info_head" class="round">
 		<a href="https://twitter.com/<?php echo $userid ?>"><img id="info_headimg" src="<?php echo $userinfo['image_url'] ?>" /></a>
-		<div id="info_name"><?php echo $userid ?></div>
+		<div id="info_name" style="display:inline-block"><?php echo $userid ?></div>
 		<?php if ($isFollower) {?>
-		<span style="position: absolute; margin-left: 8px; font-size: 11px; margin-top: 10px;"><img style="margin: 0pt 5px 3px 0pt; vertical-align: middle;" src="img/yes.gif" alt="" class="icon"/><span>Following me</span></span>
+		<span id="following_me" style="display:inline!important"><img style="" src="img/yes.gif" alt="" class="icon"/><span>Following me</span></span>
 <?php 
 		}
 ?>

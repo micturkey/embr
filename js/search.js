@@ -24,9 +24,17 @@ $(function(){
 		e.preventDefault();
 		onFavor($(this));
 	});
+	$('.unfav_btn').live("click", function(e){
+		e.preventDefault();
+		UnFavor($(this));
+	});
 	$(".retw_btn").live("click", function(e){
 		e.preventDefault();
 		onNwRT($(this));
+	});
+	$(".rt_undo,.unrt_btn").live("click", function(e){
+		e.preventDefault();
+		onUndoRt($(this));
 	});
 	$("#submit_btn").live("click", function(e){
 		updateStatus();
