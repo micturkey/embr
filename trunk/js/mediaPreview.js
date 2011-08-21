@@ -46,28 +46,16 @@ var previewFlash = function (obj) {
 }
 
 function get_img_processor(type) {
-
-	if (type.indexOf('phodroid.com') == 0) { //ugly fix for bloody Phodroid (which's the worst image hosting service ON EARTH) by @luosheng
-		return {
-		reg: /^http:\/\/(?:www\.)?phodroid\.com\/([\d\w\/]+)/,
-		func: function (url_key, url_elem) {
-		var src = "http://phodroid.s3.amazonaws.com/" + url_key[1] + ".jpg";
-		append_image(src, url_elem);
-		}
-		};
-	}
-	
-	if (type.indexOf('instagr.am') == 0) { 
-		return {
+	switch (type) {
+	case "instagr.am":
+		proc = {
 			reg: /^http:\/\/(?:www\.)?instagr\.am\/([\d\w\/]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://instagr.am/" + url_key[1] + "media/?size=t";
 				append_image(src, url_elem);
 			}
 		};
-	}
-
-	switch (type) {
+		return proc;
 	case "twitgoo.com":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?twitgoo\.com\/([\d\w]+)/,
@@ -104,7 +92,7 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "ow.ly/i":
+	case "ow.ly":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?ow\.ly\/i\/([\d\w]+)/,
 			func: function (url_key, url_elem) {
@@ -185,7 +173,7 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "flic.kr/p": 
+	case "flic.kr": 
 		proc = {
 			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/([A-Za-z0-9]+)/,
 			func: function (url_key, url_elem) {
@@ -217,9 +205,9 @@ function get_img_processor(type) {
 	}
 }
 function append_image(src, elem) {
-	var img = $('<img style="padding:3px;border:1px solid #ccc;max-width:420px;max-height:420px;" />').attr("src", src);
+	var img = $('<img />').attr("src", src);
 	var link = $(elem).clone().empty().append(img);
-	$(elem).parent().after($('<div class="thumb_pic" style="display:block;margin:5px 0px;" />').append(link));
+	$(elem).parent().after($('<div id="thumb_pic" />').append(link));
 }
 var previewImg = function (obj) {
 	if (obj.attr("rel") === "noreferrer") {
@@ -228,7 +216,7 @@ var previewImg = function (obj) {
 			append_image(RegExp.$1, obj);
 			return;
 		}
-		/http[s]?:\/\/(?:www\.)?([\S]+)\/[\S]*/i.exec(obj.attr("href"));
+		/http[s]?:\/\/(?:www\.)?([\w-_.]+)\/[\S]*/i.exec(obj.attr("href"));
 		var img_processor = get_img_processor(RegExp.$1);
 		if (img_processor === null) {
 			return null;
@@ -240,7 +228,7 @@ var previewImg = function (obj) {
 	}
 }
 var previewMedia = function (objs) {
-	$(objs).find(".tweet a:not(:hidden), .unshorturl").each(function () {
+	$(objs).find(".tweet a:not(:hidden), .unshorturl a:not(:hidden)").each(function () {
 		var t = $(this);
 		if(!t.data("previewed")) {
 			if ($.cookie('showpic') === 'true') previewImg(t);

@@ -92,7 +92,7 @@
 
 			<input id="showpic" type="checkbox" checked="checked" />
 			<label>Enable Images Preview</label>
-			<small>(Supports mainstream image hostings)</small>
+			<small>(Supports common image hostings)</small>
 
 			<br /><br />
 

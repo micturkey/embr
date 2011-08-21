@@ -76,6 +76,7 @@ $(function () {
 				if ($("#allRepliesBtn").hasClass("allHighLight")) $("#allRepliesBtn").removeClass("allHighLight");
 				else $("#allTimelineBtn").removeClass("allHighLight");
 				$("#allMessageBtn").text($("#allMessageBtn").text().replace(/(\([0-9]+\))/g, ""));
+				$(".date").timeago();
 			})
 		$(function () {
 				setUpdateInterval();

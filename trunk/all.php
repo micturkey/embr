@@ -72,7 +72,7 @@
 		foreach ($messages as $message) {
 			$name = $message->sender_screen_name;
 			$imgurl = getAvatar($message->sender->profile_image_url);
-			$date = $message->created_at;
+			$date = strtotime($message->created_at);
 			$text = formatText($message->text);
 
 			$output .= "<li>
@@ -85,7 +85,7 @@
 			$output .= recoverShortens($text);
 			$output .= "<span class=\"actions\"><a class=\"msg_replie_btn\" href=\"message.php?id=$name\">Reply</a><a class=\"msg_delete_btn\" href=\"a_del.php?id=$message->id&t=m\">Delete</a></span>
 				<span class=\"status_info\">
-				<span class=\"date\">$date</span>
+				<span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span>
 				</span>
 				</span>
 				</li>";

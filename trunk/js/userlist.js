@@ -1,41 +1,44 @@
 $(function () {
-	$('body').click(function (e) {
-			$(".right_menu").hide();
-		});
 	$(".rank_img img").live("click",function () {
 		var $this = $(this);
-		var id = getid($this);
-		$this.addClass("loading");
-		$.ajax({
-			url: 'ajax/relation.php',
-			type: "POST",
-			data: "action=show&id=" + id,
-			success: function(msg){
-				var html = '<ul class="right_menu round"><li><a class="ul_mention" href="#"><i></i>Mention</a></li>';
-				var r = parseInt(msg);
-				switch(r){
-					case 1:
-					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
-					case 2:
-					html += '<li><a class="ul_unfollow" href="#"><i></i>Unfollow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
-					break;
-					case 3:
-					html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
-					case 9:
-					html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
-					break;
-					case 4:
-					html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_unblock" href="#"><i></i>UnBlock</a></li>';
-					break;
+		var ul = $this.parent().parent().find(".right_menu");
+		if (ul.length>0) {
+			ul.fadeIn('fast');
+		} else {
+			var id = getid($this);
+			$this.addClass("loading");
+			$.ajax({
+				url: 'ajax/relation.php',
+				type: "POST",
+				data: "action=show&id=" + id,
+				success: function(msg){
+					var html = '<ul class="right_menu round"><li><a class="ul_mention" href="#"><i></i>Mention</a></li>';
+					var r = parseInt(msg);
+					switch(r){
+						case 1:
+						html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
+						case 2:
+						html += '<li><a class="ul_unfollow" href="#"><i></i>Unfollow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+						break;
+						case 3:
+						html += '<li><a class="ul_dm" href="#"><i></i>Message</a></li>';
+						case 9:
+						html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_block" href="#"><i></i>Block</a></li>';
+						break;
+						case 4:
+						html += '<li><a class="ul_follow" href="#"><i></i>Follow</a></li><li><a class="ul_unblock" href="#"><i></i>UnBlock</a></li>';
+						break;
+					}
+					html += '<li><a class="ul_spam" href="#"><i></i>Report Spam</a></li><li><a href="user.php?id='+id+'">View Full Profile</a></ul>';
+					$this.parent().after(html);
+					$(html).fadeIn('fast');
+					$this.removeClass("loading");
+				},
+				error: function(){
+					return;
 				}
-				html += '<li><a class="ul_spam" href="#"><i></i>Report Spam</a></li><li><a href="user.php?id='+id+'">View Full Profile</a></ul>';
-				$this.parent().after(html);
-				$this.removeClass("loading");
-			},
-			error: function(){
-				return;
-			}
-		});	
+			});	
+		}
 	});
 	$(".ul_mention").live("click", function (e) {
 		e.preventDefault();

@@ -6,7 +6,6 @@
 	
 	$type = 'followers';
 	include ('inc/userlist.php');
-	
 	include ('inc/sidebar.php');
 	include ('inc/footer.php');
 ?>

@@ -33,7 +33,7 @@
 
 			foreach ($statuses as $status) {
 				if (isset($status->retweeted_status)) {
-					$output .= format_retweet($status);
+					$output .= format_retweet($status,true);
 				} else { 
 				$output .= format_timeline($status,$t->username);
 				}

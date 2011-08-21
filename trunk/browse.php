@@ -31,13 +31,13 @@
 			$output = '<ol class="timeline" id="allTimeline">';
 			
 			foreach ($statuses as $status) {
-				$date = $status->created_at;
+				$date = strtotime($status->created_at);
 				$text = formatText($status->text);
 				
 				$output .= "
 					<li>
 						<span class=\"status_author\">
-							<a href=\"user.php?id=$status->screen_name\" target=\"_blank\"><img src=\"".getAvatar($status->profile_img_url)."\" title=\"$status->screen_name\" /></a>
+							<a href=\"user.php?id=$status->screen_name\" target=\"_blank\"><img src=\"".getAvatar($status->profile_img_url)."\" title=\"Hello, I am $status->screen_name\.\" /></a>
 						</span>
 						<span class=\"status_body\">
 							<span class=\"status_id\">$status->id</span>
@@ -49,7 +49,7 @@
 								<a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a><a class=\"favor_btn\" href=\"#\">Favorite</a></span>
 						<span class=\"status_info\">
 								<span class=\"source\">via $status->source</span>
-								<span class=\"date\"><a href=\"status.php?id=$status->id\" target=\"_blank\">$date</a></span>
+								<span class=\"date\"><a href=\"status.php?id=$status->id\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
 						    </span>
 						</span>
 					</li>

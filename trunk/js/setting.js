@@ -14,7 +14,7 @@ $(function(){
 			});
 		} else {
 			$.cookie('Bgcolor', '');
-			$.cookie('Bgimage','/img/bg-clouds.png');
+			$.cookie('Bgimage','');
 			location.reload();
 		}
 	});
@@ -56,24 +56,24 @@ $(function(){
 		}
 	});
 	var style = {
-		"Twitter Default":{myCSS:"/*default*/ "}, 
-		"Dark Rabr":{myCSS:"@import url(themes/1.css);"}, 
-		"Monokai Python":{myCSS:"@import url(themes/2.css);"}, 
-		"Old Times":{myCSS:"@import url(themes/3.css);"}, 
-		"Pink":{myCSS:"@import url(themes/4.css);"},
-		"Warm @lgsoltek":{myCSS:"@import url(themes/5.css);"},
-		"Cold @lgsoltek":{myCSS:"@import url(themes/6.css);"},
-		"Green":{myCSS:"@import url(themes/7.css);"},
-		"Shine":{myCSS:"@import url(themes/8.css);"},
-		"Flew":{myCSS:"@import url(themes/9.css);"},
-		"Golden":{myCSS:"@import url(themes/10.css);"},
-		"#red":{myCSS:"@import url(themes/11.css);"},
-		"Storm":{myCSS:"@import url(themes/12.css);"},
-		"City":{myCSS:"@import url(themes/13.css);"},
-		"Cosmos":{myCSS:"@import url(themes/14.css);"},
-		"Pride (Rainbow)":{myCSS:"@import url(themes/15.css); /* Have a gay day! */"},
-		"Drop Bombs":{myCSS:"@import url(themes/16.css);"},
-		"Minimal":{myCSS:"@import url(themes/minimal.css);"},
+		"Twitter Default":{theme:"/*default*/ "}, 
+		"Dark Rabr":{theme:"@import url(themes/1.css);"}, 
+		"Monokai Python":{theme:"@import url(themes/2.css);"}, 
+		"Old Times":{theme:"@import url(themes/3.css);"}, 
+		"Pink":{theme:"@import url(themes/4.css);"},
+		"Warm @lgsoltek":{theme:"@import url(themes/5.css);"},
+		"Cold @lgsoltek":{theme:"@import url(themes/6.css);"},
+		"Green":{theme:"@import url(themes/7.css);"},
+		"Shine":{theme:"@import url(themes/8.css);"},
+		"Flew":{theme:"@import url(themes/9.css);"},
+		"Golden":{theme:"@import url(themes/10.css);"},
+		"#red":{theme:"@import url(themes/11.css);"},
+		"Storm":{theme:"@import url(themes/12.css);"},
+		"City":{theme:"@import url(themes/13.css);"},
+		"Cosmos":{theme:"@import url(themes/14.css);"},
+		"Pride (Rainbow)":{theme:"@import url(themes/15.css); /* Have a gay day! */"},
+		"Drop Bombs":{theme:"@import url(themes/16.css);"},
+		"Minimal":{theme:"@import url(themes/minimal.css);"},
 	};
 
 	$.each(style, function (i,o) {
@@ -82,9 +82,10 @@ $(function(){
 	$("#styleSelect").change(function(){
 		if ($(this).val() != "n/a") {
 			$.each(style[$(this).val()], function (i,o) {
-				$.cookie('myCSS',o,{expires:365});
+				$.cookie('theme',o,{expires:365});
 				$('#twitterbg').attr('checked', false);
 				$.cookie('twitterbg',false);
+				$.cookie('BgImage','');
 				location.reload();
 				updateSentTip('Themes Saved Successfully!',3000,'success');
 			});
@@ -127,20 +128,19 @@ $(function(){
 function checkbox(c,id,d,extra){
 	if ($.cookie (c) === null) {
 		$.cookie (c, d, { expires: 30 });
-	} else if ($.cookie (c) === 'true') {
-		$(id).attr('checked', true);
 	} else {
-		$(id).attr('checked', false);
-	}
+		$(id).prop('checked', $.cookie (c) === 'true');
+	} 
 	$(id).click(function (){
-		$.cookie(c,$(id).attr("checked"),{expires:365});
+		$.cookie(c,$(id).prop("checked"),{expires:365});
 		if (extra != undefined) extra();
 		updateSentTip('Setting saved successfully!',1000,'success');
 	});
 }
 function selectbox(c,id,extra){
 	if($.cookie(c) != undefined){
-		$(id).setSelectedValue($.cookie(c));
+		//$(id).setSelectedValue($.cookie(c));
+		$(id).prop("selected",$.cookie(c));
 	}
 	$('select'+id).change(function (){
 		$.cookie(c,$('select'+id+' option:selected').val(),{expires:365});

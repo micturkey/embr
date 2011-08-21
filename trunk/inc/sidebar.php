@@ -8,7 +8,7 @@ $t = getTwitter();
 <div id="side" class="round-right">
 	<div id="sideinfo">
 		<a href="profile.php"><img id="sideimg" src="<?php echo getCookie("imgurl")?>" /></a>
-		<span id="sideid"><span id="side_name"><?php echo getEncryptCookie('twitese_name')?></span><a href="#" id="profileRefresh" title="refresh your profile"><img src="img/refresh.png" width="14" height="14"/></a></span>
+		<span id="sideid"><span id="side_name"><?php echo getEncryptCookie('twitese_name')?></span><a href="#" id="profileRefresh" title="refresh your profile"><i></i></a></span>
 		<a href="profile.php"><span id="me_tweets"><span id="update_count"><?php echo getCookie('statuses_count')?></span> tweets</span></a>
 	</div>
 	<?php if (strrpos($_SERVER['PHP_SELF'], 'profile')) {
@@ -44,52 +44,46 @@ $t = getTwitter();
 	
 		<li>
 		<DIV id='profile' class='section'> 
-		<p id="sidebarTip" class='promotion round' style='cursor:pointer'> 
-			<a class="definition">
-			<?php 
-			switch(mt_rand(0,3)) { 
-				case 3: ?>
-				<strong>Reply&middot;All</strong>
-		<em>v.</em>
-		Now you can reply to all users in a single tweet!<br>Click for more details.<span id="indicator">[+]</span>
-		</a>
-		<a id="sidebarTip_more" style="display: none;">
-			See the reply button in the tweet? Try to click it pressing Ctrl button!	
-			</a>
-			<?php break;
-				case 2: ?>
-		<strong>Realtime Refresh</strong>
-		<em>v.</em>
-		Now you can refresh your profile whenever you like!<br>Click for more details.<span id="indicator">[+]</span>
-		</a>
-		<a id="sidebarTip_more" style="display: none;">
-			See the circle behind your username? Try to click it!	
-			</a>
-				<?php break;
-				case 1: ?>
-		<strong>User Di&middot;rect View</strong>
-		<em>n.</em>
-		Now you can view the user page of your interested more incentively. <br>Click for more details.<span id="indicator">[+]</span>
-		</a>
-		<a id="sidebarTip_more" style="display: none;">
-			take @<?php echo SITE_OWNER ?> for example, you can visit his/her page via <?php echo BASE_URL.'/'.SITE_OWNER ?>			
-			</a>
-				<?php break;
-				default: ?>
-		<strong>Short&middot;cuts</strong>
-		<em>n.</em>
-		Use shortcuts in Embr. <br>Click for more details.<span id="indicator">[+]</span>
-		</a>
-		<a id="sidebarTip_more" style="display: none;">
-		<strong>Shortcuts available now:</strong><br>
-		C / U - Update<br>
-		T - Go to top<br>
-		B - Go to bottom<br>
-		R - Refresh<br>
-		S - Search
-		</a>
-		<?php break; 
-	 } ?>
+		<p id="sidebarTip" class='promotion round'> 
+	<?php
+	$preset = array(
+		array(
+			'term' => 'Short&middot;cuts',
+			'def' => '<em>n.</em> Use shortcuts in Embr.',
+			'more' => '<strong>Shortcuts available now:</strong><br>
+			C / U - Update<br>
+			T - Go to top<br>
+			B - Go to bottom<br>
+			R - Refresh<br>
+			S - Search'
+		),
+		array(
+			'term' => 'User Di&middot;rect View',
+			'def' => '<em>n.</em> Now you can view the user page of your interested more incentively.',
+			'more' => 'take @'.SITE_OWNER.' for example, you can visit his/her page via '.BASE_URL.'/'.SITE_OWNER,
+		),
+		array(
+			'term' => 'Realtime Refresh',
+			'def' => '<em>v.</em> Now you can refresh your profile whenever you like!',
+			'more' => 'See the circle behind your username? Try to click it!'
+		),
+		array(
+			'term' => 'Custom&middot;Tips',
+			'def' => '<em>n.</em> Hate embr tips so much? Now you can edit me into your own tips!',
+			'more' => 'Your tips will be encrypted in your cookies all for your privacy!'
+		),
+	);
+		if(isset($_COOKIE['Tip_Title']) || isset($_COOKIE['Tip_Content']) || isset($_COOKIE['Tip_More'])){
+			$raw = array(
+				'term' => getEncryptCookie('Tip_Title'),
+				'def' => getEncryptCookie('Tip_Content'),
+				'more' => getEncryptCookie('Tip_More'),
+			);
+			initSidebarTip($raw);
+		} else {
+			initSidebarTip($preset[3]);
+		}
+	?>
 		</p>
 		</DIV>
 		</li>
@@ -108,3 +102,8 @@ $t = getTwitter();
 </td>
 </tr>
 </table>
+<?php
+	function initSidebarTip($entity){
+		echo '<a class="definition"><strong contenteditable="true">'.$entity['term'].'</strong><span contenteditable="true">'.$entity['def'].'</span></a><br><span>Click for more details.<span id="indicator">[+]</span></span><br><br><span id="sidebarTip_more"><span contenteditable="true">'.$entity['more'].'</span><br><br><a href="#" id="tip_reset" title="You will lose all customized Tips!">Reset to default</a></span>';
+	}
+?>

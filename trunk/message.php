@@ -2,14 +2,11 @@
 	include_once('lib/twitese.php');
 	$title = 'Direct Messages';
 	include_once('inc/header.php');
-	include_once('ajax/timeline_format.php');
-	
 	if (!loginStatus()) header('location: login.php');
 ?>
 
 <script src="js/message.js"></script>
-<style>.timeline li{border-bottom:1px solid #EFEFEF;border-top:none !important}
-#statuses{padding-top:0;margin-top:-5px}</style>
+<style>.timeline li{border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <?php 
 	$isSentPage = isset($_GET['t'])? true : false;
@@ -65,13 +62,13 @@
 					$imgurl = getAvatar($message->recipient->profile_image_url);
 					$messenger = $message->recipient;
 				}
-				$date = $message->created_at;
+				$date = strtotime($message->created_at);
 				$text = formatText($message->text);
 				
 				$output .= "
 					<li>
 						<span class=\"status_author\">
-							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"Click for more...\" /></a>
+							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"Hello, I am $name. Click for more...\" /></a>
 						</span>
 						<span class=\"status_body\">
 							<span class=\"status_id\">$message->id </span>
@@ -85,7 +82,7 @@
 					$output .= "<a class=\"msg_delete_btn\" href=\"#\">delete</a>";
 				}
 				$output .="</span><span class=\"status_info\">
-								<span class=\"date\">$date</span>
+				<span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span>
 						    </span>
 						</span>
 					</li>

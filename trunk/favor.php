@@ -5,7 +5,7 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script src="js/favor.js"></script>
+<script src="js/btns.js"></script>
 
 <div id="statuses" class="column round-left">
 
@@ -28,39 +28,13 @@
 		echo "<div id=\"empty\">No tweet to display.</div>";
 	} else {
 		$output = '<ol class="timeline" id="allTimeline">';
-
+		include('ajax/timeline_format.php');
 		foreach ($statuses as $status) {
-			
-			$user = $status->user;
-			$date = $status->created_at;
-			$text = formatText($status->text);
-
-			$output .= "
-				<li>
-				<span class=\"status_author\">
-				<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"$user->screen_name\" /></a>
-				</span>
-				<span class=\"status_body\">
-				<span class=\"status_id\">$status->id_str</span>
-				<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
-			$output .= recoverShortens($text);
-			$output .="<span class=\"actions\">
-				<a class=\"replie_btn\" href=\"#\">Reply</a>
-				<a class=\"rt_btn\" href=\"#\">Retweet</a>
-				<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-				<a class=\"unfav_btn\" href=\"#\">UnFav</a>
-				<a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a>
-				</span><span class=\"status_info\">
-				";
-			if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a href=\"/status.php?id=$status->in_reply_to_status_id_str \">in reply to $status->in_reply_to_screen_name</a></span>";
-			$output .= "				
-				<span class=\"source\">via $status->source</span>
-				<span class=\"date\"><a href=\"/status.php?id=$status->id_str\" target=\"_blank\">$date</a></span>
-				</span>
-				</span>
-				</li>
-				";
-				
+			if (isset($status->retweeted_status)) {
+				$output .= format_retweet($status);
+			} else { 
+				$output .= format_timeline($status,$t->username);
+			}
 		}
 
 		$output .= "</ol><div id=\"pagination\">";
@@ -72,16 +46,10 @@
 
 		echo $output;
 	}
-
-
-
 ?>
 </div>
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
 ?>

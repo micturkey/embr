@@ -1,5 +1,5 @@
 <?php
-	function setEncryptCookie($key, $value, $time = 0, $path) {
+	function setEncryptCookie($key, $value, $time = 0, $path = '/') {
 		if (trim(SECURE_KEY) == '') {
 			setcookie($key, $value, $time, $path);
 		} else {

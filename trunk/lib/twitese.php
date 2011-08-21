@@ -123,7 +123,7 @@
 			if(preg_match($urlReg,$text,$match)){
 				$request = 'http://api.unshort.me/?r=' . $match[0];
 				$obj = objectifyXml(processCurl( $request ));
-				if (isset($obj->resolvedURL)) return $obj->resolvedURL;
+				if ($obj->success !== false && isset($obj->resolvedURL)) return $obj->resolvedURL;
 			}
 		}
 		return false; 
