@@ -101,7 +101,7 @@
 		header('location: error.php');exit();
 	} 
 	$empty = count($user) == 0? true: false;
-	if ($empty) {
+	if ($empty || !isset($user->status)) {
 		echo "<div id=\"currently\">
 			<span id=\"full_status\" title=\"Click to view the full tweet\"><strong >Latest:</strong></span>
 			<span id=\"latest_status\">

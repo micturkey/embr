@@ -16,7 +16,7 @@ function updateSentTip(message, duration, className){
 			"border-width": "1px",
 			"border-color": "transparent"
 		}).slideDown("fast");
-	window.setTimeout(function () {
+	setTimeout(function () {
 			sentTip.slideUp('fast');
 		}, duration);
 	return sentTip;
@@ -147,7 +147,7 @@ var formFunc = function(){
 				} else {
 					$('#tip').removeClass('loading');
 					leaveWord();
-					updateSentTip("Update failed. Please try again.", 3e3, "failure");
+					updateSentTip("Update failed. Please try again.", 3e3, "g");
 					$('#tweeting_button').removeClass('btn-disabled');
 				}
 				PAUSE_UPDATE = false;
@@ -797,6 +797,34 @@ var transCallback = function(content, translation){
 	}
 };
 //sidebar function
+var sidebarscroll = function (msg) {
+	var $sidebar = $("#side");
+	$window = $(window);
+	
+	if(!$sidebar.data("top")) {
+		var offset = $sidebar.offset();
+		$sidebar.data("top",offset.top);
+	}
+	
+	var top = $sidebar.data("top");
+	if(msg == undefined && location.href.indexOf('profile.php')< 0) {
+		$window.scroll(function() {
+			if ($window.scrollTop() > top) {
+					$sidebar.stop().animate({
+						marginTop: $window.scrollTop() - top
+					});
+			} else {
+				$sidebar.stop().animate({
+					marginTop: 0
+				});
+			}
+		});
+	}
+	if (msg == 'pause') {
+		$window.unbind('scroll');
+		$("#side_base").stop();
+	}
+};
 $(function () {
 	if($.cookie('autoscroll') != 'false' && $("a#more").length > 0 && $("#allTimeline").length > 0) {
 		$("#allTimeline").infinitescroll({
@@ -884,25 +912,31 @@ $(function () {
 		}, function () {
 			$("#trends_title").removeClass();
 			$("#trend_entries").slideUp("fast");
+			sidebarscroll();
 		});
 	$("#following_title").toggle(
 		function () {
 			$("#following_title").removeClass().addClass("loading");
+			sidebarscroll('pause');
 			updateFollowing();
 		}, function () {
 			$("#following_title").removeClass();
 			$("#following_list").slideUp("fast");
+			sidebarscroll();
 		});
 	$("#apiquota_title").toggle(
 		function () {
 			$("#apiquota_title").removeClass().addClass("loading");
+			sidebarscroll('pause');
 			updateAPIQuota();
 		}, function () {
 			$("#apiquota_title").removeClass();
 			$("#apiquota_list").slideUp("fast");
+			sidebarscroll();
 		});
 });
 function updateTrends() {
+	sidebarscroll('pause');
 	$.ajax({
 		url: "ajax/updateTrends.php",
 		type: "GET",
@@ -1056,6 +1090,7 @@ $(document).ready(function () {
 			$(this).removeClass().addClass("active").css("background", "transparent url('../img/spinner.gif') no-repeat scroll 173px center")
 		});
 	$(".timeline img,#sideimg").lazyload({threshold : 100, effect : "fadeIn"});
+	sidebarscroll();
 });
 var freshProfile = function(){
 	$("#side_name").text($.cookie('name'));

@@ -136,7 +136,7 @@
 			<br /><br />
 			
 			<label>Custom Themes</label>
-			<select id="styleSelect"><option value="n/a">Choose one...</option></select>
+			<select id="styleSelect"></select>
 			<small>(We have awesome themes for you!)</small>
 
 			<br /><br />
