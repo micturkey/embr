@@ -33,7 +33,7 @@ header{margin:1em auto;text-align:right;width:766px}
 #logo img{left:0;margin-top:-2px;position:absolute}
 nav{background-color:#FFF;display:inline-block;padding:0 .8em;white-space:nowrap;-webkit-transition:all .5s ease-out;-moz-transition:all .5s ease-out}
 nav li{float:left;padding:4px 8px;line-height:18px}
-nav:hover{box-shadow:0 0 10px rgba(82,168,236,1);-webkit-box-shadow:0 0 10px rgba(82,168,236,1)}
+nav:hover{box-shadow:0 0 10px #2276BB;-webkit-box-shadow:0 0 10px #2276BB}
 nav a{border-radius:3px;padding:0 2px}
 nav a:hover{background-color:#DDEEF6;text-decoration:none}
 nav li .share{text-decoration:none;padding:0px 3px;overflow:hidden;cursor:move}
@@ -190,13 +190,13 @@ h3{font-size:14px;margin:14px 0 0 14px}
 #side .user_icon{clear:both;display:block;height:31px;padding:0 0 .8em}
 #side .user_icon img{padding-right:.8em;vertical-align:middle}
 #me_name{font-size:1.35em;vertical-align:middle}
-#side p.promotion{cursor:text;margin-bottom:.5em}
+#side p.promotion{cursor:text;margin-bottom:1em}
 .in-page-link{outline-style:none;outline-width:medium}
 #side #gadgets,#side #saved_searches{overflow:hidden;width:198px}
 ul.sidebar-menu li .side-tab-ajax{display:none;float:right;margin-right:1em;vertical-align:top}
 ul.sidebar-menu span.stat_count{border-radius:3px;background-color:transparent;float:right;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:12px;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;font-weight:700;line-height:normal;margin-right:14px;margin-top:0;padding:0 .1em}
 span.link-title{float:left}
-ul.sidebar-menu li{padding-top:1px}
+#ul.sidebar-menu li{padding-top:1px}
 ul.sidebar-menu li a,#apiquota_list li span{background-image:none;clear:both;display:block;margin-right:-1px;outline-style:none;outline-width:medium;padding:8px 0 8px 14px}
 ul.sidebar-menu li a{cursor:pointer!important;-webkit-transition:background-color .5s ease-out;-moz-transition:background-color .5s ease-out}
 .safari ul.sidebar-menu li a{padding:6px 0 6px 14px}

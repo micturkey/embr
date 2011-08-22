@@ -15,23 +15,25 @@
 <link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
 <?php 
-	$myCSS = getDefCookie("myCSS","");
+	$myCSS = getDefCookie("myCSS");
+	$theme = getDefCookie("theme");
 	$old_css = "ul.sidebar-menu li.active a";
 	$new_css = "ul.sidebar-menu a.active";
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
 	$fontsize = getDefCookie("fontsize","13px");
 	$Bgcolor = getDefCookie("Bgcolor");
-	$Bgimage = getDefCookie("Bgimage",'img/bg-clouds.png');
+	$Bgimage = getDefCookie("Bgimage");
 	
 	if ($title != 'Error' ){
 		setcookie('loginPage',$_SERVER['PHP_SELF'],$_SERVER['REQUEST_TIME']+3600*24);
 	}
 ?>
 <style type="text/css">
-<?php echo $myCSS ?>
+<?php echo $theme;echo $myCSS ?>
 a:active, a:focus {outline:none}
-body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $Bgcolor ?>;background-image: url('<?php echo $Bgimage?>')}
+body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $Bgcolor ?>;<?php if ($Bgimage != "") echo 'background-image: url("'.$Bgimage.'")'; ?>}
 </style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
 <script src="js/public.js"></script>
@@ -40,6 +42,7 @@ body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $
 <div id="shortcutTip" style="display:none"></div>
 	<header>
 		<div class="wrapper">
+		<div id="sentTip" style="display:none"></div>
 			<a href="index.php"><img id="logo" style="float:left" width="155" height="49" src="img/logo.png" /></a>
 			<nav class="round">
 			<ul>

@@ -15,6 +15,7 @@ $(function(){
 		} else {
 			$.cookie('Bgcolor', '');
 			$.cookie('Bgimage','');
+			$.cookie('Bgrepeat','no-repeat');
 			location.reload();
 		}
 	});
@@ -42,7 +43,8 @@ $(function(){
 	$('#reset_link').bind('click', function(e){
 		e.preventDefault();
 		if(confirm("You will lose all customized settings!")){
-			$.cookie('myCSS', '');
+			$.cookie('myCSS', '/*default.css*/');
+			$.cookie('theme','')
 			$.cookie('fontsize', '');
 			$.cookie('Bgcolor', '');
 			$.cookie('Bgimage','');
@@ -56,7 +58,7 @@ $(function(){
 		}
 	});
 	var style = {
-		"Twitter Default":{theme:"/*default*/ "}, 
+		"Twitter Default":{theme:"/*default*/"}, 
 		"Dark Rabr":{theme:"@import url(themes/1.css);"}, 
 		"Monokai Python":{theme:"@import url(themes/2.css);"}, 
 		"Old Times":{theme:"@import url(themes/3.css);"}, 
@@ -75,22 +77,18 @@ $(function(){
 		"Drop Bombs":{theme:"@import url(themes/16.css);"},
 		"Minimal":{theme:"@import url(themes/minimal.css);"},
 	};
-
 	$.each(style, function (i,o) {
-		$("#styleSelect").append('<option value="' + i + '">' + i + '</option>');
+		$("#styleSelect").append('<option value="' + o.theme + '">' + i + '</option>');
 	});
+	var theme = $.cookie('theme') == undefined ? '/*default*/' : $.cookie('theme');
 	$("#styleSelect").change(function(){
-		if ($(this).val() != "n/a") {
-			$.each(style[$(this).val()], function (i,o) {
-				$.cookie('theme',o,{expires:365});
-				$('#twitterbg').attr('checked', false);
-				$.cookie('twitterbg',false);
-				$.cookie('BgImage','');
-				location.reload();
-				updateSentTip('Themes Saved Successfully!',3000,'success');
-			});
-		}
-	});
+		var o =$(this).val();
+		$.cookie('theme',o,{expires:365});
+		$.cookie('Bgimage','');
+		location.reload();
+		updateSentTip('Themes Saved Successfully!',3000,'success');
+	}).eq(0).val(theme);
+	
 	$("textarea#myCSS").change(function(){
 		$.cookie('myCSS',$(this).val(),{expires:365});
 		location.reload();
@@ -126,27 +124,26 @@ $(function(){
 	});
 });
 function checkbox(c,id,d,extra){
+	var $id = $(id);
 	if ($.cookie (c) === null) {
 		$.cookie (c, d, { expires: 30 });
-	} else {
-		$(id).prop('checked', $.cookie (c) === 'true');
 	} 
-	$(id).click(function (){
-		$.cookie(c,$(id).prop("checked"),{expires:365});
+	$id.attr('checked', $.cookie (c) === 'true').click(function (){
+		$.cookie(c,$id.attr("checked"),{expires:365});
 		if (extra != undefined) extra();
 		updateSentTip('Setting saved successfully!',1000,'success');
 	});
 }
 function selectbox(c,id,extra){
+	var $id = $(id);
 	if($.cookie(c) != undefined){
-		//$(id).setSelectedValue($.cookie(c));
-		$(id).prop("selected",$.cookie(c));
+		$id.eq(0).val($.cookie(c));
 	}
-	$('select'+id).change(function (){
-		$.cookie(c,$('select'+id+' option:selected').val(),{expires:365});
+	$id.change(function (){
+		$.cookie(c,$id.find(':selected').val(),{expires:365});
 		if (extra != undefined) extra();
 		updateSentTip('Setting saved successfully!',1000,'success');
-	})
+	});
 }
 
 function ProfileImageUpload() {
