@@ -51,7 +51,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?instagr\.am\/([\d\w\/]+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://instagr.am/" + url_key[1] + "media/?size=t";
+				var src = "http://instagr.am/" + url_key[1] + "media/?size=m";
 				append_image(src, url_elem);
 			}
 		};
@@ -94,7 +94,7 @@ function get_img_processor(type) {
 		return proc;
 	case "ow.ly":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?ow\.ly\/i\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?ow\.ly\/i\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://static.ow.ly/photos/thumb/" + url_key[1] + ".jpg";
 				append_image(src, url_elem);
@@ -103,7 +103,7 @@ function get_img_processor(type) {
 		return proc;
 	case "pic.gd":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?pic\.gd\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?pic\.gd\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
@@ -112,7 +112,7 @@ function get_img_processor(type) {
 		return proc;
 	case "tweetphoto.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/([\w]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
@@ -121,7 +121,7 @@ function get_img_processor(type) {
 		return proc;
 	case "plixi.com/p":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/([\w]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=thumbnail&url=http://plixi.com/p/" + url_key[1];
 				append_image(src, url_elem);
@@ -130,7 +130,7 @@ function get_img_processor(type) {
 		return proc;
 	case "ts1.in":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?ts1\.in\/(\d+)/,
+			reg: /^http:\/\/(?:www\.)?ts1\.in\/([\d]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://ts1.in/thumb/" + url_key[1];
 				append_image(src, url_elem);
@@ -139,7 +139,7 @@ function get_img_processor(type) {
 		return proc;
 	case "hellotxt.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?hellotxt.com\/i\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?hellotxt.com\/i\/([\w]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://hellotxt.com/image/" + url_key[1] + ".s.jpg"
 				append_image(src, url_elem);
@@ -157,7 +157,7 @@ function get_img_processor(type) {
 		return proc;
 	case "moby.to":
 		proc = {
-			reg: /^(http:\/\/(?:www\.)?moby\.to\/[A-Za-z0-9]+)/,
+			reg: /^(http:\/\/(?:www\.)?moby\.to\/([\w]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.mobypicture.com?s=small&format=plain&k=OozRuDDauQlucrZ3&t=" + url_key[1];
 				append_image(src, url_elem);
@@ -166,16 +166,29 @@ function get_img_processor(type) {
 		return proc;
 	case "grab.by":
 		proc = {
-			reg: /^(http:\/\/(?:www\.)?grab\.by\/[A-Za-z0-9]+)/,
+			reg: /^(http:\/\/(?:www\.)?grab\.by\/([\w]+)/,
 			func: function (url_key, url_elem) {
 				var src = url_key[1];
 				append_image(src, url_elem);
 			}
 		};
 		return proc;
+	case "picplz.com":
+		proc = {
+			reg: /^http:\/\/(?:www\.)?picplz\.com\/([\w\d]+)/,
+			func: function(url_key, url_elem) {
+				$.getJSON('http://api.picplz.com/api/v2/pic.json?pic_formats=400r&jsoncallback=?&shorturl_id='+url_key[1],function (data) {
+					if (data.result == "ok") {
+						var imgsrc = data.value[pics].pic_files['400r'].img_url;
+						append_image(imgsrc, url_elem);
+					}
+				});
+			}
+		};
+		return proc;
 	case "flic.kr": 
 		proc = {
-			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/([A-Za-z0-9]+)/,
+			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/([\w\d]+)/,
 			func: function (url_key, url_elem) {
 				function base58_decode(snipcode) {
 					var alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -216,7 +229,7 @@ var previewImg = function (obj) {
 			append_image(RegExp.$1, obj);
 			return;
 		}
-		/http[s]?:\/\/(?:www\.)?([\w-_.]+)\/[\S]*/i.exec(obj.attr("href"));
+		/http[s]?:\/\/(?:www\.)?([\w-.]+)\/[\S]*/i.exec(obj.attr("href"));
 		var img_processor = get_img_processor(RegExp.$1);
 		if (img_processor === null) {
 			return null;

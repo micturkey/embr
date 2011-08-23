@@ -28,7 +28,7 @@
 				$output .= "
 					<li>
 					<span class=\"status_author\">
-					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img src=\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
+					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img original =\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
 					</span>
 					<span class=\"status_body\">
 					<span class=\"status_id\">$status->id_str</span>

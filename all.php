@@ -73,7 +73,8 @@
 			$name = $message->sender_screen_name;
 			$imgurl = getAvatar($message->sender->profile_image_url);
 			$date = strtotime($message->created_at);
-			$text = formatText($message->text);
+			$url_recover = '';
+			$text = formatEntities(&$message->entities,$message->text,&$url_recover);
 
 			$output .= "<li>
 				<span class=\"status_author\">
@@ -82,7 +83,7 @@
 				<span class=\"status_body\">
 				<span class=\"status_id\">$message->id</span>
 				<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a><span class=\"tweet\"> $text </span></span>";
-			$output .= recoverShortens($text);
+			$output .= $url_recover;
 			$output .= "<span class=\"actions\"><a class=\"msg_replie_btn\" href=\"message.php?id=$name\">Reply</a><a class=\"msg_delete_btn\" href=\"a_del.php?id=$message->id&t=m\">Delete</a></span>
 				<span class=\"status_info\">
 				<span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span>

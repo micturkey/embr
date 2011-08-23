@@ -54,6 +54,46 @@
 		return $text;
 	}
 
+	function formatEntities($entities,$html,$url_recover = false){
+		$user_mentions = $entities->user_mentions;
+		$hashtags = $entities->hashtags;
+		$urls = $entities->urls;
+		if(count($user_mentions) > 0) {
+			foreach($user_mentions as $user_mention) {
+				$name = $user_mention->screen_name;
+				$html = str_replace("@$name","<a href=\"user.php?id=$name\" target=\"_blank\">@$name</a>",$html);
+			}
+		}
+		if(count($hashtags) > 0) {
+			foreach($hashtags as $hashtag) {
+				$text = $hashtag->text;
+				$html = str_replace("#$text","<a target=\"_blank\" href=\"search.php?q=%23$text\">#<span class=\"hashtag\">$text</span></a>",$html);
+			}	
+		}
+		if(count($urls) > 0) {
+			$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
+			foreach($urls as $url) {
+				$html = str_replace($url->url,"<a href=\"$url->expanded_url\" target=\"_blank\" rel=\"noreferrer\">$url->display_url</a>",$html);
+				if($url_recover !== false && $recovered = unshortUrl($url->expanded_url)){
+					$split = explode('/', $recovered);
+		 			$fav_icon = $scheme.'://www.google.com/s2/favicons?domain='.$split[2];
+		 			$url_recover .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
+				}
+			}	
+		}
+		if(isset($entities->media)) {
+			$medias = $entities->media;
+			foreach($medias as $media) {
+				$url = $media->media_url_https;
+				if (getcookie('p_avatar') == 'true') {
+						$url = 'img.php?imgurl='.$url;
+				}
+				$html = str_replace($media->url,"<a href=\"$url\" target=\"_blank\" rel=\"noreferrer\">$media->display_url</a>",$html);
+			}
+		}
+		return $html;
+	}
+	
 	function formatDate($date){
 		return $date;
 	}

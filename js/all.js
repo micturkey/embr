@@ -66,6 +66,7 @@ $(function () {
 				if ($("#allTimelineBtn").hasClass("allHighLight")) $("#allTimelineBtn").removeClass("allHighLight");
 				else $("#allMessageBtn").removeClass("allHighLight");
 				$("#allRepliesBtn").text($("#allRepliesBtn").text().replace(/(\([0-9]+\))/g, ""));
+				$(".date a").timeago();
 			})
 		$("#allMessageBtn").click(function () {
 				$("#allTimeline").hide();

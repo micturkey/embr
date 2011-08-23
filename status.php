@@ -13,7 +13,7 @@
 		}
 		$user = $status->user;
 		$date = $status->created_at;
-		$text = formatText($status->text);
+		$text = formatEntities(&$status->entities,$status->text);
 	} else {
 		header('location: error.php');exit();
 	}
