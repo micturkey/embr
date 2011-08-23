@@ -52,38 +52,13 @@
 	<?php 
 		
 			$output = '<ol class="timeline" id="allTimeline">';
-			
+			include('ajax/timeline_format.php');
 			foreach ($statuses as $status) {
-				//format_timeline($status,$t->username);
-				
-				$user = $status->user;
-				$date = $status->created_at;
-				$text = formatText($status->text);
-				
-				$output .= "
-					<li>
-						<span class=\"status_author\">
-							<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"$user->screen_name\" /></a>
-						</span>
-						<span class=\"status_body\">
-							<span class=\"status_id\">$status->id_str</span>
-							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a> $text </span>";
-				$output .= recoverShortens($text);
-				$output .= "<span class=\"actions\">
-							<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
-							<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>
-							<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-							<a class=\"favor_btn\" title=\"Favorite\" href=\"#\">Fav</a>";
-				if ($user->screen_name == $t->username) $output .= "<a class=\"delete_btn\" title=\"Delete\" href=\"#\">Delete</a>";
-				$output .= "</span><span class=\"status_info\">";
-				if ($status->in_reply_to_status_id_str) $output .= "<span class=\"in_reply_to\"> <a class=\"ajax_reply\" href=\"ajax/status.php?id=$status->in_reply_to_status_id_str&uid=$user->id \">in reply to $status->in_reply_to_screen_name</a></span>";
-				$output .= "<span class=\"source\">via $status->source</span>
-							<span class=\"date\"><a href=\"status.php?id=$status->id_str\" target=\"_blank\">$date</a></span>
-						    </span>
-						</span>
-					</li>
-				";
-				
+				if (isset($status->retweeted_status)) {
+					$output .= format_retweet($status);
+				} else { 
+					$output .= format_timeline($status,$t->username);
+				}
 			}
 			
 			$output .= "</ol><div id=\"pagination\">";

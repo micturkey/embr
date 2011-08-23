@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	if(!isset($_SESSION)){
 		session_start();
 	}
@@ -18,11 +18,12 @@
 				
 				$user = $status->user;
 				$date = $status->created_at;
-				$text = formatText($status->text);
+				$url_recover = '';
+				$text = formatEntities(&$status->entities,$status->text,&$url_recover);
 
 				if(strpos("@$t->username", $text) > -1) {
 					if (++$count == count($statuses)) 
-						$output = "<li style=\"background-color:#E8FECD;border-bottom:5px solid #CCCCCC\">";
+						$output = "<li style=\"background-color:#E8FECD;border-bottom:5px solid #CCC\">";
 					else 
 						$output = "<li style=\"background-color:#E8FECD\">";
 
@@ -35,7 +36,7 @@
 					<span class=\"status_body\">
 					<span class=\"status_id\">$status->id_str </span>
 					<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
-				$output .= recoverShortens($text);
+				$output .= $url_recover;
 				$output .= "<span class=\"actions\">
 					<a class=\"replie_btn\" title=\"Reply\" href=\"a_reply.php?id=$status->id_str\">回复</a>
 					<a class=\"rt_btn\" title=\"Retweet\" href=\"a_rt.php?id=$status->id_str\">回推</a>

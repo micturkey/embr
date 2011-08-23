@@ -4,8 +4,12 @@
 	}
 	include ('../lib/twitese.php');
 	$t = getTwitter();
-	$user = $t->veverify();
-	if (!isset($user->error) && isset($user->name)) {
+	if (isset($_POST)) {
+		$user = $t->updateProfile($_POST);
+	} else {
+		$user = $t->veverify();
+	}
+	if ($t->http_code == 200) {
 		$time = $_SERVER['REQUEST_TIME']+3600*24*365;
 		setcookie('friends_count', $user->friends_count, $time, '/');
 		setcookie('statuses_count', $user->statuses_count, $time, '/');
@@ -22,5 +26,4 @@
 	} else {
 		echo '{"result": "error"}';
 	}
-	
 ?>

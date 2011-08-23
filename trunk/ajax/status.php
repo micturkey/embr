@@ -31,8 +31,8 @@
 		if($reply_to_id == ""){
 			$reply_to_id = $user->id;
 		}
-		$date = $status->created_at;
-		$text = formatText($status->text);
+		$date = strtotime($status->created_at);
+		$text = formatEntities(&$status->entities,$status->text);
 		$end = (!isset($status->in_reply_to_user_id) || ($user_id != $status->in_reply_to_user_id && $reply_to_id != $status->in_reply_to_user_id));
 		$html = '<li class="round">
 			<span class="status_author">
@@ -46,7 +46,7 @@
 			$html .= '<span class="in_reply_to"> <a class="ajax_reply" href="ajax/status.php?id='.$status->in_reply_to_status_id_str.'&uid='.$user->id.'">in reply to '.$status->in_reply_to_screen_name.'</a></span>';
 		}
 		$html .= '<span class="source">via '.$status->source.'</span>
-			<span class="date"><a href="status.php?id='.$status_id.'" target="_blank">'.$date.'</a></span>
+			<span class="date"><a href="status.php?id='.$status->id_str.'" id="'.$date.'" target="_blank">'.date('Y-m-d H:i:s', $date).'</a></span>
 			</span>
 			</span>
 			</li>';

@@ -1,4 +1,4 @@
-﻿<script src="js/formfunc.js"></script>
+<script src="js/formfunc.js"></script>
 <script src="js/ajaxfileupload.js"></script>
 <?php if (!isset($_sentText)) { 
 	if ($title != 'Direct Messages') {

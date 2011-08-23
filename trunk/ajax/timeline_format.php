@@ -4,7 +4,8 @@
 		$rt_status = $status->retweeted_status;
 		$status_owner = $rt_status->user;
 		$date = strtotime($status->created_at);
-		$text = formatText($rt_status->text);
+		$url_recover = '';
+		$text = formatEntities(&$rt_status->entities,$rt_status->text,&$url_recover);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="Hello, I am  '.$status_owner->screen_name.'. Click for more..." /></a>
@@ -13,7 +14,7 @@
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
 			<span class="status_id">'.$status->id_str.'</span>
 			<span class="status_word"><a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a> <span class="tweet">&nbsp;'.$text.'</span></span>';
-		$html .= recoverShortens($text);
+		$html .= $url_recover;
 		$html .= '<span class="actions">
 			<a class="replie_btn" title="Reply" href="#">Reply</a>
 			<a class="rt_btn" title="Retweet" href="#">Retweet</a>';
@@ -39,7 +40,8 @@
 	function format_retweet_of_me($status){
 		$status_owner = $status->user;
 		$date = strtotime($status->created_at);
-		$text = formatText($status->text);
+		$url_recover = '';
+		$text = formatEntities(&$status->entities,$status->text,&$url_recover);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
@@ -48,7 +50,7 @@
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span><span class="status_id">'.$status->id_str.'</span>
 			<span class="status_word">
 			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
-		$html .= recoverShortens($text);
+		$html .= $url_recover;
 		$html .= '<span class="actions">
 			<a class="replie_btn" title="Reply" href="#">Reply</a>
 			<a class="rt_btn" title="Retweet" href="#">Retweet</a>';
@@ -82,8 +84,9 @@
 	function format_timeline($status, $screen_name, $updateStatus = false){
 		$user = $status->user;
 		$date = strtotime($status->created_at);
-		$text = formatText($status->text);
-
+		$url_recover = '';
+		$text = formatEntities(&$status->entities,$status->text,&$url_recover);
+		
 		if(preg_match('/^\@'.getTwitter()->username.'/i', $text) == 1){
 			$output = "<li class=\"reply\">";
 		}elseif($updateStatus == true){
@@ -98,7 +101,7 @@
 			<span class=\"status_body\">
 			<span class=\"status_id\">$status->id_str</span>
 			<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
-		$output .= recoverShortens($text);
+		$output .= $url_recover;
 		$output .= "<span class=\"actions\">
 			<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
 			<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>

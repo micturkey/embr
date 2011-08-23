@@ -295,7 +295,7 @@ $(function () {
 		} else {
 			$that.addClass("loading");
 			$.ajax({
-				url: $this.prop("href"),
+				url: $this.attr("href"),
 				type: "GET",
 				dataType: "text",
 				success: function(msg){
@@ -513,7 +513,7 @@ function onFavor($this) {
 			if (msg.indexOf("success") >= 0) {
 				updateSentTip("Favorite added successfully.", 3e3, "success");
 				$this.parent().parent().parent().append('<i class="faved"></i>');
-				$this.removeClass().addClass("unfav_btn").prop("title","UnFav").text("UnFav");
+				$this.removeClass().addClass("unfav_btn").attr("title","UnFav").text("UnFav");
 			} else {
 				updateSentTip("Add failed. Please try again.", 3e3, "failure");
 			}
@@ -524,17 +524,18 @@ function onFavor($this) {
 	});
 }
 function onReplie($this, e) {
-	var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
+	var $word = $this.parent().parent().find(".status_word");
+	var replie_id = $word.find(".user_name").text();
 	var in_reply_id = $this.parent().parent().find(".status_id").text();
 	var text = "@" + replie_id;
 	var mode = "In reply to ";
 	if (!e.ctrlKey && !e.metaKey) {
 		var temp=[];
-		temp[replie_id] = true;
+		temp[text] = true;
 		var self = '@'+$("#side_name").text();
 		temp[self] = true;
 		var mentionArray = [text];
-		var mentions = $this.parent().parent().find('a[href^="user.php"]');
+		var mentions = $word.find('.tweet').find('a[href^="user.php"]');
 		$.each(mentions, function () {
 			var t = $(this).text();
 			if (!(t in temp)) {
@@ -580,7 +581,7 @@ function onNwRT($this) {
 	if (confirm("Are you sure to retweet this?")) {
 		var statusBody = $this.parent().parent();
 		var status_id = statusBody.find(".status_id").text();
-		var div = "#" + statusBody.parent().parent().prop('id');
+		var div = "#" + statusBody.parent().parent().attr('id');
 		var btnDiv = div + "Btn";
 		updateSentTip("Retweeting tweet...", 5000, "ing");
 		$.ajax({
@@ -628,7 +629,7 @@ function UnFavor($this){
 						$that.parent().fadeOut("fast");
 					} else {
 						$that.parent().find(".faved").fadeOut("fast");
-						$this.removeClass().addClass("favor_btn").prop("title","Fav").text("Fav");
+						$this.removeClass().addClass("favor_btn").attr("title","Fav").text("Fav");
 					}
 					updateSentTip("This tweet has been unfavored!", 3e3, "success");
 				} else {
@@ -1099,7 +1100,7 @@ var freshProfile = function(){
 		.eq(1).text($.cookie('followers_count')).end()
 		.eq(2).text($.cookie('listed_count'));
 	$("#update_count").text($.cookie('statuses_count'));
-	$('#sideimg').prop("src",$.cookie('imgurl'));
+	$('#sideimg').attr("src",$.cookie('imgurl'));
 };
 var markReply = function(obj){
 	obj.each(function (i, o) {

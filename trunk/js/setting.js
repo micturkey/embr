@@ -109,8 +109,9 @@ $(function(){
 				'location': $('input[name="location"]').val(),
 				'description': $('textarea[name="description"]').text()
 			},
+			dataType: 'json',
 			success: function(msg) {
-				if (msg == 'success') {
+				if (msg.result == 'success') {
 					freshProfile();
 					updateSentTip ('Profile updated successfully!',3000,'success');
 				} else {

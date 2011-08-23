@@ -63,7 +63,8 @@
 					$messenger = $message->recipient;
 				}
 				$date = strtotime($message->created_at);
-				$text = formatText($message->text);
+				$url_recover = '';
+				$text = formatEntities(&$message->entities,$message->text,&$url_recover);
 				
 				$output .= "
 					<li>
@@ -73,6 +74,7 @@
 						<span class=\"status_body\">
 							<span class=\"status_id\">$message->id </span>
 							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a> $text </span>
+							".$url_recover."
 							<span class=\"actions\">
 				";
 				

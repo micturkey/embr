@@ -225,6 +225,7 @@ class TwitterOAuth {
 		
 		return $response;
 	}
+	
 
 	/* ---------- API METHODS ---------- */
 	/*                                   */
@@ -264,13 +265,15 @@ class TwitterOAuth {
 		return $this->delete($url);
 	}
 
-	function directMessages($page = false, $since_id = false, $count = null){
+	function directMessages($page = false, $since_id = false, $count = null, $include_entities = true){
 		$url = '/direct_messages';
 		$args = array();
 		if( $since_id )
 			$args['since_id'] = $since_id;
 		if( $page )
 			$args['page'] = $page;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
@@ -418,7 +421,7 @@ class TwitterOAuth {
 
 	}
 
-	function listStatus($id, $page = false, $since_id = false){
+	function listStatus($id, $page = false, $since_id = false,$include_rts = true, $include_entities = true){
 		$arr = explode('/', $id);
 		$url = "/$arr[0]/lists/$arr[1]/statuses";
 		$args = array();
@@ -428,6 +431,10 @@ class TwitterOAuth {
 		if($since_id){
 			$args['since_id'] = $since_id;
 		}
+		if($include_rts)
+			$args['include_rts'] = $include_rts;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
@@ -500,7 +507,7 @@ class TwitterOAuth {
 		return $this->get($url, $args);
 	}
 
-	function showUser($id = false, $email = false, $user_id = false, $screen_name = false){
+	function showUser($id = false, $email = false, $user_id = false, $screen_name = false,$include_entities = true){
 		$url = '/users/show';
 		$args = array();
 		if($id)
@@ -516,7 +523,7 @@ class TwitterOAuth {
 	/* ---------- Ratelimit ---------- */
 	function ratelimit(){
 		$url = '/account/rate_limit_status';
-		return $this->get($url);
+		return $this->get($url,array(),false);
 	}
 
 	/* ---------- Retweet ---------- */
@@ -533,18 +540,20 @@ class TwitterOAuth {
 		return $this->post($url);
 	}
 
-	function retweets($id, $count = 20){
+	function retweets($id, $count = 20,$include_entities = true){
 		if($count > 100){
 			$count = 100;
 		}
 		$url = "/statuses/retweets/$id";
 		$args = array();
 		$args['count'] = $count;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url,$args);
 	}
 
 	// Returns the 20 most recent retweets posted by the authenticating user.
-	function retweeted_by_me($page = false, $count = 20, $since_id = false, $max_id = false){
+	function retweeted_by_me($page = false, $count = 20, $since_id = false, $max_id = false,$include_entities = true){
 		$url = '/statuses/retweeted_by_me';
 		$args = array();
 		if($since_id){
@@ -559,11 +568,13 @@ class TwitterOAuth {
 		if($page){
 			$args['page'] = $page;
 		}
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
 	// Returns the 20 most recent retweets posted by the authenticating user's friends.
-	function retweeted_to_me($page = false, $count = false, $since_id = false, $max_id = false){
+	function retweeted_to_me($page = false, $count = false, $since_id = false, $max_id = false,$include_entities = true){
 		$url = '/statuses/retweeted_to_me';
 		$args = array();
 		if($since_id){
@@ -578,10 +589,12 @@ class TwitterOAuth {
 		if($page){
 			$args['page'] = $page;
 		}
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
-	function retweets_of_me($page = false, $count = false, $since_id = false, $max_id = false){
+	function retweets_of_me($page = false, $count = false, $since_id = false, $max_id = false,$include_entities = true){
 		$url = '/statuses/retweets_of_me';
 		$args = array();
 		if($since_id){
@@ -596,6 +609,8 @@ class TwitterOAuth {
 		if($page){
 			$args['page'] = $page;
 		}
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
@@ -630,7 +645,7 @@ class TwitterOAuth {
 		return $this->delete($url);
 	}
 
-	function homeTimeline($page = false, $since_id = false, $count = false, $trim_user = false) {
+	function homeTimeline($page = false, $since_id = false, $count = false, $include_entities = true) {
 		$url = '/statuses/home_timeline';
 		$args = array();
 		if($page)
@@ -639,12 +654,12 @@ class TwitterOAuth {
 			$args['since_id'] = $since_id;
 		if($count)
 			$args['count'] = $count;
-		if($trim_user)
-			$args['trim_user'] = $trim_user;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 	
-	function friendsTimeline($page = false, $since_id = false, $count = false){
+	function friendsTimeline($page = false, $since_id = false, $count = false,$include_entities = true){
 		$url = '/statuses/friends_timeline';
 		$args = array();
 		if($page)
@@ -653,10 +668,12 @@ class TwitterOAuth {
 			$args['since_id'] = $since_id;
 		if($count)
 			$args['count'] = $count;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
-	function getFavorites($page = false,$userid=false){
+	function getFavorites($page = false,$userid=false,$include_entities = true){
 		if($userid == false){
 			$url = '/favorites';
 		}
@@ -667,6 +684,8 @@ class TwitterOAuth {
 		$args = array();
 		if($page)
 			$args['page'] = $page;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
@@ -675,12 +694,14 @@ class TwitterOAuth {
 		return $this->post($url);
 	}
 
-	function publicTimeline($sinceid = false){
+	function publicTimeline($sinceid = false,$include_entities = true){
 		$url = '/statuses/public_timeline';
 		$args = array();
 		if($sinceid){
 			$args['since_id'] = $sinceid;
 		}
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
@@ -689,35 +710,42 @@ class TwitterOAuth {
 		return $this->post($url);
 	}
 
-	function replies($page = false, $since_id = false){
+	function replies($page = false, $since_id = false,$include_entities = true){
 		$url = '/statuses/mentions';
 		$args = array();
 		if($page)
 			$args['page'] = (int) $page;
 		if($since_id)
 			$args['since_id'] = $since_id;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		return $this->get($url, $args);
 	}
 
-	function showStatus($id){
+	function showStatus($id,$include_entities = true){
 		$url = "/statuses/show/$id";
-		return $this->get($url);
+		$args = array();
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
+		return $this->get($url,$args);
 	}
 
-	function update($status, $replying_to = false){
+	function update($status, $replying_to = false,$include_entities = true){
 		try{
 			$url = '/statuses/update';
 			$args = array();
 			$args['status'] = $status;
 			if($replying_to)
 				$args['in_reply_to_status_id'] = $replying_to;
+			if($include_entities)
+				$args['include_entities'] = $include_entities;
 			return $this->post($url, $args);
 		}catch(Exception $ex){
 			echo $ex->getLine." : ".$ex->getMessage();
 		}
 	}
 
-	function userTimeline($page = false, $id = false, $count = false, $since_id = false, $include_rts = true){
+	function userTimeline($page = false, $id = false, $count = false, $since_id = false, $include_rts = true, $include_entities = true){
 		$url = '/statuses/user_timeline';
 		$args = array();
 		if($page)
@@ -730,14 +758,9 @@ class TwitterOAuth {
 			$args['since_id'] = $since_id;
 		if($include_rts)
 			$args['include_rts'] = $include_rts;
+		if($include_entities)
+			$args['include_entities'] = $include_entities;
 		$response = $this->get($url, $args);
-		if(isset($response->error))
-		{
-			if($response->error === 'Not authorized')
-			{
-				return 'protected';
-			}
-		}
 		return $response;
 	}
 
@@ -762,10 +785,6 @@ class TwitterOAuth {
 			switch( $pk ){
 			case 'name' :
 				$args[$pk] = (string) substr( $pv, 0, 20 );
-				break;
-			case 'email' :
-				if( preg_match( '/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $pv ) )
-					$args[$pk] = (string) $pv;
 				break;
 			case 'url' :
 				$args[$pk] = (string) substr( $pv, 0, 100 );
