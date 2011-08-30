@@ -29,7 +29,7 @@
 	}
 	
 	if ($statuses === false) {
-		header('location: error.php');exit();
+		header('location: error.php');exit;
 	}
 	$user = $t->showUser($userid);
 	if (strcasecmp($userid,$t->username) == 0) {header('location: profile.php');exit();}

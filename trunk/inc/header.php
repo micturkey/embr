@@ -5,9 +5,9 @@
 	}
 ?>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 <meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <meta name="author" content="disinfeqt, JLHwung" />
@@ -22,7 +22,8 @@
 	$myCSS = str_replace($old_css,$new_css,$myCSS);
 	$fontsize = getDefCookie("fontsize","13px");
 	$Bgcolor = getDefCookie("Bgcolor");
-	$Bgimage = getDefCookie("Bgimage");
+	$Bgimage = getAvatar(getDefCookie("Bgimage"));
+	$Bgrepeat = getDefCookie("Bgrepeat","no-repeat");
 	
 	if ($title != 'Error' ){
 		setcookie('loginPage',$_SERVER['PHP_SELF'],$_SERVER['REQUEST_TIME']+3600*24);
@@ -30,10 +31,13 @@
 ?>
 <style type="text/css">
 <?php echo $theme;echo $myCSS ?>
-a:active, a:focus {outline:none}
-body {font-size:<?php echo $fontsize ?> !important;background-color:<?php echo $Bgcolor ?>;<?php if ($Bgimage != "") echo 'background-image: url("'.$Bgimage.'")'; ?>}
+a:active,a:focus {outline:none}
+body {font-size:<?php echo $fontsize ?> !important;<?php 
+	if ($Bgcolor != "") echo 'background-color:'.$Bgcolor.';';
+ 	if ($Bgimage != "") echo 'background-image: url("'.$Bgimage.'");';
+ ?>background-repeat:<?php echo $Bgrepeat ?>}
 </style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
 <script src="js/public.js"></script>

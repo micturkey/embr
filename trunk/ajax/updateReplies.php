@@ -3,7 +3,7 @@
 		session_start();
 	}
 	include ('../lib/twitese.php');
-	include_once('timeline_format.php');
+	include_once('../lib/timeline_format.php');
 	$t = getTwitter();
 	if ( isset($_GET['since_id']) ) {
 

@@ -6,7 +6,6 @@
 ?>
 <script src="js/colorpicker.js"></script>
 <script src="js/setting.js"></script>
-<script src="js/ajaxfileupload.js"></script>
 <link rel="stylesheet" href="css/colorpicker.css" />
 <div id="statuses" class="column round-left">
 	<div id="setting">
@@ -82,7 +81,11 @@
 			
 			<br /><br />			
 			<input id="autoscroll" type="checkbox" />
-			<label>Auto Scroll your Timeline</label>
+			<label>Timeline Autopaging</label>
+			
+			<br /><br />			
+			<input id="sidebarscroll" type="checkbox" />
+			<label>Fixed Sidebar</label>
 			
 			</fieldset>
 			

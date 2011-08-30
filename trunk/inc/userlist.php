@@ -1,7 +1,7 @@
 <div id="statuses" class="column round-left">
 <script src="js/userlist.js"></script>
 <?php
-	include_once('ajax/timeline_format.php');
+	include_once('lib/timeline_format.php');
 	
 	if(!isset($_SESSION)){
 		session_start();
@@ -148,7 +148,7 @@
 			$output .= "
 				<li>
 				<span class=\"rank_img\">
-				<img title=\"Click for more...\" src=\"".getAvatar($user->profile_image_url)."\" />
+				<img id= \"avatar\"title=\"Click for more...\" src=\"".getAvatar($user->profile_image_url)."\" />
 				</span>
 				<div class=\"rank_content\">
 				<span class=\"rank_num\"><span class=\"rank_name\"><a href=\"user.php?id=$user->screen_name\">$user->name</a></span>&nbsp;<span class=\"rank_screenname\">$user->screen_name</span><span id=\"rank_id\" style=\"display: none;\">$user->id</span></span>

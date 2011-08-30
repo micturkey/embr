@@ -202,8 +202,8 @@ $(document).ready(function () {
 				var val = $(this).val();
 				$.cookie('transLang', val, option);
 				$.cookie('fullLang', $(this).find('option[value=' + val + ']').text(), option);
-			});
-		select.find('option').each(function(){
+			})
+			.find('option').each(function(){
 				var lang = $.cookie('transLang')
 				if(lang === null){
 					lang = 'en';
@@ -216,8 +216,8 @@ $(document).ready(function () {
 		mylang.change(function(){
 				var val = $(this).val();
 				$.cookie('myLangs', val, option);
-			});
-		mylang.find('option').each(function(){
+			})
+			.find('option').each(function(){
 				var lang = $.cookie('myLangs')
 				if(lang === null){
 					lang = 'en';

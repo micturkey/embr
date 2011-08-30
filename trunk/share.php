@@ -18,9 +18,9 @@ a{color:#3280AB;text-decoration:none}
 a:hover{color:#000;text-decoration:underline}
 #tip{color:#999;float:right;font-size:12px}
 #tip b{font-family:Tahoma,Helvetica,sans-serif;font-size:24px;margin:3px}
-#share{-moz-border-radius:5px;border-radius:5px;box-shadow:0 0 5px #000;-moz-box-shadow:0 0 5px #000;-webkit-box-shadow:0 0 5px #000;background:url("../img/bg-front.gif") repeat-x scroll 0 0 transparent;height:230px;margin:20px 30px 0;padding:10px 20px;width:500px}
-#textbox{-moz-border-radius:2px;border-radius:2px;background-color:#FBFBFB;border:1px solid #A7A6AA;font-family:'Lucida Grande',Tahoma,sans-serif;font-size:14px;height:80px;margin:0;overflow:hidden;padding:3px;width:490px}
-#url{-moz-border-radius:2px;border-radius:2px;background-color:#FBFBFB;border:1px solid #A7A6AA;font-family:'Lucida Grande',Tahoma,sans-serif;font-size:12px;padding:3px;width:490px}
+#share{border-radius:5px;box-shadow:0 0 5px #000;-moz-box-shadow:0 0 5px #000;-webkit-box-shadow:0 0 5px #000;background:url("../img/bg-front.gif") repeat-x scroll 0 0 transparent;height:230px;margin:20px 30px 0;padding:10px 20px;width:500px}
+#textbox{border-radius:2px;background-color:#FBFBFB;border:1px solid #A7A6AA;font-family:'Lucida Grande',Tahoma,sans-serif;font-size:14px;height:80px;margin:0;overflow:hidden;padding:3px;width:490px}
+#url{border-radius:2px;background-color:#FBFBFB;border:1px solid #A7A6AA;font-family:'Lucida Grande',Tahoma,sans-serif;font-size:12px;padding:3px;width:490px}
 .title{display:block;width:40px}
 table tr td{padding:5px 0}
 #message{font-size:14px;margin-top:100px;text-align:center}
@@ -33,11 +33,10 @@ table tr td{padding:5px 0}
 .round{-moz-border-radius:8px;border-radius:8px}
 #shareBtn{color:#666;display:block;height:45px;margin:0 auto;text-shadow:0 1px 0 #FFF;vertical-align:top;width:300px;line-height:1em}
 </style>
-<script src="js/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script>
 $(function(){leaveWord();
-	$("#textbox").focus();
-	$("#textbox").keydown(function(){leaveWord(140)}).keyup(function(){leaveWord(140)})
+	$("#textbox").focus().bind("keyup","keydown",function(){leaveWord()});
 });
 
 function leaveWord(num){

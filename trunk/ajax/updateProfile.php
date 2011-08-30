@@ -19,7 +19,7 @@
 		setcookie('listed_count', GetListed($t), $time, '/');
 		if($_GET['extra'] == 'bg') {
 			setcookie('Bgcolor', '#'.$user->profile_background_color,$time,'/');
-			setcookie('Bgimage', getAvatar($user->profile_background_image_url),$time,'/');
+			setcookie('Bgimage', $user->profile_background_image_url,$time,'/');
 			setcookie('Bgrepeat',$user->profile_background_tile ? "repeat" : "no-repeat",$time,'/');
 		}
 		echo '{"result": "success"}';

@@ -4,13 +4,13 @@
 	}
 	include ('../lib/twitese.php');
 	$t = getTwitter();
-	$trends = $t->trends();
+	$trends = $t->trends()->trends;
 
 	if (count($trends) == 0) {
 		echo "empty";
 	}else{
 		$html = '';
-		foreach ($trends->trends as $trend) {
+		foreach ($trends as $trend) {
 			$li = '
 				<li>
 				<a href="search.php?q='.rawurlencode($trend->name).'">'.$trend->name.'</a>

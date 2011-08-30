@@ -1,5 +1,4 @@
 <script src="js/formfunc.js"></script>
-<script src="js/ajaxfileupload.js"></script>
 <?php if (!isset($_sentText)) { 
 	if ($title != 'Direct Messages') {
 	echo "<h2>What's happening?</h2>" ;
@@ -95,46 +94,54 @@
 <textarea name="status" id="textbox"><?php if (isset($_sentText)) echo $_sentText ?></textarea>
 <input type="hidden" id="in_reply_to" name="in_reply_to" value="<?php echo isset($_sentInReplyTo) ? $_sentInReplyTo : 0 ?>" />
 <?php
-	$t = getTwitter();
-	$user = $t->veverify();
-	if ($user === false) {
-		header('location: error.php');exit();
-	} 
-	$empty = count($user) == 0? true: false;
-	if ($empty || !isset($user->status)) {
-		echo "<div id=\"currently\">
-			<span id=\"full_status\" title=\"Click to view the full tweet\"><strong >Latest:</strong></span>
-			<span id=\"latest_status\">
-			<span id=\"latest_text\">
-			<span class=\"status-text\">What's shaking?</span>
-			<span class=\"full-text\" style=\"display:none\">What's shaking?</span>
-			<span class=\"entry-meta\" id=\"latest_meta\"></span>
-			<span class=\"entry-meta\" id=\"full_meta\"></span>
-			</span>
-			</span>
-			</div>";
-	} else {
-			$status = $user->status;
-			$date = strtotime($status->created_at);
-			$text = formatText($status->text);
-			$output = "
-				<div id=\"currently\">
-				<span id=\"full_status\"><strong>Latest:</strong></span>
+	$p = 1;
+	if (isset($_GET['p']))
+	{
+		$p = (int) $_GET['p'];
+		if ($p <= 0) $p = 1;
+	}
+	if($_COOKIE['autoscroll'] == 'false' || $p == 1) {
+		$t = getTwitter();
+		$user = $t->veverify();
+		if ($user === false) {
+			header('location: error.php');exit();
+		} 
+		$empty = count($user) == 0? true: false;
+		if ($empty || !isset($user->status)) {
+			echo "<div id=\"currently\">
+				<span id=\"full_status\" title=\"Click to view the full tweet\"><strong >Latest:</strong></span>
 				<span id=\"latest_status\">
 				<span id=\"latest_text\">
-				<span class=\"status-text\">" . $text . "</span>
-				<span class=\"full-text\" style=\"display:none\">" . $text . "</span>
-				<span class=\"entry-meta\" id=\"latest_meta\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
-				<span class=\"entry-meta\" id=\"full_meta\" style=\"display:none\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
+				<span class=\"status-text\">What's shaking?</span>
+				<span class=\"full-text\" style=\"display:none\">What's shaking?</span>
+				<span class=\"entry-meta\" id=\"latest_meta\"></span>
+				<span class=\"entry-meta\" id=\"full_meta\"></span>
 				</span>
 				</span>
-				</div>
-				";
-		echo $output;
+				</div>";
+		} else {
+				$status = $user->status;
+				$date = strtotime($status->created_at);
+				$text = formatText($status->text);
+				$output = "
+					<div id=\"currently\">
+					<span id=\"full_status\"><strong>Latest:</strong></span>
+					<span id=\"latest_status\">
+					<span id=\"latest_text\">
+					<span class=\"status-text\">" . $text . "</span>
+					<span class=\"full-text\" style=\"display:none\">" . $text . "</span>
+					<span class=\"entry-meta\" id=\"latest_meta\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
+					<span class=\"entry-meta\" id=\"full_meta\" style=\"display:none\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', $date)."</a></span>
+					</span>
+					</span>
+					</div>
+					";
+			echo $output;
+		}
 	}
 ?>
 <div id="tweeting_controls">
-	<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl+Enter also works!"><span>
+	<a class="a-btn a-btn-m btn-disabled" id="tweeting_button" tabindex="2" href="#" title="Ctrl/⌘+Enter also works!"><span>
 		<?php if($title == 'Direct Messages') {
 			echo 'Send';
 			} else {

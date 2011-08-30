@@ -28,7 +28,7 @@
 		echo "<div id=\"empty\">No tweet to display.</div>";
 	} else {
 		$output = '<ol class="timeline" id="allTimeline">';
-		include('ajax/timeline_format.php');
+		include('lib/timeline_format.php');
 		foreach ($statuses as $status) {
 			if (isset($status->retweeted_status)) {
 				$output .= format_retweet($status);

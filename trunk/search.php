@@ -28,7 +28,7 @@
 				$output .= "
 					<li>
 					<span class=\"status_author\">
-					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img original =\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
+					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img id=\"avatar\" src =\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
 					</span>
 					<span class=\"status_body\">
 					<span class=\"status_id\">$status->id_str</span>
@@ -64,8 +64,7 @@
 		<input type="text" name="q" id="query" value="<?php echo $_GET['q'] ?>" />
 		<input type="submit" class="more round" style="width: 103px; margin-left: 10px; display: block; float: left; height: 34px; font-family: tahoma; color: rgb(51, 51, 51);" value="Search">
 	</form>
-<?php 
-	$t = getTwitter();
+<?php
 	$p = 1;
 	if (isset($_GET['p'])) {
 		$p = (int) $_GET['p'];

@@ -11,7 +11,7 @@
 		if($_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
 			$_SESSION['oauth_status'] = 'oldtoken';
 			session_destroy();
-			header('Location: login.php?oauth=old');
+			header('Location: login.php?oauth=old');exit();
 		}else{
 			/* Create TwitteroAuth object with app key/secret and token key/secret from default phase */
 			$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
@@ -52,17 +52,17 @@
 					setcookie('mediaPre', 'true', $time, '/');
 				}
 				if(!isset($_COOKIE['loginPage'])) {
-					header('Location: index.php');
+					header('Location: index.php');exit();
 				} else {
 					$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 					$port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
 					$login_page = $scheme . '://' . $_SERVER['HTTP_HOST'] . $port . $_COOKIE['loginPage'];
-					header('Location: '. $login_page);
+					header('Location: '. $login_page);exit();
 				}
 				
 			} else {
 				session_destroy();
-				header('Location: login.php?oauth=error');
+				header('Location: login.php?oauth=error');exit();
 			}
 		}
 	}else{

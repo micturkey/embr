@@ -1,38 +1,48 @@
 var INTERVAL_COOKIE = 'updatesInterval';
 $(function () {
 		formFunc();
-		$(".rt_btn").live("click", function (e) {
-				e.preventDefault();
-				onRT($(this));
-			});
-		$(".retw_btn").live("click", function (e) {
-				e.preventDefault();
-				onNwRT($(this));
-			});
-		$(".replie_btn").live("click", function (e) {
-				e.preventDefault();
-				onReplie($(this), e);
-			});
-		$(".favor_btn").live("click", function (e) {
-				e.preventDefault();
-				onFavor($(this));
-			});
-		$(".delete_btn").live("click", function (e) {
-				e.preventDefault();
-				onDelete($(this));
-			});
-		$(".msg_replie_btn").live("click", function (e) {
-				e.preventDefault();
-				onReplieDM($(this));
-			});
-		$(".msg_delete_btn").live("click", function (e) {
-				e.preventDefault();
-				onDeleteMsg($(this));
-			});
-		$(".rt_undo").live("click", function (e) {
-				e.preventDefault();
-				onUndoRt($(this));
-			});
+		$("ol.timeline").click(function(e) {
+			var $this = $(e.target);
+			var type = $this.attr('class');
+			switch(type) {
+				case 'rt_btn':
+					e.preventDefault();
+					onRT($this);
+					break;
+				case 'retw_btn':
+					e.preventDefault();
+					onNwRT($this);
+					break;
+				case 'replie_btn':
+					e.preventDefault();
+					onReplie($this,e);
+					break;
+				case 'favor_btn':
+					e.preventDefault();
+					onFavor($this);
+					break;
+				case 'unfav_btn':
+					e.preventDefault();
+					UnFavor($this);
+					break;
+				case 'delete_btn':
+					e.preventDefault();
+					onDelete($this);
+					break;
+				case 'rt_undo':
+					e.preventDefault();
+					onUndoRt($this);
+					break;
+				case 'msg_replie_btn':
+					e.preventDefault();
+					onReplieDM($this);
+					break;
+				case 'msg_delete_btn':
+					e.preventDefault();
+					onDeleteMsg($this);
+					break;
+			}
+		});
 		markReply($("#allTimeline > li"));
 		$("#submit_btn").click(function (e) {
 				updateStatus();
@@ -49,7 +59,7 @@ $(function () {
 		$("#allMessage").hide();
 		$("#allTimelineBtn").click(function () {
 				$("#allTimeline").show();
-				$("#allTimeline img").lazyload({threshold : 100, effect : "fadeIn"});
+				$("#allTimeline img").lazyload({threshold : 100, effect : "fadeIn", placeholder:'img/blank.gif'});
 				$("#allReplies").hide();
 				$("#allMessage").hide();
 				$("#allTimelineBtn").addClass("allHighLight");
@@ -60,24 +70,23 @@ $(function () {
 		$("#allRepliesBtn").click(function () {
 				$("#allTimeline").hide();
 				$("#allReplies").show();
-				$("#allReplies img").lazyload({threshold : 100, effect : "fadeIn"});
+				$("#allReplies img").lazyload({threshold : 100, effect : "fadeIn",placeholder:'img/blank.gif'});
 				$("#allMessage").hide();
 				$("#allRepliesBtn").addClass("allHighLight");
 				if ($("#allTimelineBtn").hasClass("allHighLight")) $("#allTimelineBtn").removeClass("allHighLight");
 				else $("#allMessageBtn").removeClass("allHighLight");
 				$("#allRepliesBtn").text($("#allRepliesBtn").text().replace(/(\([0-9]+\))/g, ""));
-				$(".date a").timeago();
 			})
 		$("#allMessageBtn").click(function () {
 				$("#allTimeline").hide();
 				$("#allReplies").hide();
 				$("#allMessage").show();
-				$("#allMessage img").lazyload({threshold : 100, effect : "fadeIn"});
+				$("#allMessage img").lazyload({threshold : 100, effect : "fadeIn",placeholder:'img/blank.gif'});
 				$("#allMessageBtn").addClass("allHighLight");
 				if ($("#allRepliesBtn").hasClass("allHighLight")) $("#allRepliesBtn").removeClass("allHighLight");
 				else $("#allTimelineBtn").removeClass("allHighLight");
 				$("#allMessageBtn").text($("#allMessageBtn").text().replace(/(\([0-9]+\))/g, ""));
-				$(".date").timeago();
+				$("#allMessage span.date").timeago();
 			})
 		$(function () {
 				setUpdateInterval();
@@ -167,8 +176,12 @@ function updateFunc(type, name, pw) {
 					$(btnDiv).text($(btnDiv).text().replace(/(\([0-9]+\))/g, "") + "(" + (navNum + len) + ")");
 					filterEle();
 					embrTweet(source);
-					$(".new").slideDown("fast");
-					$(".big-retweet-icon").tipsy({
+					if($("div.new").length == 1) {
+						$("div.new").show().slideDown("fast");
+					} else {
+						$("span.tweetcount").filter(":last").text(navNum + len);
+					}
+					$("span.big-retweet-icon").tipsy({
 							gravity: 's'
 						});
 					previewMedia(source);

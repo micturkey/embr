@@ -16,8 +16,9 @@
 			break;
 			case 'profile':
 			$t = getTwitter();
-			$result = $t->updateProfileImage($image);
-			if ($result->http_code == 200) {
+			$skip_status = $_POST['skip_status'];
+			$result = $t->updateProfileImage($image,$skip_status);
+			if ($t->http_code == 200) {
 				echo '{"result": "success"}';
 			} else {
 				echo '{"result": "error"}';

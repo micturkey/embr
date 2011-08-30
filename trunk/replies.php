@@ -10,7 +10,7 @@
 <div id="statuses" class="column round-left">
 <?php 
 	include('inc/sentForm.php');
-	include('ajax/timeline_format.php');
+	include('lib/timeline_format.php');
 		$t = getTwitter();
 		$p = 1;
 		if (isset($_GET['p'])) {

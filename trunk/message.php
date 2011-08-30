@@ -9,7 +9,7 @@
 <style>.timeline li{border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
 
 <?php 
-	$isSentPage = isset($_GET['t'])? true : false;
+	$isSentPage = isset($_GET['t']) ? true : false;
 ?>
 <div id="statuses" class="column round-left">
 
@@ -49,46 +49,11 @@
 		if ($empty) {
 			echo "<div id=\"empty\">No tweets to display.</div>";
 		} else {
-			$output = '<ol class="timeline" id="allTimeline">';
+			include ('lib/timeline_format.php');
+			$output = '<ol class="timeline" id="allMessage">';
 			
 			foreach ($messages as $message) {
-				if (!$isSentPage) {
-					$name = $message->sender_screen_name;
-					$imgurl = getAvatar($message->sender->profile_image_url);
-					$messenger = $message->sender;
-				}
-				else{
-					$name = $message->recipient_screen_name;
-					$imgurl = getAvatar($message->recipient->profile_image_url);
-					$messenger = $message->recipient;
-				}
-				$date = strtotime($message->created_at);
-				$url_recover = '';
-				$text = formatEntities(&$message->entities,$message->text,&$url_recover);
-				
-				$output .= "
-					<li>
-						<span class=\"status_author\">
-							<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"Hello, I am $name. Click for more...\" /></a>
-						</span>
-						<span class=\"status_body\">
-							<span class=\"status_id\">$message->id </span>
-							<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a> $text </span>
-							".$url_recover."
-							<span class=\"actions\">
-				";
-				
-				if (!$isSentPage) {
-					$output .= "<a class=\"msg_replie_btn\" href=\"#\">reply</a><a class=\"msg_delete_btn\" href=\"#\">delete</a>";
-				} else {
-					$output .= "<a class=\"msg_delete_btn\" href=\"#\">delete</a>";
-				}
-				$output .="</span><span class=\"status_info\">
-				<span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span>
-						    </span>
-						</span>
-					</li>
-				";
+				$output .= format_message($message,$isSentPage);
 			}
 			
 			$output .= "</ol><div id=\"pagination\">";

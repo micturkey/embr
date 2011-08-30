@@ -3,7 +3,7 @@
 		session_start();
 	}
 	include ('../lib/twitese.php');
-	include('timeline_format.php');
+	include('../lib/timeline_format.php');
 	$t = getTwitter();
 	if ( isset($_GET['since_id']) ) {
 		$statuses = $t->homeTimeline(false, $_GET['since_id']);
@@ -21,7 +21,7 @@
 					break;
 				}
 				
-				if(($status->user->screen_name == $t->username ) && (strpos($status->source, "api") !== false || strpos($status->source, "rabr") !== false)){
+				if(($status->user->screen_name == $t->username ) && (strpos($status->source, "api") !== false || strpos($status->source, "embr") !== false)){
 					$count -= 1;
 					continue;
 				}

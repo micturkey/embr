@@ -778,6 +778,12 @@ class TwitterOAuth {
 		return false;
 	}
 
+	function veverify($skip_status = false){
+		$url = '/account/verify_credentials';
+		$args = array('skip_status' => $skip_status);
+		return $this->get($url,$args);
+	}
+	
 	function updateProfile($fields = array(), $skip_status = true){
 		$url = '/account/update_profile';
 		$args = array();
@@ -803,32 +809,45 @@ class TwitterOAuth {
 		return $this->post($url, $args);
 	}
 	
+	/* media */
 	function updateProfileImage($image, $skip_status=true) {
 		$url = '/account/update_profile_image';
-		$mul = array();
+		$mul = array();$args = array();
 		if($image){
 			$mul['image']=$image;
-			$mul['skip_status']=$skip_status;
 		}
-		return $this->post($url, NULL, $mul);
+		if($skip_status) {
+			$args['skip_status']=$skip_status;
+		}
+		return $this->post($url, $args, $mul);
 	}
 	
 	function updateProfileBackground($image, $skip_status=true) {
 		$url = '/account/update_profile_background_image';
-		$mul = array();
+		$mul = array();$args=array();
 		if($image){
 			$mul['image']=$image;
-			$mul['skip_status']=$skip_status;
 		}
-		return $this->post($url, NULL, $mul);
+		if($skip_status) {
+			$args['skip_status']=$skip_status;
+		}
+		return $this->post($url, $args, $mul);
 	}
 	
-	function veverify($skip_status = false){
-		$url = '/account/verify_credentials';
-		$args = array('skip_status' => $skip_status);
-		return $this->get($url,$args);
+	function updateMedia($status,$image,$replying_to = false) {
+		$url='https://upload.twitter.com/1/statuses/update_with_media'.$this->type;
+		$args = array();$mul = array();
+		if($status) {
+			$args['status'] = $status;
+		}
+		if($replying_to) {
+			$args['in_reply_to_status_id'] = $replying_to;
+		}
+		if($image) {
+			$mul['media'][] = $image;
+		}
+		return $this->post($url, $args, $mul);
 	}
-
 	/* ---------- twitese method ---------- */
 	function rank($page = false, $count = false){
 		$url = TWITESE_API_URL."/rank.$this->type";

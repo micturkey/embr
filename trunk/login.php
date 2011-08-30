@@ -22,9 +22,9 @@
 	}
 ?>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 <meta name="keywords" content="rabr, open source, php, twitter, oauth, embr" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <meta name="author" content="Contributors" />
@@ -64,10 +64,15 @@ a{color:#BFBFBF;outline:medium none;text-decoration:none;}
 a:hover,.form-footer{color:#999;}
 #oauth {border:none;line-height: 22px;margin-right:-2px;padding-left:25px;}
 </style>
-<script src="js/jquery.js"></script>
-<script src="js/public.js"></script>
+<script type="text/javascript">
+function register() {
+	if (window.confirm("Make sure you can get access to twitter.com!")) {
+		window.open("https://mobile.twitter.com/signup", "registerwindow", "height=450, width=600, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=yes, status=yes");
+	}
+}
+</script>
 </head> 
-<?php if(BASIC_AUTH) require ('./basic_auth.php'); ?>
+<?php if(BASIC_AUTH) require ('basic_auth.php'); ?>
 <body class="form-container">
 <div class="clear rounded_5px" id="container">
  <div id="header">
