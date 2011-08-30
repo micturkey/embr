@@ -3,6 +3,7 @@ TUDOU_EMBED = '<br /><embed src="http://www.tudou.com/v/src_id" type="applicatio
 XIAMI_EMBED = '<br /><embed src="http://www.xiami.com/widget/0_src_id/singlePlayer.swf" type="application/x-shockwave-flash" width="257" height="33" wmode="transparent"></embed>';
 YOUKU_EMBED = '<br /><embed src="http://player.youku.com/player.php/sid/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
 YOUTUBE_EMBED = '<br /><embed src="http://www.youtube.com/e/src_id?enablejsapi=1&version=3&playerapiid=ytplayer" quality="high" width="420" height="363" align="middle" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>';
+KU6_EMBED='<br /><embed src="http://player.ku6.com/refer/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
 EMBED_FRAME = '';
 
 function getFlashReg(sSite) {
@@ -27,6 +28,9 @@ function getFlashReg(sSite) {
 		EMBED_FRAME = YOUTUBE_EMBED;
 		return /[\S]+.youtube.[\S]+\/watch\?v=([\w-_?]+)[\S]*/i;
 		break;
+	case 'v.ku6.com':
+		EMBED_FRAME = KU6_EMBED;
+		return /[\S]+.ku6.com\/show\/([\w-]+)[\S]*(.html)/i;
 	default:
 		return null;
 	}
@@ -49,7 +53,7 @@ function get_img_processor(type) {
 	switch (type) {
 	case "instagr.am":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?instagr\.am\/([\d\w\/]+)/,
+			reg: /^http:\/\/(?:www\.)?instagr\.am\/([\w\/]+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://instagr.am/" + url_key[1] + "media/?size=m";
 				append_image(src, url_elem);
@@ -58,7 +62,7 @@ function get_img_processor(type) {
 		return proc;
 	case "twitgoo.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?twitgoo\.com\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?twitgoo\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "img.php?imgurl=http://twitgoo.com/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
@@ -67,16 +71,16 @@ function get_img_processor(type) {
 		return proc;
 	case "yfrog.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?yfrog\.com\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?yfrog\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = url_key[0] + ".th.jpg";
+				var src = url_key[0] + ":iphone";
 				append_image(src, url_elem);
 			}
 		};
 		return proc;
 	case "twitpic.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?twitpic\.com\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?twitpic\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "img.php?imgurl=http://twitpic.com/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
@@ -85,7 +89,7 @@ function get_img_processor(type) {
 		return proc;
 	case "img.ly":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?img\.ly\/([\d\w]+)/,
+			reg: /^http:\/\/(?:www\.)?img\.ly\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "img.php?imgurl=http://img.ly/show/thumb/" + url_key[1];
 				append_image(src, url_elem);
@@ -112,7 +116,7 @@ function get_img_processor(type) {
 		return proc;
 	case "tweetphoto.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/([\w]+)/,
+			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
 				append_image(src, url_elem);
@@ -121,7 +125,7 @@ function get_img_processor(type) {
 		return proc;
 	case "plixi.com/p":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/([\w]+)/,
+			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=thumbnail&url=http://plixi.com/p/" + url_key[1];
 				append_image(src, url_elem);
@@ -130,7 +134,7 @@ function get_img_processor(type) {
 		return proc;
 	case "ts1.in":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?ts1\.in\/([\d]+)/,
+			reg: /^http:\/\/(?:www\.)?ts1\.in\/(\d+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://ts1.in/thumb/" + url_key[1];
 				append_image(src, url_elem);
@@ -139,7 +143,7 @@ function get_img_processor(type) {
 		return proc;
 	case "hellotxt.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?hellotxt.com\/i\/([\w]+)/,
+			reg: /^http:\/\/(?:www\.)?hellotxt.com\/i\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://hellotxt.com/image/" + url_key[1] + ".s.jpg"
 				append_image(src, url_elem);
@@ -148,7 +152,7 @@ function get_img_processor(type) {
 		return proc;
 	case "twitxr.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?twitxr.com\/[^ ]+\/updates\/([\d]+)/,
+			reg: /^http:\/\/(?:www\.)?twitxr.com\/[^ ]+\/updates\/(\d+)/,
 			func: function (url_key, url_elem) {
 				var src = 'http://twitxr.com/thumbnails/' + url_key[1].substr(-2, 2) + '/' + url_key[1] + '_th.jpg';
 				append_image(src, url_elem);
@@ -157,7 +161,7 @@ function get_img_processor(type) {
 		return proc;
 	case "moby.to":
 		proc = {
-			reg: /^(http:\/\/(?:www\.)?moby\.to\/([\w]+)/,
+			reg: /^(http:\/\/(?:www\.)?moby\.to\/(\w+))/,
 			func: function (url_key, url_elem) {
 				var src = "http://api.mobypicture.com?s=small&format=plain&k=OozRuDDauQlucrZ3&t=" + url_key[1];
 				append_image(src, url_elem);
@@ -166,7 +170,7 @@ function get_img_processor(type) {
 		return proc;
 	case "grab.by":
 		proc = {
-			reg: /^(http:\/\/(?:www\.)?grab\.by\/([\w]+)/,
+			reg: /^(http:\/\/(?:www\.)?grab\.by\/(\w+))/,
 			func: function (url_key, url_elem) {
 				var src = url_key[1];
 				append_image(src, url_elem);
@@ -175,11 +179,11 @@ function get_img_processor(type) {
 		return proc;
 	case "picplz.com":
 		proc = {
-			reg: /^http:\/\/(?:www\.)?picplz\.com\/([\w\d]+)/,
+			reg: /^http:\/\/(?:www\.)?picplz\.com\/(\w+)/,
 			func: function(url_key, url_elem) {
-				$.getJSON('http://api.picplz.com/api/v2/pic.json?pic_formats=400r&jsoncallback=?&shorturl_id='+url_key[1],function (data) {
+				$.getJSON('http://api.picplz.com/api/v2/pic.json?pic_formats=400r&callback=?&shorturl_id='+url_key[1],function (data) {
 					if (data.result == "ok") {
-						var imgsrc = data.value[pics].pic_files['400r'].img_url;
+						var imgsrc = data.value.pics[0].pic_files["400r"].img_url;
 						append_image(imgsrc, url_elem);
 					}
 				});
@@ -188,7 +192,7 @@ function get_img_processor(type) {
 		return proc;
 	case "flic.kr": 
 		proc = {
-			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/([\w\d]+)/,
+			reg: /^http:\/\/(?:www\.)?flic\.kr\/p\/(\w+)/,
 			func: function (url_key, url_elem) {
 				function base58_decode(snipcode) {
 					var alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -229,7 +233,7 @@ var previewImg = function (obj) {
 			append_image(RegExp.$1, obj);
 			return;
 		}
-		/http[s]?:\/\/(?:www\.)?([\w-.]+)\/[\S]*/i.exec(obj.attr("href"));
+		/https?\:\/\/(?:www\.)?([\w-.]+)\/[\S]*/i.exec(obj.attr("href"));
 		var img_processor = get_img_processor(RegExp.$1);
 		if (img_processor === null) {
 			return null;
@@ -241,7 +245,7 @@ var previewImg = function (obj) {
 	}
 }
 var previewMedia = function (objs) {
-	$(objs).find(".tweet a:not(:hidden), .unshorturl a:not(:hidden)").each(function () {
+	objs.find("span.tweet a, span.unshorturl a").each(function () {
 		var t = $(this);
 		if(!t.data("previewed")) {
 			if ($.cookie('showpic') === 'true') previewImg(t);

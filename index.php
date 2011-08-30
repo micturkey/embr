@@ -3,12 +3,9 @@
 	$title = 'Home';
 	include ('inc/header.php');
 
-	if (!loginStatus()) header('location: login.php');
-
+	if (!loginStatus()) header('location: login.php'); 
 	$t = getTwitter();
-
-	if (isset($_POST['status']) && isset($_POST['in_reply_to']))
-	{
+	if (isset($_POST['status']) && isset($_POST['in_reply_to'])) {
 		if (trim($_POST['status']) !== '')
 		{
 			$result = $t->update($_POST['status'], $_POST['in_reply_to']);
@@ -55,7 +52,7 @@
 	{
 		$output = '<ol class="timeline" id="allTimeline">';
 
-		include('ajax/timeline_format.php');
+		include('lib/timeline_format.php');
 		
 		foreach ($statuses as $status) {
 			if (isset($status->retweeted_status)) {

@@ -2,17 +2,15 @@
 	include_once('lib/twitese.php');
 	$title = 'Updates';
 	include_once('inc/header.php');
-	include_once('ajax/timeline_format.php');
+	include_once('lib/timeline_format.php');
 	if (!loginStatus()) header('location: login.php');
-
+	include('inc/sentForm.php');
 ?>
 <script src="js/all.js"></script>
 <style>.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
-
 <div id="statuses" class="column round-left">
-	<?php include('inc/sentForm.php') ?>
 			<div id="allNav">
-			<a class="allBtn allHighLight" id="allTimelineBtn" href="javascript:void(0);">Updates</a>
+			<a class="allBtn allHighLight" id="allTimelineBtn" href="#">Updates</a>
 			<a class="allBtn" id="allRepliesBtn" href="#">Replies</a>
 			<a class="allBtn" id="allMessageBtn" href="#">Messages</a>
 		</div>
@@ -65,31 +63,12 @@
 	}
 	$empty = count($messages) == 0? true: false;
 	if ($empty) {
-		echo "";
+		echo "<div id=\"empty\">No tweet to display</div>";
 	} else {
 		$output = '<ol class="timeline" id="allMessage">';
 
 		foreach ($messages as $message) {
-			$name = $message->sender_screen_name;
-			$imgurl = getAvatar($message->sender->profile_image_url);
-			$date = strtotime($message->created_at);
-			$url_recover = '';
-			$text = formatEntities(&$message->entities,$message->text,&$url_recover);
-
-			$output .= "<li>
-				<span class=\"status_author\">
-				<a href=\"user.php?id=$name\" target=\"_blank\"><img src=\"$imgurl\" title=\"$name\" /></a>
-				</span>
-				<span class=\"status_body\">
-				<span class=\"status_id\">$message->id</span>
-				<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a><span class=\"tweet\"> $text </span></span>";
-			$output .= $url_recover;
-			$output .= "<span class=\"actions\"><a class=\"msg_replie_btn\" href=\"message.php?id=$name\">Reply</a><a class=\"msg_delete_btn\" href=\"a_del.php?id=$message->id&t=m\">Delete</a></span>
-				<span class=\"status_info\">
-				<span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span>
-				</span>
-				</span>
-				</li>";
+			$output .= format_message($message);
 		}
 
 		$output .= "</ol>";

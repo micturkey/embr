@@ -109,10 +109,11 @@ textarea#textbox:hover{outline:none;border:1px solid rgba(167,166,170,.75);box-s
 .embr{color:#33CCFF!important}
 .timeline li:hover,.rank_list li:hover{background-color:#F2F2F2}
 .status_author{height:48px;left:5px;padding:1px;position:absolute;width:48px}
-.timeline li.loading .status_author{background:url("../img/spinner.gif") no-repeat scroll center center transparent!important;outline:4px solid #BBBBBB}
-.timeline li.loading .status_author a{opacity:0.2}
+li.loading .status_author,li.loading .rank_img{background:url("../img/spinner.gif") no-repeat scroll center center transparent!important;outline:4px solid #BBB}
+li.loading #avatar{opacity:0.2}
 .rank_img{top:15px;left:10px;position:absolute;width:48px;height:48px}
-.status_author img,.rank_img img{height:48px;width:48px;border-radius:5px}
+.status_author img,.rank_img img,#avatar{height:48px;width:48px;border-radius:5px}
+
 
 .unshorturl{border-radius:5px;border:1px solid #DDD;display:block;font-family:tahoma;font-size:11px;overflow:hidden;margin:5px 5px 5px 1px;padding:0 5px 2px;white-space:nowrap;word-wrap:break-word;-moz-transition:all .5s ease-out;-webkit-transition:all .5s ease-out}
 .unshorturl:hover{border:1px solid #999;box-shadow:0 1px 2px rgba(0,0,0,.25);-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25)}
@@ -169,7 +170,6 @@ h3{font-size:14px;margin:14px 0 0 14px}
 #tip_reset{text-decoration:underline;cursor:pointer}
 #tip_reset:hover{color:red}
 #sidebarTip_more{display:none}
-#side span.sponsored{color:#777;display:block;font-size:.9em;padding-bottom:.2em;padding-top:.2em}
 #side .notice{background-color:#FFF;margin:.5em auto 1em;padding:10px;text-align:center}
 #side div.section{padding:13px}
 #side div#profile.section{margin-bottom:0;padding:.2em}
@@ -246,8 +246,9 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 .notify{text-align:center;line-height:1;padding:5px 0;background-repeat:no-repeat;background-position:left center;margin-bottom:8px}
 .notify div{background-color:#edffe5;font-size:.9em;margin:0 12px 0 24px;padding:10px 5px;border-radius:5px}
 #trend_entries, #apiquota_list{display:none;width:198px;float:left;margin-top:5px!important}
-#trends, #following, #apiquota{margin-left:-2px}
-#trends_title, #following_title, #apiquota_title{background:transparent url(../img/toggle_down_dark.png) no-repeat scroll right center;font-weight:normal;font-size:110%;padding-left:3px;margin-bottom:0px;margin-top:0px;width:177px;cursor:pointer}
+#trends, #following, #apiquota, #version{margin-left:-2px}
+#trends_title, #following_title, #apiquota_title,#version_title{background:transparent url(../img/toggle_down_dark.png) no-repeat scroll right center;font-weight:normal;font-size:110%;padding-left:3px;margin-bottom:0px;margin-top:0px;width:177px;cursor:pointer}
+#version_title{background:none!important}
 #trends_title.loading, #following_title.loading, #apiquota_title.loading{background:transparent url(../img/spinner.gif) no-repeat scroll right center!important}
 #trends_title.open, #following_title.open, #apiquota_title.open{background:transparent url(../img/toggle_up_dark.png) no-repeat scroll right center!important}
 #following_list{display:none;float:left;padding:10px 10px 0 10px}
@@ -257,8 +258,8 @@ td.column,#side .stats td{padding:0;vertical-align:top}
 /* =buttons
 ----------------------------------------*/
 .btn::-moz-focus-inner{border:0 none}
-.btn,input.btn[type=submit],input.btn[type=button]{border-radius:4px;-x-system-font:none;background:#DDD url(../img/bg-btn.gif) repeat-x scroll 0 0;border-color:#DDD #DDD #CCC;border-style:solid;border-width:1px;color:#333;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;margin:0;overflow:visible;padding:4px 8px 5px;text-shadow:1px 1px 0 #FFF;width:auto;font:400 11px/14px "tahoma";cursor:pointer}
-#btn{border-radius:4px;-x-system-font:none;background:#DDD url(../img/bg-btn.gif) repeat-x scroll 0 0;border-color:#DDD #DDD #CCC;border-style:solid;border-width:1px;color:#333;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;margin:0;overflow:visible;padding:4px 5px 5px;text-shadow:1px 1px 0 #FFF;width:auto;font:400 11px/14px "tahoma"}
+.btn,input.btn[type=submit],input.btn[type=button]{border-radius:4px;background:#DDD url(../img/bg-btn.gif) repeat-x scroll 0 0;border-color:#DDD #DDD #CCC;border-style:solid;border-width:1px;color:#333;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;margin:0;overflow:visible;padding:4px 8px 5px;text-shadow:1px 1px 0 #FFF;width:auto;font:400 11px/14px "tahoma";cursor:pointer}
+#btn{border-radius:4px;background:#DDD url(../img/bg-btn.gif) repeat-x scroll 0 0;border-color:#DDD #DDD #CCC;border-style:solid;border-width:1px;color:#333;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;margin:0;overflow:visible;padding:4px 5px 5px;text-shadow:1px 1px 0 #FFF;width:auto;font:400 11px/14px "tahoma"}
 .btn:hover,.btn:focus,input.btn[type=submit]:hover,input.btn[type=submit]:focus,input.btn[type=button]:hover,input.btn[type=button]:focus,button.btn:hover,button.btn:focus{background-position:0 -6px;border-color:#999 #999 #888;color:#000}
 .btn:active,.btn:active,input.btn[type=submit]:active,input.btn[type=button]:active,button.btn:active{background-image:none!important;outline:medium none!important;text-shadow:none!important}
 #btn:hover,#btn:focus{background-position:0 -6px;border-color:#999 #999 #888;color:#000}

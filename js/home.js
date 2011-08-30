@@ -2,33 +2,39 @@
 var INTERVAL_COOKIE = 'homeInterval';
 $(function () {
 	formFunc();
-	$(".rt_btn").live("click", function (e) {
-		e.preventDefault();
-		onRT($(this));
-	});
-	$(".retw_btn").live("click", function (e) {
-		e.preventDefault();
-		onNwRT($(this));
-	});
-	$(".replie_btn").live("click", function (e) {
-		e.preventDefault();
-		onReplie($(this),e);
-	});
-	$(".favor_btn").live("click", function (e) {
-		e.preventDefault();
-		onFavor($(this));
-	});
-	$(".unfav_btn").live("click", function (e) {
-		e.preventDefault();
-		UnFavor($(this));
-	})
-	$(".delete_btn").live("click", function (e) {
-		e.preventDefault();
-		onDelete($(this));
-	});
-	$(".rt_undo").live("click", function (e) {
-		e.preventDefault();
-		onUndoRt($(this));
+	$("#allTimeline").click(function(e) {
+		var $this = $(e.target);
+		var type = $this.attr('class');
+		switch(type) {
+			case 'rt_btn':
+				e.preventDefault();
+				onRT($this);
+				break;
+			case 'retw_btn':
+				e.preventDefault();
+				onNwRT($this);
+				break;
+			case 'replie_btn':
+				e.preventDefault();
+				onReplie($this,e);
+				break;
+			case 'favor_btn':
+				e.preventDefault();
+				onFavor($this);
+				break;
+			case 'unfav_btn':
+				e.preventDefault();
+				UnFavor($this);
+				break;
+			case 'delete_btn':
+				e.preventDefault();
+				onDelete($this);
+				break;
+			case 'rt_undo':
+				e.preventDefault();
+				onUndoRt($this);
+				break;
+		}
 	});
 	markReply($("#allTimeline > li"));
 	$("#submit_btn").click(function (e) {
@@ -85,12 +91,12 @@ function update() {
 					markReply($('#allTimeline > li'));
 					filterEle();
 					embrTweet(source);
-					if($(".new").length == 1) {
-						$(".new").show().slideDown("fast");
+					if($("div.new").length == 1) {
+						$("div.new").show().slideDown("fast");
 					} else {
-						$(".tweetcount").filter(":last").text(num + $(msg).length - 1);
+						$("span.tweetcount").filter(":last").text(num + $(msg).length - 1);
 					}
-					$(".big-retweet-icon").tipsy({
+					$("span.big-retweet-icon").tipsy({
 						gravity: 's'
 					});
 					previewMedia(source);

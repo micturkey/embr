@@ -73,8 +73,16 @@
 		if(count($urls) > 0) {
 			$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 			foreach($urls as $url) {
-				$html = str_replace($url->url,"<a href=\"$url->expanded_url\" target=\"_blank\" rel=\"noreferrer\">$url->display_url</a>",$html);
-				if($url_recover !== false && $recovered = unshortUrl($url->expanded_url)){
+				$exp = is_null($url->expanded_url) ? $url->url : $url->expanded_url;
+				if(isset($url->display_url)) {
+					$dis = $url->display_url;
+				} elseif ($url->url[4] == 's'){
+					$dis = substr($url->url,8);
+				} else {
+					$dis = substr($url->url,7,26);
+				}
+				$html = str_replace($url->url,"<a href=\"$exp\" target=\"_blank\" rel=\"noreferrer\">$dis</a>",$html);
+				if($url_recover !== false && $recovered = unshortUrl($exp)){
 					$split = explode('/', $recovered);
 		 			$fav_icon = $scheme.'://www.google.com/s2/favicons?domain='.$split[2];
 		 			$url_recover .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
@@ -93,10 +101,7 @@
 		}
 		return $html;
 	}
-	
-	function formatDate($date){
-		return $date;
-	}
+
 	function formatTweetID($text){
 		$reg = '/(\<a[\w+=@\:\%\#\&\.~\?\"\'\/\-\! ]+\>[\S]+<\/a\>)/i';
 		preg_match_all($reg, $text, $tmpMatches);
@@ -262,18 +267,18 @@
 		return null;
 	}
 
-	function loginStatus() {
-		if(isset($_SESSION['login_status'])){
-			return $_SESSION['login_status'] == 'verified' ? true : false;
-		}elseif(getEncryptCookie("oauth_token") != "" && getEncryptCookie("oauth_token_secret") != "" && getEncryptCookie("user_id") != "" && getEncryptCookie("twitese_name") != ""){
-			$access_token = array("oauth_token" => getEncryptCookie("oauth_token"), "oauth_token_secret" => getEncryptCookie("oauth_token_secret"), "user_id" => getEncryptCookie("user_id"), "screen_name" => getEncryptCookie("twitese_name"));
-			$_SESSION['access_token'] = $access_token;
-			$_SESSION['login_status'] = 'verified';
-			refreshProfile();
-			return true;
-		}
-		return false;
-	}
+   function loginStatus() {
+	   if(isset($_SESSION['login_status'])){
+	      return $_SESSION['login_status'] == 'verified' ? true : false;
+	   }elseif(getEncryptCookie("oauth_token") != "" && getEncryptCookie("oauth_token_secret") != "" && getEncryptCookie("user_id") != "" && getEncryptCookie("twitese_name") != ""){
+	      $access_token = array("oauth_token" => getEncryptCookie("oauth_token"), "oauth_token_secret" => getEncryptCookie("oauth_token_secret"), "user_id" => getEncryptCookie("user_id"), "screen_name" => getEncryptCookie("twitese_name"));
+	      $_SESSION['access_token'] = $access_token;
+	      $_SESSION['login_status'] = 'verified';
+	      refreshProfile();
+	      return true;
+	   }
+	   return false;
+   }
 
 	function GetListed($t, $cursor = false){
 		$lists = $t->beAddedLists($t->username, $cursor);

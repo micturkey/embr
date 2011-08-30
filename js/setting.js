@@ -1,8 +1,20 @@
 $(function(){
 	checkbox('showpic',"#showpic",true);
 	checkbox('mediaPre',"#mediaPreSelect",true);
-	checkbox('p_avatar',"#proxifyAvatar",false);
+	checkbox('p_avatar',"#proxifyAvatar",false,function(){
+		var imgurl = $.cookie('imgurl');
+		if(imgurl.indexOf('img.php') > -1) {
+			imgurl = imgurl.substr(15);
+		} else {
+			imgurl = 'img.php?imgurl='+imgurl;
+		}
+		$.cookie('imgurl',imgurl,{expires:365});
+		freshProfile();
+	});
 	checkbox('autoscroll',"#autoscroll",true);
+	checkbox('sidebarscroll',"#sidebarscroll",true,function(){
+		$(window).unbind('scroll',scroller);
+	});
 	checkbox('twitterbg',"#twitterbg",false,function(){
 		if($.cookie('twitterbg') === 'true'){
 			$.ajax({

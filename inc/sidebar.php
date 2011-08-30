@@ -1,6 +1,3 @@
-<?php 
-$t = getTwitter();
-?>
 <td class="column round-right" id="side_base">
 <table>
 <tr>
@@ -12,6 +9,7 @@ $t = getTwitter();
 		<a href="profile.php"><span id="me_tweets"><span id="update_count"><?php echo getCookie('statuses_count')?></span> tweets</span></a>
 	</div>
 	<?php if (strrpos($_SERVER['PHP_SELF'], 'profile')) {
+		$t = getTwitter();
 	$user = $t->showUser();
 ?>
 	<ul id="user_info_profile">

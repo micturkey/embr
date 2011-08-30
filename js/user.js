@@ -1,29 +1,45 @@
 $(function(){
-	$(".retw_btn").live("click", function(e){
-		e.preventDefault();
-		onNwRT($(this));
-	});
-
-	$(".rt_btn").live("click",function(e){
-		e.preventDefault();
-		if ($("#textbox").length > 0) {
-			onInfoRT($(this));
-		} else {
-			$("#info_head").after('<h2>What\'s happening?</h2>' + formHTML);
-			formFunc();
-			onInfoRT($(this));
-		}
-	});
-
-	$(".replie_btn").live("click", function(e){
-		e.preventDefault();
-		var replie_id = $(this).parent().parent().find(".status_word").find(".user_name").text();
-		if ($("#textbox").length > 0) {
-			onReplie($(this),e);
-		} else {
-			$("#info_head").after('<h2>In reply to ' + replie_id + '</h2>' + formHTML);
-			formFunc();
-			onReplie($(this),e);
+	$("#allTimeline").click(function(e) {
+		var $this = $(e.target);
+		var type = $this.attr('class');
+		switch(type) {
+			case 'rt_btn':
+				e.preventDefault();
+				if ($("#textbox").length > 0) {
+					onInfoRT($this);
+				} else {
+					$("#info_head").after('<h2>What\'s happening?</h2>' + formHTML);
+					formFunc();
+					onInfoRT($this);
+				}
+				break;
+			case 'retw_btn':
+				e.preventDefault();
+				onNwRT($this);
+				break;
+			case 'replie_btn':
+				e.preventDefault();
+				var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
+				if ($("#textbox").length > 0) {
+					onReplie($this,e);
+				} else {
+					$("#info_head").after('<h2>In reply to ' + replie_id + '</h2>' + formHTML);
+					formFunc();
+					onReplie($this,e);
+				}
+				break;
+			case 'favor_btn':
+				e.preventDefault();
+				onFavor($this);
+				break;
+			case 'unfav_btn':
+				e.preventDefault();
+				UnFavor($this);
+				break;
+			case 'rt_undo':
+				e.preventDefault();
+				onUndoRt($this);
+				break;
 		}
 	});
 
@@ -46,10 +62,6 @@ $(function(){
 	}
 	$("#info_hide_btn").live("click", function(){
 		onHide();
-	});
-	$(".favor_btn").live("click", function(e){
-		e.preventDefault();
-		onFavor($(this));
 	});
 
 	$("#info_follow_btn").live("click", function(e){
@@ -213,8 +225,11 @@ function onInfoReplie($this) {
 
 function onInfoRT($this) {
 	var replie_id = $("#info_name").text();
-	$("#textbox").val(" RT @" + replie_id + ":" + $this.parent().parent().find(".tweet").text());
-	$("#textbox").focus().caret(0);
+	var status_word = $this.parent().parent().find(".status_word").clone();
+	status_word.find('.tweet a[rel=noreferrer]').each(function(){
+		$(this).text($(this).attr('href'));
+	});
+	$("#textbox").focus().val(" RT @" + replie_id + ":" + status_word.text().replace(replie_id, "")).caret(0);
 	leaveWord();
 }
 function getCookie(name){

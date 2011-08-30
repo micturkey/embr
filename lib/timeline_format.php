@@ -8,7 +8,7 @@
 		$text = formatEntities(&$rt_status->entities,$rt_status->text,&$url_recover);
 		$html = '<li>
 			<span class="status_author">
-			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="Hello, I am  '.$status_owner->screen_name.'. Click for more..." /></a>
+			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="Hello, I am  '.$status_owner->screen_name.'. Click for more..." /></a>
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
@@ -44,7 +44,7 @@
 		$text = formatEntities(&$status->entities,$status->text,&$url_recover);
 		$html = '<li>
 			<span class="status_author">
-			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
+			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
 			</span>
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span><span class="status_id">'.$status->id_str.'</span>
@@ -80,7 +80,6 @@
 		return $html;
 	}
 
-	// $updateStatus 标识是否为发推, 是则应用指定 css
 	function format_timeline($status, $screen_name, $updateStatus = false){
 		$user = $status->user;
 		$date = strtotime($status->created_at);
@@ -94,13 +93,12 @@
 		}else{
 			$output = "<li>";
 		}
-
-		$output .= "<span class=\"status_author\">
-			<a href=\"user.php?id=$user->screen_name\" target=\"_blank\"><img src=\"".getAvatar($user->profile_image_url)."\" title=\"Hello, I am $user->screen_name. Click for more...\" /></a>
-			</span>
-			<span class=\"status_body\">
-			<span class=\"status_id\">$status->id_str</span>
-			<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$user->screen_name\">$user->screen_name</a><span class=\"tweet\"> $text </span></span>";
+		$output .= '<span class="status_author">
+		<a href="user.php?id='.$user->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($user->profile_image_url).'" title="Hello, I am  '.$user->screen_name.'. Click for more..." /></a>
+		</span>
+		<span class="status_body">
+		<span class="status_id">'.$status->id_str.'</span>
+		<span class="status_word"><a class="user_name" href="user.php?id='.$user->screen_name.'">'.$user->screen_name.'</a> <span class="tweet">&nbsp;'.$text.'</span></span>';
 		$output .= $url_recover;
 		$output .= "<span class=\"actions\">
 			<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
@@ -120,6 +118,41 @@
 			</span>";
 		$output .= $status->favorited == true ? '<i class="faved"></i>' : '';
 		$output .= "</li>";
+		return $output;
+	}
+	
+	function format_message($message,$isSentPage=false) {
+		if ($isSentPage) {
+			$name = $message->recipient_screen_name;
+			$imgurl = getAvatar($message->recipient->profile_image_url);
+			$messenger = $message->recipient;
+		} else {
+			$name = $message->sender_screen_name;
+			$imgurl = getAvatar($message->sender->profile_image_url);
+			$messenger = $message->sender;
+		}
+		$date = strtotime($message->created_at);
+		$url_recover = '';
+		$text = formatEntities(&$message->entities,$message->text,&$url_recover);
+		
+		$output = "
+			<li>
+				<span class=\"status_author\">
+					<a href=\"user.php?id=$name\" target=\"_blank\"><img id=\"avatar\" src=\"$imgurl\" title=\"Hello, I am $name. Click for more...\" /></a>
+				</span>
+				<span class=\"status_body\">
+					<span class=\"status_id\">$message->id </span>
+					<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a> $text </span>
+					".$url_recover."
+					<span class=\"actions\">
+		";
+		
+		if ($isSentPage) {
+			$output .= "<a class=\"msg_delete_btn\" href=\"#\">delete</a>";
+		} else {
+			$output .= "<a class=\"msg_replie_btn\" href=\"#\">reply</a><a class=\"msg_delete_btn\" href=\"#\">delete</a>";
+		}
+		$output .="</span><span class=\"status_info\"><span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span></span></span></li>";
 		return $output;
 	}
 ?>

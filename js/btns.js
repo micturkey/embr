@@ -1,48 +1,48 @@
 $(function(){
 		formFunc();
-		$(".rt_btn").live("click", function(e){
-				e.preventDefault();
-				onRT($(this));
-			});
-
-		$(".retw_btn").live("click", function(e){
-				e.preventDefault();
-				onNwRT($(this));
-			});
-
-		$(".replie_btn").live("click", function(e){
-				e.preventDefault();
-				onReplie($(this),e);
-			});
-
-		$(".favor_btn").live("click", function(e){
-				e.preventDefault();
-				onFavor($(this));
-			});
-		$('.unfav_btn').live("click", function(e){
-			e.preventDefault();
-			UnFavor($(this));
+		$("ol.timeline").live("click", function(e) {
+			var $this = $(e.target);
+			var type = $this.attr('class');
+			switch(type) {
+				case 'rt_btn':
+					e.preventDefault();
+					onRT($this);
+					break;
+				case 'retw_btn':
+					e.preventDefault();
+					onNwRT($this);
+					break;
+				case 'replie_btn':
+					e.preventDefault();
+					onReplie($this,e);
+					break;
+				case 'favor_btn':
+					e.preventDefault();
+					onFavor($this);
+					break;
+				case 'unfav_btn':
+					e.preventDefault();
+					UnFavor($this);
+					break;
+				case 'delete_btn':
+					e.preventDefault();
+					onDelete($this);
+					break;
+				case 'rt_undo':
+				case 'unrt_btn':
+					e.preventDefault();
+					onUndoRt($this);
+					break;
+				case 'msg_replie_btn':
+					e.preventDefault();
+					onReplieDM($this);
+					break;
+				case 'msg_delete_btn':
+					e.preventDefault();
+					onDeleteMsg($this);
+					break;
+			}
 		});
-		$(".delete_btn").live("click", function(e){
-				e.preventDefault();
-				onDelete($(this));
-			});
-			
-		$(".msg_replie_btn").live("click", function(e){
-				e.preventDefault();
-				onReplieDM($(this));
-			});
-			
-		$(".msg_delete_btn").live("click", function(e){
-				e.preventDefault();
-				onDeleteMsg($(this));
-			});
-
-		$(".rt_undo,.unrt_btn").live("click", function(e){
-				e.preventDefault();
-				onUndoRt($(this));
-			});
-
 		$("#submit_btn").click(function(e){
 				updateStatus();
 				e.preventDefault();

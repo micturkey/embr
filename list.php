@@ -2,7 +2,6 @@
 	include ('lib/twitese.php');
 	$title = "@{$_GET['id']}";
 	include ('inc/header.php');
-	//include('ajax/timeline_format.php');
 	if (!loginStatus()) header('location: login.php');
 ?>
 
@@ -52,7 +51,7 @@
 	<?php 
 		
 			$output = '<ol class="timeline" id="allTimeline">';
-			include('ajax/timeline_format.php');
+			include('lib/timeline_format.php');
 			foreach ($statuses as $status) {
 				if (isset($status->retweeted_status)) {
 					$output .= format_retweet($status);

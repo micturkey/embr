@@ -6,7 +6,7 @@
 	if (!loginStatus()) header('location: login.php');
 ?>
 
-<script src="js/profile.js"></script>
+<script src="js/btns.js"></script>
 
 <div id="statuses" class="column round-left">
 
