@@ -141,8 +141,8 @@ function checkbox(c,id,d,extra){
 	if ($.cookie (c) === null) {
 		$.cookie (c, d, { expires: 30 });
 	} 
-	$id.attr('checked', $.cookie (c) === 'true').click(function (){
-		$.cookie(c,$id.attr("checked"),{expires:365});
+	$id.prop('checked', $.cookie (c) === 'true').click(function (){
+		$.cookie(c,$id.prop("checked"),{expires:365});
 		if (extra != undefined) extra();
 		updateSentTip('Setting saved successfully!',1000,'success');
 	});

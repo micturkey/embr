@@ -2,7 +2,7 @@
 	include ('lib/twitese.php');
 	$title = "{$_GET['id']}";
 	include ('inc/header.php');
-	include ('ajax/timeline_format.php');
+	include ('lib/timeline_format.php');
 
 ?>
 
@@ -34,7 +34,7 @@
 	$user = $t->showUser($userid);
 	if (strcasecmp($userid,$t->username) == 0) {header('location: profile.php');exit();}
 
-	$isProtected = $statuses == 'protected';
+	$isProtected = ($statuses == 'protected') || ($statuses->error == 'Not authorized');
 	$r = getRelationship($user->screen_name);
 	$isFriend = $r == 2 || $r == 1;
 	$isFollower = $r == 3 || $r == 1;

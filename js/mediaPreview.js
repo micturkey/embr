@@ -221,15 +221,16 @@ function get_img_processor(type) {
 		return null;
 	}
 }
-function append_image(src, elem) {
+var append_image = function(src, elem) {
 	var img = $('<img />').attr("src", src);
 	var link = $(elem).clone().empty().append(img);
 	$(elem).parent().after($('<div id="thumb_pic" />').append(link));
 }
 var previewImg = function (obj) {
 	if (obj.attr("rel") === "noreferrer") {
+		var rel = obj.attr("href");
 		/(https?\:\/\/[\S]*\.(jpg|png|gif))/.exec(obj.attr("href"));
-		if(RegExp.$2.length > 0){
+		if(RegExp.$2.length == 3){
 			append_image(RegExp.$1, obj);
 			return;
 		}

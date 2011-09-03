@@ -19,7 +19,7 @@
 		if ($resultCount <= 0) {
 			echo "<div id=\"empty\">No tweet to display.</div>";
 		} else {
-			include_once('ajax/timeline_format.php');
+			include_once('lib/timeline_format.php');
 			$output = '<ol class="timeline" id="allTimeline">';
 			foreach ($statuses->results as $status) {
 				$date = strtotime($status->created_at);

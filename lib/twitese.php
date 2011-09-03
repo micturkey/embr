@@ -54,7 +54,7 @@
 		return $text;
 	}
 
-	function formatEntities($entities,$html,$url_recover = false){
+	function formatEntities(&$entities,$html,&$url_recover = false){
 		$user_mentions = $entities->user_mentions;
 		$hashtags = $entities->hashtags;
 		$urls = $entities->urls;

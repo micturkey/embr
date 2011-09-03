@@ -1,5 +1,6 @@
 <?php 
-	include ('lib/twitese.php'); 
+	include ('lib/twitese.php');
+ 
 	delCookie('oauth_token');
 	delCookie('oauth_token_secret');
 	delCookie('user_id');
@@ -25,7 +26,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-<meta name="keywords" content="rabr, open source, php, twitter, oauth, embr" />
+<meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
 <meta name="author" content="Contributors" />
 <title>Embr / Sign In</title>
@@ -71,13 +72,15 @@ function register() {
 	}
 }
 </script>
-</head> 
+</head>
+ 
 <?php if(BASIC_AUTH) require ('basic_auth.php'); ?>
 <body class="form-container">
 <div class="clear rounded_5px" id="container">
  <div id="header">
 <h1><a href="/"><img border="0" alt="Embr" height="167" width="500" src="img/big_logo.png"></a></h1>
-</div> 
+</div>
+ 
 <?php if(isset($_GET['oauth']) && $_GET['oauth'] == 'denied') {?> 
 <style type="text/css">
 .form-container .form {display:none}

@@ -106,14 +106,14 @@
 		if ($user === false) {
 			header('location: error.php');exit();
 		} 
-		$empty = count($user) == 0? true: false;
-		if ($empty || !isset($user->status)) {
+		$empty = count($user) == 0 || !isset($user->status) || $user->status->text == '';
+		if ($empty) {
 			echo "<div id=\"currently\">
-				<span id=\"full_status\" title=\"Click to view the full tweet\"><strong >Latest:</strong></span>
+				<span id=\"full_status\"><strong >Latest:</strong></span>
 				<span id=\"latest_status\">
 				<span id=\"latest_text\">
-				<span class=\"status-text\">What's shaking?</span>
-				<span class=\"full-text\" style=\"display:none\">What's shaking?</span>
+				<span class=\"status-text\">What's happening?</span>
+				<span class=\"full-text\" style=\"display:none\">What's happening?</span>
 				<span class=\"entry-meta\" id=\"latest_meta\"></span>
 				<span class=\"entry-meta\" id=\"full_meta\"></span>
 				</span>
@@ -125,7 +125,7 @@
 				$text = formatText($status->text);
 				$output = "
 					<div id=\"currently\">
-					<span id=\"full_status\"><strong>Latest:</strong></span>
+					<span id=\"full_status\" title=\"Click to view the full tweet\"><strong>Latest:</strong></span>
 					<span id=\"latest_status\">
 					<span id=\"latest_text\">
 					<span class=\"status-text\">" . $text . "</span>
