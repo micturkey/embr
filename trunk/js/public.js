@@ -156,7 +156,7 @@ var formFunc = function(){
 				} else {
 					$('#tip').removeClass('loading');
 					leaveWord();
-					updateSentTip("Update failed. Please try again.", 3e3, "g");
+					updateSentTip("Update failed. Please try again.", 3e3, "failure");
 					$('#tweeting_button').removeClass('btn-disabled');
 				}
 				PAUSE_UPDATE = false;
@@ -172,8 +172,7 @@ var formFunc = function(){
 	}
 };
 function shortUrlDisplay() {
-	var stringVar = "";
-	stringVar = document.getElementById("textbox").value;
+	var stringVar = $("#textbox").val();
 	if (stringVar.length === 0) {
 		updateSentTip("There's no URL in your tweet to shorten!", 3e3, "failure");
 	} else {
@@ -195,7 +194,7 @@ function shortUrlDisplay() {
 				updateSentTip(unshorten + " URL(s) are maintained!", 3e3, "failure");
 			}
 			if (l_urls != "") {
-				$('#tip').addClass('loading');
+				$('#tip').addClass('loading').find('b').css('color','transparent');
 				$.post("ajax/shorturl.php", {
 					long_urls: l_urls
 					}, function (data) {
@@ -206,7 +205,7 @@ function shortUrlDisplay() {
 	}
 }
 function getShortUrl(res) {
-	var $textbox = $('textbox');
+	var $textbox = $('#textbox');
 	var url_arry, s_url, l_url, part;
 	var err_cnt = 0;
 	url_arry = res.split('^');
@@ -352,7 +351,7 @@ function rminit($this){
 				$that.removeClass();
 			},
 			error: function(){
-				updateSentTips('Loading Avatar Menu Failed, Please Retry!',3e3,"failure");
+				updateSentTip('Loading Avatar Menu Failed, Please Retry!',3e3,"failure");
 				$that.removeClass();
 			}
 		});
@@ -878,11 +877,11 @@ var sidebarscroll = function (msg) {
 	}
 };
 $(function () {
-	if($.cookie('autoscroll') != 'false' && $("a#more").length > 0) {
-		$("#allTimeline").infinitescroll({
-			nextSelector:"a#more:last",
+	if($.cookie('autoscroll') != 'false' && $("#more").length > 0 && $("ol.timeline").length > 0) {
+		$("ol.timeline").infinitescroll({
+			nextSelector:"#more:last",
 			navSelector:"#pagination",
-			itemSelector:"#allTimeline li",
+			itemSelector:"ol.timeline li",
 			callback: function(obj) {
 				embrTweet(obj);
 				previewMedia(obj);

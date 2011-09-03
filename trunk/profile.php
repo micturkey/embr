@@ -10,9 +10,7 @@
 
 <div id="statuses" class="column round-left">
 
-	<?php include('inc/sentForm.php')?>
-	
-	<?php 
+	<?php include('inc/sentForm.php');
 		$t = getTwitter();
 		$p = 1;
 		if (isset($_GET['p'])) {
@@ -28,14 +26,14 @@
 		if ($empty) {
 			echo "<div id=\"empty\">No tweet to display.</div>";
 		} else {
-			include_once('ajax/timeline_format.php');
+			include_once('lib/timeline_format.php');
 			$output = '<ol class="timeline" id="allTimeline">';
 
 			foreach ($statuses as $status) {
 				if (isset($status->retweeted_status)) {
 					$output .= format_retweet($status,true);
 				} else { 
-				$output .= format_timeline($status,$t->username);
+					$output .= format_timeline($status,$t->username);
 				}
 			}
 
@@ -56,8 +54,5 @@
 
 <?php 
 		include ('inc/sidebar.php');
-?>
-
-<?php 
 		include ('inc/footer.php');
 ?>

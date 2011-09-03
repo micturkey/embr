@@ -42,8 +42,9 @@
 	if ($statuses == false)
 	{
 		header('location: error.php');exit();
-	} 
-	$empty = count($statuses) == 0 ? true: false;
+	}
+	$count = count($statuses);
+	$empty = $count == 0 ? true: false;
 	if ($empty)
 	{
 		echo "<div id=\"empty\">No tweet to display.</div>";
@@ -53,19 +54,22 @@
 		$output = '<ol class="timeline" id="allTimeline">';
 
 		include('lib/timeline_format.php');
-		
+		$maxid = isset($_GET['maxid']) ? $_GET['maxid'] : '';
 		foreach ($statuses as $status) {
-			if (isset($status->retweeted_status)) {
-				$output .= format_retweet($status);
-			} else { 
-				$output .= format_timeline($status,$t->username);
+			if($maxid == ''|| strcmp($status->id_str,$maxid) < 0) {
+				if (isset($status->retweeted_status)) {
+					$output .= format_retweet($status);
+				} else { 
+					$output .= format_timeline($status,$t->username);
+				}
 			}
 		}
 
 		$output .= "</ol><div id=\"pagination\">";
+		$maxid = $statuses[$count-1]->id_str;
 
 		if ($p >1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"index.php?p=" . ($p-1) . "\">Back</a>";
-		if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?p=" . ($p+1) . "\">Next</a>";
+		if (!$empty) $output .= "<a id=\"more\" class=\"round more\" style=\"float: right;\" href=\"index.php?maxid=$maxid&p=" . ($p+1) . "\">Next</a>";
 		echo $output;
 	}
 ?>

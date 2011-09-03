@@ -5,7 +5,7 @@
 		$status_owner = $rt_status->user;
 		$date = strtotime($status->created_at);
 		$url_recover = '';
-		$text = formatEntities(&$rt_status->entities,$rt_status->text,&$url_recover);
+		$text = formatEntities($rt_status->entities,$rt_status->text,$url_recover);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="Hello, I am  '.$status_owner->screen_name.'. Click for more..." /></a>
@@ -41,7 +41,7 @@
 		$status_owner = $status->user;
 		$date = strtotime($status->created_at);
 		$url_recover = '';
-		$text = formatEntities(&$status->entities,$status->text,&$url_recover);
+		$text = formatEntities($status->entities,$status->text,$url_recover);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
@@ -84,7 +84,7 @@
 		$user = $status->user;
 		$date = strtotime($status->created_at);
 		$url_recover = '';
-		$text = formatEntities(&$status->entities,$status->text,&$url_recover);
+		$text = formatEntities($status->entities,$status->text,$url_recover);
 		
 		if(preg_match('/^\@'.getTwitter()->username.'/i', $text) == 1){
 			$output = "<li class=\"reply\">";
@@ -133,7 +133,7 @@
 		}
 		$date = strtotime($message->created_at);
 		$url_recover = '';
-		$text = formatEntities(&$message->entities,$message->text,&$url_recover);
+		$text = formatEntities($message->entities,$message->text,$url_recover);
 		
 		$output = "
 			<li>

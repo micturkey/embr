@@ -812,7 +812,7 @@ class TwitterOAuth {
 	/* media */
 	function updateProfileImage($image, $skip_status=true) {
 		$url = '/account/update_profile_image';
-		$mul = array();$args = array();
+		$mul = array();
 		if($image){
 			$mul['image']=$image;
 		}
@@ -824,29 +824,22 @@ class TwitterOAuth {
 	
 	function updateProfileBackground($image, $skip_status=true) {
 		$url = '/account/update_profile_background_image';
-		$mul = array();$args=array();
+		$mul = array();
 		if($image){
 			$mul['image']=$image;
+			$mul['skip_status']=$skip_status;
 		}
-		if($skip_status) {
-			$args['skip_status']=$skip_status;
-		}
-		return $this->post($url, $args, $mul);
+		return $this->post($url, NULL, $mul);
 	}
 	
 	function updateMedia($status,$image,$replying_to = false) {
 		$url='https://upload.twitter.com/1/statuses/update_with_media'.$this->type;
-		$args = array();$mul = array();
-		if($status) {
-			$args['status'] = $status;
-		}
-		if($replying_to) {
-			$args['in_reply_to_status_id'] = $replying_to;
-		}
-		if($image) {
-			$mul['media'][] = $image;
-		}
-		return $this->post($url, $args, $mul);
+		$args = array();
+		if($status) $args['status'] = $status;
+		if($replying_to) $args['in_reply_to_status_id'] = $replying_to;
+		$mul = array();
+		if($image) $mul['media'][] = $image;
+		return $this->post($url,$args,$mul);
 	}
 	/* ---------- twitese method ---------- */
 	function rank($page = false, $count = false){

@@ -2,7 +2,7 @@
 	include_once('lib/twitese.php');
 	$title = "Retweets";
 	include_once('inc/header.php');
-	include_once('ajax/timeline_format.php');
+	include_once('lib/timeline_format.php');
 	if (!loginStatus()) header('location: login.php');
 
 	$type = 'retweets';

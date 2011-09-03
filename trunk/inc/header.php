@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 <meta name="keywords" content="embr, open source, php, twitter, oauth" />
 <meta name="description" content="Vivid Interface for Twitter" />
-<meta name="author" content="disinfeqt, JLHwung" />
+<meta name="author" content="Contributors" />
 <link rel="icon" href="img/favicon.ico" />
 <link id="css" href="css/main.css" rel="stylesheet" />
 <title>Embr / <?php echo $title ?></title>
@@ -37,7 +37,7 @@ body {font-size:<?php echo $fontsize ?> !important;<?php
  	if ($Bgimage != "") echo 'background-image: url("'.$Bgimage.'");';
  ?>background-repeat:<?php echo $Bgrepeat ?>}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
 <script src="js/public.js"></script>
