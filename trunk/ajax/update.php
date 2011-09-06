@@ -1,6 +1,6 @@
 <?php 
 	include ('../lib/twitese.php');
-	include_once('timeline_format.php');
+	include_once('../lib/timeline_format.php');
 	if(!isset($_SESSION)){
 		session_start();
 	}

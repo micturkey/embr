@@ -102,6 +102,6 @@
 </table>
 <?php
 	function initSidebarTip($entity){
-		echo '<a class="definition"><strong contenteditable="true">'.$entity['term'].'</strong><span contenteditable="true">'.$entity['def'].'</span></a><br><span>Click for more details.<span id="indicator">[+]</span></span><br><br><span id="sidebarTip_more"><span contenteditable="true">'.$entity['more'].'</span><br><br><a href="#" id="tip_reset" title="You will lose all customized Tips!">Reset to default</a></span>';
+		echo '<a class="definition"><strong contenteditable="true">'.$entity['term'].'</strong><span contenteditable="true">'.$entity['def'].'</span></a><br><br><span>Click for more details.<span id="indicator">[+]</span></span><span id="sidebarTip_more"><span contenteditable="true">'.$entity['more'].'</span><br><br><a href="#" id="tip_reset" title="You will lose all customized Tips!">Reset to default</a></span>';
 	}
 ?>

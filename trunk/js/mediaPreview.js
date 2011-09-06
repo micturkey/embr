@@ -5,7 +5,6 @@ YOUKU_EMBED = '<br /><embed src="http://player.youku.com/player.php/sid/src_id/v
 YOUTUBE_EMBED = '<br /><embed src="http://www.youtube.com/e/src_id?enablejsapi=1&version=3&playerapiid=ytplayer" quality="high" width="420" height="363" align="middle" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>';
 KU6_EMBED='<br /><embed src="http://player.ku6.com/refer/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
 EMBED_FRAME = '';
-
 function getFlashReg(sSite) {
 	switch (sSite) {
 	case 'www.xiami.com':
@@ -73,7 +72,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?yfrog\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = url_key[0] + ":iphone";
+				var src = "img.php?imgurl=" + url_key[0] + ":iphone";
 				append_image(src, url_elem);
 			}
 		};
@@ -82,7 +81,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?twitpic\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "img.php?imgurl=http://twitpic.com/show/thumb/" + url_key[1];
+				var src = "img.php?imgurl=http://twitpic.com/show/large/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -91,7 +90,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?img\.ly\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "img.php?imgurl=http://img.ly/show/thumb/" + url_key[1];
+				var src = "img.php?imgurl=http://img.ly/show/medium/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -100,7 +99,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?ow\.ly\/i\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://static.ow.ly/photos/thumb/" + url_key[1] + ".jpg";
+				var src = "img.php?imgurl=http://static.ow.ly/photos/thumb/" + url_key[1] + ".jpg";
 				append_image(src, url_elem);
 			}
 		};
@@ -109,7 +108,7 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?pic\.gd\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=medium&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
@@ -118,16 +117,16 @@ function get_img_processor(type) {
 		proc = {
 			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=thumbnail&url=" + url_key[0];
+				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=medium&url=" + url_key[0];
 				append_image(src, url_elem);
 			}
 		};
 		return proc;
-	case "plixi.com/p":
+	case "plixi.com":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?plixi\.com\/p\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=thumbnail&url=http://plixi.com/p/" + url_key[1];
+				var src = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url=http://plixi.com/p/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};

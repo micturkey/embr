@@ -1,95 +1,95 @@
 FILTER_COOKIE = 'filKey';
 FILTER_COUNTER = 'filCnt';
-FILTER_KEY_OPT = {
+FILTER_KEY_OPT ={
 	expires: 30
 }
-$(function () {
-		$("#photoBtn").click(function () {
+$(function (){
+		$("#photoBtn").click(function (){
 				$("#photoArea").slideToggle(100);
 			});
-		$("#imageUploadSubmit").click(function (e) {
+		$("#imageUploadSubmit").click(function (e){
 				e.preventDefault();
 				ImageUpload();
 			});
-		$("#filterBtn").click(function () {
+		$("#filterBtn").click(function (){
 				$("#filterArea").slideToggle(100);
 			});
-		$("#symbolBtn").click(function () {
+		$("#symbolBtn").click(function (){
 				$("#symArea").toggle();
 			});
-		$("#symbols span").click(function () {
-      var obj = document.getElementById('textbox'); 
-      var str = $(this).html();
-      if(document.selection) {  
-         obj.focus();  
-         var sel=document.selection.createRange();  
-         document.selection.empty();  
-         sel.text = str;  
-      } else {  
-         var prefix, main, suffix;  
-         prefix = obj.value.substring(0, obj.selectionStart);  
-         main = obj.value.substring(obj.selectionStart, obj.selectionEnd);  
-         suffix = obj.value.substring(obj.selectionEnd);  
-         obj.value = prefix + str + suffix;  
-      }
-				$("#symArea").hide();
-				leaveWord();
-			});
-		$("#restoreBtn").click(function () {
+		$("#symbols span").click(function (){
+	      var obj = document.getElementById('textbox'); 
+	      var str = $(this).html();
+	      if(document.selection){  
+	         obj.focus();  
+	         var sel=document.selection.createRange();  
+	         document.selection.empty();  
+	         sel.text = str;  
+	      }else{  
+	         var prefix, main, suffix;  
+	         prefix = obj.value.substring(0, obj.selectionStart);  
+	         main = obj.value.substring(obj.selectionStart, obj.selectionEnd);  
+	         suffix = obj.value.substring(obj.selectionEnd);  
+	         obj.value = prefix + str + suffix;  
+	      }
+			$("#symArea").hide();
+			leaveWord();
+		});
+		$("#restoreBtn").click(function (){
 				$('#textbox').val($.cookie('recover'));
-				updateSentTip("Your previous tweet has been restored!", 3000, "success");
+				updateSentTip("Your previous tweet has been restored!", 3e3, "success");
 			});
 		$("#autoBtn").click(function(){
-				if ($("#autoBtn").hasClass("pause")) {
+				if ($("#autoBtn").hasClass("pause")){
 					clearInterval(UPDATE_INTERVAL);
 					$("#autoBtn").removeClass("pause").addClass("start");
-					updateSentTip("Auto refresh deactivated!", 3000, "success");
-				} else {
+					updateSentTip("Auto refresh deactivated!", 3e3, "success");
+				}else{
 					setUpdateInterval();
 					$("#autoBtn").removeClass("start").addClass("pause");
-					updateSentTip("Auto refresh activated!", 3000, "success");
+					updateSentTip("Auto refresh activated!", 3e3, "success");
 					update();
 				}
 			});
-		$("#refreshBtn").click(function () {
+		$("#refreshBtn").click(function (){
 				update();
-				updateSentTip("Retrieving new tweets...", 3000, "ing");
+				updateSentTip("Retrieving new tweets...", 3e3, "ing");
 			});
-		$("#transBtn").click(function () {
+		$("#transBtn").click(function (){
 				$("#transArea").slideToggle(100);
 			});
-		$("#filterSubmit").click(function (e) {
+		$("#filterSubmit").click(function (e){
 				e.preventDefault();
-				if ($.trim($('#iptFilter').val()).length == 0) {
-					updateSentTip("Please enter at least one keyword!", 3000, "failure");
+				if ($.trim($('#iptFilter').val()).length == 0){
+					updateSentTip("Please enter at least one keyword!", 3e3, "failure");
 					return false;
-				} else {
+				}else{
 					$.cookie(FILTER_COOKIE, null);
 					$.cookie(FILTER_COUNTER, null);
-					updateSentTip("New keyword: " + $.trim($('#iptFilter').val()) + " added!", 3000, "success");
+					updateSentTip("New keyword: " + $.trim($('#iptFilter').val()) + " added!", 3e3, "success");
 					filterEle();
 				}
 			});
-		$("#filterReset").click(function (e) {
+		$("#filterReset").click(function (e){
 				e.preventDefault();
 				$.cookie(FILTER_COOKIE, null);
 				$.cookie(FILTER_COUNTER, null);
 				$('#iptFilter').val("");
-				updateSentTip("Filtered tweets have been restored!", 5000, "success");
+				updateSentTip("Filtered tweets have been restored!", 5e3, "success");
 				$('#statuses .filter').slideDown("fast");
 			});
 		$("#filterHide").toggle(
 
-			function () {
+			function (){
 				$('#statuses .reply').slideUp("fast");
 				$('#filterHide').val("Show @");
-			}, function () {
+			}, function (){
 				$('#statuses .reply').slideDown("fast");
 				$('#filterHide').val("Hide @");
 			});
 		$("#clearBtn").click(function(e){
 				e.preventDefault();
-				if (confirm("This will sweep your timeline and remove excess tweets, are you sure?")) {
+				if (confirm("This will sweep your timeline and remove excess tweets, are you sure?")){
 					$("#statuses .timeline").each(function(){
 							$(this).find("li:gt(19)").remove();
 						});
@@ -97,7 +97,7 @@ $(function () {
 			});
 	});
 	
-	function ImageUpload() {
+	function ImageUpload(){
 		updateSentTip("Uploading your image...", 10000, "ing");
 		$.ajaxFileUpload({
 				url: 'ajax/uploadImage.php?do=image',
@@ -105,55 +105,55 @@ $(function () {
 				secureuri: false,
 				fileElementId: 'imageFile',
 				dataType: 'json',
-				success: function (data, status) {
-					if (typeof(console) !== 'undefined' && console != null) {
+				success: function (data, status){
+					if (typeof(console) !== 'undefined' && console != null){
 						console.info(data);
 					}
-					if (data.result != undefined && data.result == "success") {
+					if (data.result != undefined && data.result == "success"){
 						$("#textbox").val($("#textbox").val() + data.url);
-						updateSentTip("Your image has been uploaded!", 3000, "success");
+						updateSentTip("Your image has been uploaded!", 3e3, "success");
 						$("#photoArea").slideToggle(100);
-					} else {
-						updateSentTip("Failed to upload, please try again.", 3000, "failure");
+					}else{
+						updateSentTip("Failed to upload, please try again.", 3e3, "failure");
 						$("#photoArea").slideToggle(100);
 					}
 				},
-				error: function (data, status, e) {
-					updateSentTip("Failed to upload, please try again.", 3000, "failure");
+				error: function (data, status, e){
+					updateSentTip("Failed to upload, please try again.", 3e3, "failure");
 					$("#photoArea").slideToggle(100);
 				}
 			})
 		return false;
 	}
 	
-function enableFilter() {
-	if ($.cookie(FILTER_COOKIE) != null && $.cookie(FILTER_COOKIE) != "") {
+function enableFilter(){
+	if ($.cookie(FILTER_COOKIE) != null && $.cookie(FILTER_COOKIE) != ""){
 		$('#iptFilter').val(recoverKeywords());
 		$.cookie(FILTER_COUNTER, null);
 		filterEle();
 	}
 }
-function filterEle() {
-	if ($.trim($('#iptFilter').val()).length == 0) {
+function filterEle(){
+	if ($.trim($('#iptFilter').val()).length == 0){
 		return false;
-	} else {
+	}else{
 		var objs;
 		var targets = new Array();
 		var keywords = keywordRegexp();
-		if (keywords === $.cookie(FILTER_COOKIE)) {
+		if (keywords === $.cookie(FILTER_COOKIE)){
 			objs = $('#statuses .timeline li:not(.filter:hidden)').find('.status_word');
-		} else {
+		}else{
 			objs = $('#statuses .timeline li').find('.status_word');
 		}
 		var reg = new RegExp(keywords, "i");
-		for (i = 0; i < objs.length; i++) {
-			if (reg.test($(objs[i]).text())) {
+		for (i = 0; i < objs.length; i++){
+			if (reg.test($(objs[i]).text())){
 				targets.push(objs[i]);
 			}
 		}
-		if ($.cookie(FILTER_COUNTER) != null && $.cookie(FILTER_COUNTER) != '') {
+		if ($.cookie(FILTER_COUNTER) != null && $.cookie(FILTER_COUNTER) != ''){
 			$.cookie(FILTER_COUNTER, targets.length + parseInt($.cookie(FILTER_COUNTER)));
-		} else {
+		}else{
 			$.cookie(FILTER_COUNTER, targets.length);
 		}
 		hideMatched(targets);
@@ -161,35 +161,35 @@ function filterEle() {
 		setCounter();
 	}
 }
-function hideMatched(obj) {
+function hideMatched(obj){
 	$(obj).parent().parent().addClass("filter").hide();
 }
-function isMatch(txt, keywords) {
+function isMatch(txt, keywords){
 	var reg = RegExp(keywords, "i");
 	return reg.test(txt);
 }
-function keywordRegexp() {
-	if ($.cookie(FILTER_COOKIE) === null) {
+function keywordRegexp(){
+	if ($.cookie(FILTER_COOKIE) === null){
 		return setFilterCookie();
-	} else {
+	}else{
 		return $.cookie(FILTER_COOKIE);
 	}
 }
-function recoverKeywords() {
+function recoverKeywords(){
 	return $.cookie(FILTER_COOKIE).replace(/\|/g, ',');
 }
-function setFilterCookie() {
+function setFilterCookie(){
 	var strs = $('#iptFilter').val().split(",");
 	var keywords = '';
-	for (i = 0; i < strs.length; i++) {
+	for (i = 0; i < strs.length; i++){
 		if (strs[i] == "") continue;
 		keywords += strs[i] + "|";
 	}
 	keywords = keywords.substr(0, keywords.length - 1);
 	return keywords;
 }
-var option = { expire: 30 };
-$(document).ready(function () {
+var option ={ expire: 30 };
+$(document).ready(function (){
 		enableFilter();
 		if($.cookie('transLang') === null){
 			$.cookie('transLang', 'en', option);

@@ -21,11 +21,11 @@ $(function(){
 				e.preventDefault();
 				var replie_id = $this.parent().parent().find(".status_word").find(".user_name").text();
 				if ($("#textbox").length > 0) {
-					onReplie($this,e);
+					onInfoReplie($this,e);
 				} else {
 					$("#info_head").after('<h2>In reply to ' + replie_id + '</h2>' + formHTML);
 					formFunc();
-					onReplie($this,e);
+					onInfoReplie($this,e);
 				}
 				break;
 			case 'favor_btn':
@@ -43,7 +43,7 @@ $(function(){
 		}
 	});
 
-	$("#info_reply_btn").live("click",function(){
+	$("#info_reply_btn").click(function(){
 		var replie_id = $("#info_name").text();
 		if ($("#textbox").length > 0) {
 			$("#textbox").val($("#textbox").val() + "@" + replie_id + " ");
@@ -60,11 +60,11 @@ $(function(){
 	if (getCookie("infoShow") == "hide") {
 		onHide();
 	}
-	$("#info_hide_btn").live("click", function(){
+	$("#info_hide_btn").click(function(){
 		onHide();
 	});
 
-	$("#info_follow_btn").live("click", function(e){
+	$("#info_follow_btn").click(function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $("#info_name").text();
@@ -92,7 +92,7 @@ $(function(){
 		});
 	});
 
-	$("#info_block_btn").live("click", function(e){
+	$("#info_block_btn").click(function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $("#info_name").text();
@@ -118,7 +118,7 @@ $(function(){
 		}
 	});
 
-	$("#block_btn").live("click", function(e){
+	$("#block_btn").click(function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $("#info_name").text();
@@ -148,7 +148,7 @@ $(function(){
 		}
 	});
 
-	$("#unblock_btn").live("click", function(e){
+	$("#unblock_btn").click(function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $("#info_name").text();
@@ -174,7 +174,7 @@ $(function(){
 		}
 	});
 	
-	$("#report_btn").live("click", function(e){
+	$("#report_btn").click(function(e){
 		e.preventDefault();
 		var $this = $(this);
 		var id = $("#info_name").text();
