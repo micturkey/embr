@@ -151,45 +151,45 @@ function updateFunc(type, name, pw) {
 		since_id = $(div + " li:first-child").find("span.status_id").text();
 	}
 	$.ajax({
-			url: url,
-			type: "GET",
-			dataType: "text",
-			data: "since_id=" + since_id,
-			success: function (msg) {
-				if ($.trim(msg).indexOf("</li>") > 0) {
-					var source = $(msg).prependTo(div);
-					if (div === "#allTimeline") {
-						$(div + " li.myTweet:not(:first)").removeClass("myTweet");
-						$("#allTimeline li.myTweet").fadeOut("fast");
-						markReply($('#allTimeline > li'));
-					}
-					var num = 0;
-					var navNum = 0;
-					if (document.title.match(/\d+/) != null) {
-						num = parseInt(document.title.match(/\d+/));
-					}
-					var len = $(msg).length - 1;
-					document.title = "(" + (num + len) + ") " + document.title.replace(/(\([0-9]+\))/g, "");
-					if ($(btnDiv).text().match(/\d+/) != null) {
-						navNum = parseInt($(btnDiv).text().match(/\d+/));
-					}
-					$(btnDiv).text($(btnDiv).text().replace(/(\([0-9]+\))/g, "") + "(" + (navNum + len) + ")");
-					filterEle();
-					embrTweet(source);
-					if($("div.new").length == 1) {
-						$("div.new").show().slideDown("fast");
-					} else {
-						$("span.tweetcount").filter(":last").text(navNum + len);
-					}
-					$("span.big-retweet-icon").tipsy({
-							gravity: 's'
-						});
-					previewMedia(source);
+		url: url,
+		type: "GET",
+		dataType: "text",
+		data: "since_id=" + since_id,
+		success: function (msg) {
+			if ($.trim(msg).indexOf("</li>") > 0) {
+				var source = $(msg).prependTo(div);
+				if (div === "#allTimeline") {
+					$(div + " li.myTweet:not(:first)").removeClass("myTweet");
+					markReply($('#allTimeline > li'));
 				}
-				PAUSE_TIMELINE = false;
-			},
-			error: function (msg) {
-				PAUSE_TIMELINE = false;
+				var num = 0;
+				var navNum = 0;
+				if (document.title.match(/\d+/) != null) {
+					num = parseInt(document.title.match(/\d+/));
+				}
+				var len = $(msg).length - 1;
+				document.title = "(" + (num + len) + ") " + document.title.replace(/(\([0-9]+\))/g, "");
+				if ($(btnDiv).text().match(/\d+/) != null) {
+					navNum = parseInt($(btnDiv).text().match(/\d+/));
+				}
+				$(btnDiv).text($(btnDiv).text().replace(/(\([0-9]+\))/g, "") + "(" + (navNum + len) + ")");
+				filterEle();
+				embrTweet(source);
+				if($("div.new").length == 1) {
+					$("div.new").show().slideDown("fast");
+				} else {
+					$("div.new").filter(":first").remove();
+					$("span.tweetcount").filter(":last").text(navNum + len);
+				}
+				$("span.big-retweet-icon").tipsy({
+						gravity: 's'
+					});
+				previewMedia(source);
 			}
-		});
+			PAUSE_TIMELINE = false;
+		},
+		error: function (msg) {
+			PAUSE_TIMELINE = false;
+		}
+	});
 }

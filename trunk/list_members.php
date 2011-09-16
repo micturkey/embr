@@ -7,7 +7,6 @@ include ('inc/header.php');
 <?php
 $type = 'list_members';
 include ('inc/userlist.php');
-
 include ('inc/sidebar.php');
 include ('inc/footer.php');
 ?>

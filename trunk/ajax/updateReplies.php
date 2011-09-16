@@ -8,17 +8,16 @@
 	if ( isset($_GET['since_id']) ) {
 
 		$statuses = $t->replies(false, $_GET['since_id']);
-
-		$empty = count($statuses) == 0? true: false;
-
-		if ($empty) {
+		$count = count($statuses);
+		if ($count == 0) {
 			echo "empty";
 		} else {
 			$output = "";
 			foreach($statuses as $status) {
 				$output .= format_timeline($status, $t->username);
 			}
-			$output .= '<div class="new"></div>';
+			$tweetCounter = "<span class=\"tweetcount\">$count</span> unread mention(s)";
+			$output .= '<div class="new">'.$tweetCounter.'</div>';
 			echo $output;
 		}
 

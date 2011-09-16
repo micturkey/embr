@@ -72,8 +72,8 @@ function update() {
 			$.cookie("intervalChanged", "")
 			setUpdateInterval();
 		}
-		$("#statuses .timeline li.mine").removeClass("mine").addClass("myTweet");
-		var since_id = $("#statuses .timeline li:not(.myTweet):not(#ajax_statuses li):first").find(".status_id").text();
+		$("ol.timeline li.mine").removeClass("mine").addClass("myTweet");
+		var since_id = $("ol.timeline li:not(.myTweet):not(#ajax_statuses li):first").find(".status_id").text();
 		$.ajax({
 			url: "ajax/updateTimeline.php",
 			type: "GET",
@@ -81,7 +81,6 @@ function update() {
 			data: "since_id=" + since_id,
 			success: function (msg) {
 				if ($.trim(msg).indexOf("</li>") > 0) {
-					$("#allTimeline li.myTweet").fadeOut("fast");
 					var source = $(msg).prependTo($(".timeline"));
 					var num = 0;
 					if (document.title.match(/\d+/) != null) {
@@ -94,6 +93,7 @@ function update() {
 					if($("div.new").length == 1) {
 						$("div.new").show().slideDown("fast");
 					} else {
+						$("div.new").filter(":first").remove();
 						$("span.tweetcount").filter(":last").text(num + $(msg).length - 1);
 					}
 					$("span.big-retweet-icon").tipsy({

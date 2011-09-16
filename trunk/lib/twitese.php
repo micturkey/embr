@@ -54,7 +54,7 @@
 		return $text;
 	}
 
-	function formatEntities(&$entities,$html,&$url_recover = false){
+	function formatEntities($entities,$html,&$url_recover = false){
 		$user_mentions = $entities->user_mentions;
 		$hashtags = $entities->hashtags;
 		$urls = $entities->urls;
@@ -166,9 +166,12 @@
 		
 		foreach($urlRegs as $urlReg) {
 			if(preg_match($urlReg,$text,$match)){
-				$request = 'http://api.unshort.me/?r=' . $match[0];
-				$obj = objectifyXml(processCurl( $request ));
-				if ($obj->success !== false && isset($obj->resolvedURL)) return $obj->resolvedURL;
+				$request = 'http://api.longurl.org/v2/expand?format=json&url=' . urlencode($match[0]);
+				$result = objectifyJson(processCurl($request));
+				if ($result != null){
+					$var = get_object_vars($result);
+					if (array_key_exists('long-url',$var)) return $var['long-url'];
+				}
 			}
 		}
 		return false; 

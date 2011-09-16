@@ -8,17 +8,16 @@
 	if ( isset($_GET['since_id']) ) {
 
 		$messages = $t->directMessages(false, $_GET['since_id']);
-
-		$empty = count($messages) == 0? true: false;
-
-		if ($empty) {
+		$count = count($messages);
+		if ($count == 0) {
 			echo "empty";
 		} else {
 			$output = '';
 			foreach ($messages as $message) {
 				$output .= format_message($message);
 			}
-			$output .= "<div class=\"new\"></div>";
+			$tweetCounter = "<span class=\"tweetcount\">$count</span> unread message(s)";
+			$output .= '<div class="new">'.$tweetCounter.'</div>';
 			echo $output;
 		}
 	} else {
