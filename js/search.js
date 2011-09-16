@@ -46,7 +46,7 @@ $(function(){
 				break;
 		}
 	});
-	$("#submit_btn").live("click", function(e){
+	$("#submit_btn").click(function(e){
 		updateStatus();
 		e.preventDefault();
 	});

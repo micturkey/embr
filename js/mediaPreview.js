@@ -4,6 +4,7 @@ XIAMI_EMBED = '<br /><embed src="http://www.xiami.com/widget/0_src_id/singlePlay
 YOUKU_EMBED = '<br /><embed src="http://player.youku.com/player.php/sid/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
 YOUTUBE_EMBED = '<br /><embed src="http://www.youtube.com/e/src_id?enablejsapi=1&version=3&playerapiid=ytplayer" quality="high" width="420" height="363" align="middle" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed>';
 KU6_EMBED='<br /><embed src="http://player.ku6.com/refer/src_id/v.swf" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></embed>';
+VIMEO_EMBED='<br /><iframe src="http://player.vimeo.com/video/src_id" quality="high" width="420" height="363" align="middle" allowScriptAccess="allways" mode="transparent" type="application/x-shockwave-flash"></iframe>';
 EMBED_FRAME = '';
 function getFlashReg(sSite) {
 	switch (sSite) {
@@ -30,6 +31,9 @@ function getFlashReg(sSite) {
 	case 'v.ku6.com':
 		EMBED_FRAME = KU6_EMBED;
 		return /[\S]+.ku6.com\/show\/([\w-]+)[\S]*(.html)/i;
+	case 'vimeo.com':
+		EMBED_FRAME = VIMEO_EMBED;
+		return /vimeo.com\/(\d+)[\S]*/i;
 	default:
 		return null;
 	}
@@ -37,10 +41,11 @@ function getFlashReg(sSite) {
 var previewFlash = function (obj) {
 	var reg = /http:\/\/([\w]*[\.]*[\w]+\.[\w]+)\//i;
 	var embed = "";
-	if (reg.exec(obj.text().toLowerCase()) !== null) {
+	var href = obj.attr("href");
+	if (reg.exec(href.toLowerCase()) !== null) {
 		var re = getFlashReg(RegExp.$1);
 		if (re !== null) {
-			if (re.exec(obj.text()) !== null) {
+			if (re.exec(href) !== null) {
 				embed = EMBED_FRAME.replace(/src_id/, RegExp.$1);
 				$(embed).appendTo(obj.parent().parent().find(".tweet"));
 			}
@@ -104,15 +109,6 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "pic.gd":
-		proc = {
-			reg: /^http:\/\/(?:www\.)?pic\.gd\/(\w+)/,
-			func: function (url_key, url_elem) {
-				var src = "http://api.plixi.com/api/TPAPI.svc/imagefromurl?size=medium&url=" + url_key[0];
-				append_image(src, url_elem);
-			}
-		};
-		return proc;
 	case "tweetphoto.com":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?tweetphoto\.com\/(\w+)/,
@@ -131,29 +127,11 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "ts1.in":
-		proc = {
-			reg: /^http:\/\/(?:www\.)?ts1\.in\/(\d+)/,
-			func: function (url_key, url_elem) {
-				var src = "http://ts1.in/thumb/" + url_key[1];
-				append_image(src, url_elem);
-			}
-		};
-		return proc;
 	case "hellotxt.com":
 		proc = {
 			reg: /^http:\/\/(?:www\.)?hellotxt.com\/i\/(\w+)/,
 			func: function (url_key, url_elem) {
 				var src = "http://hellotxt.com/image/" + url_key[1] + ".s.jpg"
-				append_image(src, url_elem);
-			}
-		};
-		return proc;
-	case "twitxr.com":
-		proc = {
-			reg: /^http:\/\/(?:www\.)?twitxr.com\/[^ ]+\/updates\/(\d+)/,
-			func: function (url_key, url_elem) {
-				var src = 'http://twitxr.com/thumbnails/' + url_key[1].substr(-2, 2) + '/' + url_key[1] + '_th.jpg';
 				append_image(src, url_elem);
 			}
 		};
@@ -167,11 +145,11 @@ function get_img_processor(type) {
 			}
 		};
 		return proc;
-	case "grab.by":
+	case "p.twipple.jp":
 		proc = {
-			reg: /^(http:\/\/(?:www\.)?grab\.by\/(\w+))/,
+			reg: /^http:\/\/(?:p\.)?twipple\.jp\/(\w+)/,
 			func: function (url_key, url_elem) {
-				var src = url_key[1];
+				var src = "img.php?url=http://p.twipple.jp/show/large/" + url_key[1];
 				append_image(src, url_elem);
 			}
 		};
@@ -213,6 +191,15 @@ function get_img_processor(type) {
 						append_image(imgsrc, url_elem);
 					}
 				});
+			}
+		};
+		return proc;
+	case "twitxr.com":
+		proc = {
+			reg: /^http:\/\/(?:www\.)?twitxr.com\/[^ ]+\/updates\/(\d+)/,
+			func: function (url_key, url_elem) {
+				var src = 'http://twitxr.com/thumbnails/' + url_key[1].substr(-2, 2) + '/' + url_key[1] + '_th.jpg';
+				append_image(src, url_elem);
 			}
 		};
 		return proc;

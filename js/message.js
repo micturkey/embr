@@ -1,7 +1,16 @@
 //message function
 $(function () {
 	formFunc();
-	$("#sent_id").autocomplete(uniq($(".user_name").text().split(" ")));
+	var temp = [];
+	var auto = [];
+	$("a.user_name").each(function(){
+		var u = this.text;
+		if (!(u in temp)) {
+			temp[u] = true;
+			auto.push(u);
+		}
+	});
+	$("#sent_id").autocomplete(auto);
 	$("#allMessage").click(function(e) {
 		var $this = $(e.target);
 		var type = $this.attr('class');
@@ -39,4 +48,3 @@ $(function () {
 		}
 	});
 });
-var uniq=function(a){var b=[],c={},d,e,f=a.length;if(f<2){return a}for(d=0;d<f;d++){e=a[d];if(c[e]!==1){b.push(e);c[e]=1}}return b}

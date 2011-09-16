@@ -138,7 +138,7 @@ function filterEle(){
 		return false;
 	}else{
 		var objs;
-		var targets = new Array();
+		var targets = [];
 		var keywords = keywordRegexp();
 		if (keywords === $.cookie(FILTER_COOKIE)){
 			objs = $('#statuses .timeline li:not(.filter:hidden)').find('.status_word');

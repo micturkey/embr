@@ -33,7 +33,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="lists.php">
+			<a href="lists.php?t=2">
 				<span class="count"><?php $listed_count = getCookie('listed_count'); echo ($listed_count > 0 ? $listed_count : 0);?></span>
 				<span class="label">listed</span>
 			</a>

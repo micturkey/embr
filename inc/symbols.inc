@@ -453,7 +453,7 @@
 <span title="小新"><(￣︶￣)↗</span>
 <span title="邪恶">( ‵▽′)ψ</span>
 <span title="谢啦!!">☆⌒(*＾-゜)v </span>
-<span title="心神不宁"...">(゜゜ )(。。)(゜゜ )(。。)</span>
+<span title="心神不宁...">(゜゜ )(。。)(゜゜ )(。。)</span>
 <span title="欣慰">( ╯▽╰)</span>
 <span title="要">不＞(￣ε￣ = ￣3￣)<</span>
 <span title="噎死">( *⊙~⊙) </span>
