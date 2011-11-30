@@ -764,8 +764,8 @@ class TwitterOAuth {
 		return $response;
 	}
 
-	function trends(){
-		$url = "/trends";
+	function trends($woeid = 1){
+		$url = "/trends/$woeid";
 		return $this->get($url);
 	}
 

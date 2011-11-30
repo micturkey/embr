@@ -121,7 +121,7 @@
 				</div>";
 		} else {
 				$status = $user->status;
-				$date = strtotime($status->created_at);
+				$date = format_time($status->created_at);
 				$text = formatText($status->text);
 				$output = "
 					<div id=\"currently\">

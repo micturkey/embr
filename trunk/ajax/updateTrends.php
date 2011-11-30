@@ -3,9 +3,9 @@
 		session_start();
 	}
 	include ('../lib/twitese.php');
-	$t = getTwitter();
-	$trends = $t->trends()->trends;
-
+	$tr = getTwitter()->trends();
+	$trends = $tr[0]->trends;
+	
 	if (count($trends) == 0) {
 		echo "empty";
 	}else{
@@ -13,7 +13,7 @@
 		foreach ($trends as $trend) {
 			$li = '
 				<li>
-				<a href="search.php?q='.rawurlencode($trend->name).'">'.$trend->name.'</a>
+				<a href="search.php?q='.$trend->query.'">'.$trend->name.'</a>
 				</li>
 				';
 			$html .= $li;

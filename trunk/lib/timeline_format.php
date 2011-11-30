@@ -1,9 +1,13 @@
 <?php
+	function format_time($time){
+		date_default_timezone_set('UTC');
+		return strtotime($time);
+	}
 	function format_retweet($status, $retweetByMe = false){
 		$retweeter = $status->user;
 		$rt_status = $status->retweeted_status;
 		$status_owner = $rt_status->user;
-		$date = strtotime($status->created_at);
+		$date = format_time($status->created_at);
 		$url_recover = '';
 		$text = formatEntities($rt_status->entities,$rt_status->text,$url_recover);
 		$html = '<li>
@@ -39,7 +43,7 @@
 
 	function format_retweet_of_me($status){
 		$status_owner = $status->user;
-		$date = strtotime($status->created_at);
+		$date = format_time($status->created_at);
 		$url_recover = '';
 		$text = formatEntities($status->entities,$status->text,$url_recover);
 		$html = '<li>
@@ -82,7 +86,7 @@
 
 	function format_timeline($status, $screen_name, $updateStatus = false){
 		$user = $status->user;
-		$date = strtotime($status->created_at);
+		$date = format_time($status->created_at);
 		$url_recover = '';
 		$text = formatEntities($status->entities,$status->text,$url_recover);
 		
@@ -131,7 +135,7 @@
 			$imgurl = getAvatar($message->sender->profile_image_url);
 			$messenger = $message->sender;
 		}
-		$date = strtotime($message->created_at);
+		$date = format_time($message->created_at);
 		$url_recover = '';
 		$text = formatEntities($message->entities,$message->text,$url_recover);
 		

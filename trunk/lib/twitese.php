@@ -74,6 +74,7 @@
 			$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
 			foreach($urls as $url) {
 				$exp = is_null($url->expanded_url) ? $url->url : $url->expanded_url;
+				if(substr($url->url,0,4) != 'http') $url->url = 'http://'.$url->url;
 				if(isset($url->display_url)) {
 					$dis = $url->display_url;
 				} elseif ($url->url[4] == 's'){
@@ -166,11 +167,10 @@
 		
 		foreach($urlRegs as $urlReg) {
 			if(preg_match($urlReg,$text,$match)){
-				$request = 'http://api.longurl.org/v2/expand?format=json&url=' . urlencode($match[0]);
-				$result = objectifyJson(processCurl($request));
-				if ($result != null){
-					$var = get_object_vars($result);
-					if (array_key_exists('long-url',$var)) return $var['long-url'];
+				$request = 'http://api.unfwd4.me/?url=' . urlencode($match[0]);
+				$result = processCurl($request);
+				if(substr($result,0,6) != "ERROR:"){
+					return $result;
 				}
 			}
 		}
