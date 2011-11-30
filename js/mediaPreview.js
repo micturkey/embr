@@ -213,30 +213,31 @@ var append_image = function(src, elem) {
 	$(elem).parent().after($('<div id="thumb_pic" />').append(link));
 }
 var previewImg = function (obj) {
-	if (obj.attr("rel") === "noreferrer") {
-		var rel = obj.attr("href");
-		/(https?\:\/\/[\S]*\.(jpg|png|gif))/.exec(obj.attr("href"));
-		if(RegExp.$2.length == 3){
-			append_image(RegExp.$1, obj);
-			return;
-		}
-		/https?\:\/\/(?:www\.)?([\w-.]+)\/[\S]*/i.exec(obj.attr("href"));
-		var img_processor = get_img_processor(RegExp.$1);
-		if (img_processor === null) {
-			return null;
-		}
-		if ((img_url_key = img_processor.reg.exec(obj.attr("href"))) != null) {
-			obj.attr("alt", "image");
-			img_processor.func(img_url_key, obj);
-		}
+	var rel = obj.attr("href");
+	/(https?\:\/\/[\S]*\.(jpg|png|gif))/.exec(obj.attr("href"));
+	if(RegExp.$2.length == 3){
+		append_image(RegExp.$1, obj);
+		return;
+	}
+	/https?\:\/\/(?:www\.)?([\w-.]+)\/[\S]*/i.exec(obj.attr("href"));
+	var img_processor = get_img_processor(RegExp.$1);
+	if (img_processor === null) {
+		return null;
+	}
+	if ((img_url_key = img_processor.reg.exec(obj.attr("href"))) != null) {
+		obj.attr("alt", "image");
+		img_processor.func(img_url_key, obj);
 	}
 }
 var previewMedia = function (objs) {
-	objs.find("span.tweet a, span.unshorturl a").each(function () {
+	var temp =[];
+	objs.find("span.tweet a[rel^=noref], span.unshorturl a[rel^=noref]").each(function () {
 		var t = $(this);
-		if(!t.data("previewed")) {
+		var href = t.attr("href");
+		if(!(href in temp) && !t.data("previewed")) {
 			if ($.cookie('showpic') === 'true') previewImg(t);
 			if ($.cookie('mediaPre') === 'true') previewFlash(t);
+			temp[href]=true;
 		}
 		t.data("previewed",true);
 	});
