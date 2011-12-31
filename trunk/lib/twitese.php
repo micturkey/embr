@@ -26,26 +26,29 @@
 		if (getCookie($name)) return getCookie($name);
 		else return $default;
 	}
-
+	function format_time($time){
+		date_default_timezone_set('UTC');
+		return strtotime($time);
+	}
 	function formatText($text) {
-		//Èç¹û¿ªÆôÁËÄ§ÊõÒıºÅ\" \' ×ª»ØÀ´
+		//å¦‚æœå¼€å¯äº†é­”æœ¯å¼•å·\" \' è½¬å›æ¥
 		if (get_magic_quotes_gpc()) {
 			$text = stripslashes($text);
 		}
 
-		//Ìí¼ÓurlÁ´½Ó
+		//æ·»åŠ urlé“¾æ¥
 		$urlReg = '/(((http|https|ftp):\/\/){1}([[:alnum:]\-\.])+(\.)(([[:alnum:]]){2,4})?([[:alnum:]\/+=%#&@\:\;_\.~\?\!\-\,]*))/i';
 		$text = preg_replace($urlReg, '<a href="\1" target="_blank" rel="noreferrer">\1</a>', $text);
 
-		//Ìí¼Ó@Á´½Ó
+		//æ·»åŠ @é“¾æ¥
 		$atReg = '/\B@{1}(([a-zA-Z0-9\_\.\-])+)/i';
 		$text = preg_replace($atReg,	'<a href="user.php?id=\1" target="_blank">\0</a>', $text);
 
-		//Ìí¼Ó list Á´½Ó
+		//æ·»åŠ  list é“¾æ¥
 		$listReg = '/(\<a[\w+=\:\%\#\&\.~\?\"\'\/\- ]+\>@{1}([a-zA-Z0-9_\.\-]+)<\/a\>([\/a-zA-Z0-9_\.\-]+))/i';
 		$text = preg_replace($listReg,	'<a href="list.php?id=\2\3" target="_blank">@\2\3</a>', $text);
 
-		//Ìí¼Ó±êÇ©Á´½Ó
+		//æ·»åŠ æ ‡ç­¾é“¾æ¥
 		$tagReg = "/\B(\#{1}([\w]*[\pN\pC\pL]+[\w]*))([\s]*)/u";
 		$text = preg_replace($tagReg, '<a target="_blank" href="search.php?q=%23\2">#<span class="hashtag">\2</span></a>\3', $text);
 

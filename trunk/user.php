@@ -51,7 +51,7 @@
 		$userinfo['url'] = $user->url;
 		$userinfo['description'] = formatText($user->description);
 		$userinfo['location'] = $user->location;
-		$userinfo['date_joined'] = date('Y-m-d', strtotime($user->created_at)); //from dabr
+		$userinfo['date_joined'] = date('Y-m-d', format_time($user->created_at)); //from dabr
 		$userinfo['protected'] = $user->url;
 		$userinfo['id'] = $user->id;
 		$userinfo['image_url'] = getAvatar($user->profile_image_url);

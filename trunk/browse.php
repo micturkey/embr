@@ -31,7 +31,7 @@
 			$output = '<ol class="timeline" id="allTimeline">';
 			
 			foreach ($statuses as $status) {
-				$date = strtotime($status->created_at);
+				$date = format_time($status->created_at);
 				$text = formatText($status->text);
 				$output .= "
 					<li>
@@ -72,9 +72,5 @@
 
 <?php 
 	include ('inc/sidebar.php');
-?>
-
-<?php 
 	include ('inc/footer.php');
-	
 ?>

@@ -12,7 +12,7 @@
 			header('location: error.php');exit();
 		}
 		$user = $status->user;
-		$date = $status->created_at;
+		$date = format_time($status->created_at);
 		$text = formatEntities(&$status->entities,$status->text);
 	} else {
 		header('location: error.php');exit();
@@ -54,6 +54,7 @@ header {margin:1em auto;text-align:right;width:600px}
 .timeline li {cursor:default;margin:0px;overflow:hidden;padding:10px;position:relative}
 .status_author, .rank_img {left:10px;position:absolute;top:15px;width:50px}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/mediaPreview.js"></script>
 <script src="js/public.js"></script>
@@ -94,7 +95,7 @@ header {margin:1em auto;text-align:right;width:600px}
 							<span class="status_info">
 										<?php if ($status->in_reply_to_status_id_str) {?><span class="in_reply_to"> <a href="status.php?id=<?php echo $status->in_reply_to_status_id_str ?>">in reply to <?php echo $status->in_reply_to_screen_name?></a></span> <?php }?>
 										<span class="source">from <?php echo $status->source ?></span>
-										<span class="date"><a href="status.php?id=<?php echo $statusid ?>" target="_blank"><?php echo $date ?></a></span>
+										<span class="date"><a href="status.php?id=<?php echo $statusid ?>" id="<?php echo $date?>" target="_blank"><?php echo date('Y-m-d H:i:s', $date); ?></a></span>
 							</span>
 						</span>
 				</li>

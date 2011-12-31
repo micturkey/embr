@@ -10,7 +10,7 @@
 		GLOBAL $output;
 		$t = getTwitter();
 		$MAX_TWEETS = 20;
-		$statuses = $t->search($query, $page, $MAX_TWEETS);
+		$statuses = $t->search($query,$page,$MAX_TWEETS);
 
 		//if ($statuses === false) {
 		//	header('location: error.php');exit();
@@ -22,30 +22,8 @@
 			include_once('lib/timeline_format.php');
 			$output = '<ol class="timeline" id="allTimeline">';
 			foreach ($statuses->results as $status) {
-				$date = strtotime($status->created_at);
-				$text = formatText($status->text);
-
-				$output .= "
-					<li>
-					<span class=\"status_author\">
-					<a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img id=\"avatar\" src =\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
-					</span>
-					<span class=\"status_body\">
-					<span class=\"status_id\">$status->id_str</span>
-					<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$status->from_user\">$status->from_user</a> <span class=\"tweet\">$text</span> </span>";
-				$output .= recoverShortens($text);
-				$output .="<span class=\"actions\">
-					<a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a>
-					<a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-					<a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\">";
-				$output .=	"<span class=\"source\">via ".html_entity_decode($status->source)."</span>
-					<span class=\"date\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', strtotime($status->created_at))."</a></span>
-					</span>
-					</span>
-					</li>
-					";
+				$output .= format_search($status);
 			}
-
 			$output .= "</ol><div id=\"pagination\">";
 
 			if ($page > 1) $output .= "<a id=\"more\" class=\"round more\" style=\"float: left;\" href=\"search.php?q=".urlencode($query)."&p=" . ($page - 1) . "\">Back</a>";
