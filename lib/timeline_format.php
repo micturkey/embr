@@ -1,8 +1,4 @@
 <?php
-	function format_time($time){
-		date_default_timezone_set('UTC');
-		return strtotime($time);
-	}
 	function format_retweet($status, $retweetByMe = false){
 		$retweeter = $status->user;
 		$rt_status = $status->retweeted_status;
@@ -157,6 +153,31 @@
 			$output .= "<a class=\"msg_replie_btn\" href=\"#\">reply</a><a class=\"msg_delete_btn\" href=\"#\">delete</a>";
 		}
 		$output .="</span><span class=\"status_info\"><span class=\"date\" id=\"$date\">".date('Y-m-d H:i:s', $date)."</span></span></span></li>";
+		return $output;
+	}
+	function format_search($status){
+		$date = format_time($status->created_at);
+      $url_recover = '';
+		$text = formatEntities($status->entities,$status->text,$url_recover);
+      $output = "
+              <li>
+              <span class=\"status_author\">
+              <a href=\"user.php?id=$status->from_user\" target=\"_blank\"><img id=\"avatar\" src =\"".getAvatar($status->profile_image_url)."\" title=\"Hello, I am $status->from_user. Click for more... \" /></a>
+              </span>
+              <span class=\"status_body\">
+              <span class=\"status_id\">$status->id_str</span>
+              <span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$status->from_user\">$status->from_user</a> <span class=\"tweet\">$text</span> </span>";
+      $output .= $url_recover;
+      $output .="<span class=\"actions\">
+              <a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a>
+              <a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
+              <a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\">";
+      $output .=      "<span class=\"source\">via ".html_entity_decode($status->source)."</span>
+              <span class=\"date\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', strtotime($status->created_at))."</a></span>
+              </span>
+              </span>
+              </li>
+              ";
 		return $output;
 	}
 ?>

@@ -615,19 +615,24 @@ class TwitterOAuth {
 	}
 
 	/* ---------- Search ---------- */
-	function search($q = false, $page = false, $rpp = false){
+	function search($q = false, $page = false, $rpp = false, $include_entities = true){
 		$searchApiUrl = strpos($this->host, "twitter.com") > 0 ? "http://search.twitter.com" : $this->host;
  			$url = $searchApiUrl.'/search.'.$this->type;
-		if(!$q)
+		if(!$q) {
 			return false;
-		$args = array();
+		} else{
+			$args = array();
+			$args['q'] = $q;
+		}
 		if($page){
 			$args['page'] = $page;
 		}
 		if($rpp){
 			$args['rpp'] = $rpp;
 		}
-		$args['q'] = $q;
+		if($include_entities) {
+			$args['include_entities'] = $include_entities;
+		}
 		return $this->get($url, $args);
 	}
 

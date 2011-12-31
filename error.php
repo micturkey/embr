@@ -1,6 +1,8 @@
-<?php include ('lib/twitese.php') ?>
-<?php $title = "Error" ?>
-<?php include ('inc/header.php') ?>
+<?php 
+	include ('lib/twitese.php');
+	$title = "Error";
+	include ('inc/header.php');
+?>
 
 <div id="login_area">
 	<div id="error">
@@ -11,7 +13,7 @@
 				echo '<p>Fail to connect Twitter right now. Please <a href="index.php">go back</a> or <a href="logout.php">sign in</a> minutes later.</p>';
 				if(loginStatus())
 				{
-				echo '<p> The API will reset in '.intval((strtotime(getTwitter()->ratelimit()->reset_time) - time())/60).' min(s).';
+				echo '<p> The API will reset in '.intval((format_time(getTwitter()->ratelimit()->reset_time) - time())/60).' min(s).';
 				break;
 				}
 				default:
