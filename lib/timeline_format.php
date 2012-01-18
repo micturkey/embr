@@ -4,8 +4,7 @@
 		$rt_status = $status->retweeted_status;
 		$status_owner = $rt_status->user;
 		$date = format_time($status->created_at);
-		$url_recover = '';
-		$text = formatEntities($rt_status->entities,$rt_status->text,$url_recover);
+		$text = formatEntities($rt_status->entities,$rt_status->text);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="Hello, I am  '.$status_owner->screen_name.'. Click for more..." /></a>
@@ -13,9 +12,8 @@
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span>
 			<span class="status_id">'.$status->id_str.'</span>
-			<span class="status_word"><a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a> <span class="tweet">&nbsp;'.$text.'</span></span>';
-		$html .= $url_recover;
-		$html .= '<span class="actions">
+			<span class="status_word"><a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a> <span class="tweet">&nbsp;'.$text.'</span></span>
+			<span class="actions">
 			<a class="replie_btn" title="Reply" href="#">Reply</a>
 			<a class="rt_btn" title="Retweet" href="#">Retweet</a>';
 		if($retweetByMe != true){
@@ -40,8 +38,7 @@
 	function format_retweet_of_me($status){
 		$status_owner = $status->user;
 		$date = format_time($status->created_at);
-		$url_recover = '';
-		$text = formatEntities($status->entities,$status->text,$url_recover);
+		$text = formatEntities($status->entities,$status->text);
 		$html = '<li>
 			<span class="status_author">
 			<a href="user.php?id='.$status_owner->screen_name.'" target="_blank"><img id="avatar" src="'.getAvatar($status_owner->profile_image_url).'" title="click for more..." /></a>
@@ -49,9 +46,8 @@
 			<span class="status_body">
 			<span title="Retweets from people you follow appear in your timeline." class="big-retweet-icon"></span><span class="status_id">'.$status->id_str.'</span>
 			<span class="status_word">
-			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>';
-		$html .= $url_recover;
-		$html .= '<span class="actions">
+			<a class="user_name" href="user.php?id='.$status_owner->screen_name.'">'.$status_owner->screen_name.'</a><span class="tweet">&nbsp;'.$text.'</span></span>
+			<span class="actions">
 			<a class="replie_btn" title="Reply" href="#">Reply</a>
 			<a class="rt_btn" title="Retweet" href="#">Retweet</a>';
 		$html .= $status->favorited ? '<a class="unfav_btn" title="UnFav" href="#">UnFav</a>' : '<a class="favor_btn" title="Fav" href="#">Fav</a>';
@@ -83,8 +79,7 @@
 	function format_timeline($status, $screen_name, $updateStatus = false){
 		$user = $status->user;
 		$date = format_time($status->created_at);
-		$url_recover = '';
-		$text = formatEntities($status->entities,$status->text,$url_recover);
+		$text = formatEntities($status->entities,$status->text);
 		
 		if(preg_match('/^\@'.getTwitter()->username.'/i', $text) == 1){
 			$output = "<li class=\"reply\">";
@@ -99,7 +94,6 @@
 		<span class="status_body">
 		<span class="status_id">'.$status->id_str.'</span>
 		<span class="status_word"><a class="user_name" href="user.php?id='.$user->screen_name.'">'.$user->screen_name.'</a> <span class="tweet">&nbsp;'.$text.'</span></span>';
-		$output .= $url_recover;
 		$output .= "<span class=\"actions\">
 			<a class=\"replie_btn\" title=\"Reply\" href=\"#\">Reply</a>
 			<a class=\"rt_btn\" title=\"Retweet\" href=\"#\">Retweet</a>
@@ -132,8 +126,7 @@
 			$messenger = $message->sender;
 		}
 		$date = format_time($message->created_at);
-		$url_recover = '';
-		$text = formatEntities($message->entities,$message->text,$url_recover);
+		$text = formatEntities($message->entities,$message->text);
 		
 		$output = "
 			<li>
@@ -143,7 +136,6 @@
 				<span class=\"status_body\">
 					<span class=\"status_id\">$message->id </span>
 					<span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$name\">$name</a> $text </span>
-					".$url_recover."
 					<span class=\"actions\">
 		";
 		
@@ -157,8 +149,7 @@
 	}
 	function format_search($status){
 		$date = format_time($status->created_at);
-      $url_recover = '';
-		$text = formatEntities($status->entities,$status->text,$url_recover);
+		$text = formatEntities($status->entities,$status->text);
       $output = "
               <li>
               <span class=\"status_author\">
@@ -166,13 +157,11 @@
               </span>
               <span class=\"status_body\">
               <span class=\"status_id\">$status->id_str</span>
-              <span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$status->from_user\">$status->from_user</a> <span class=\"tweet\">$text</span> </span>";
-      $output .= $url_recover;
-      $output .="<span class=\"actions\">
+              <span class=\"status_word\"><a class=\"user_name\" href=\"user.php?id=$status->from_user\">$status->from_user</a> <span class=\"tweet\">$text</span> </span>
+				  <span class=\"actions\">
               <a class=\"replie_btn\" href=\"#\">Reply</a><a class=\"rt_btn\" href=\"#\">Retweet</a>
               <a class=\"retw_btn\" title=\"New Retweet\" href=\"#\">New Retweet</a>
-              <a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\">";
-      $output .=      "<span class=\"source\">via ".html_entity_decode($status->source)."</span>
+              <a class=\"favor_btn\" href=\"#\">Fav</a><a class=\"trans_btn\" title=\"Translate\" href=\"#\">Translate</a></span><span class=\"status_info\"><span class=\"source\">via ".html_entity_decode($status->source)."</span>
               <span class=\"date\"><a href=\"status.php?id=$status->id_str\" id=\"$date\" target=\"_blank\">".date('Y-m-d H:i:s', strtotime($status->created_at))."</a></span>
               </span>
               </span>

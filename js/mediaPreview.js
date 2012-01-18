@@ -231,7 +231,7 @@ var previewImg = function (obj) {
 }
 var previewMedia = function (objs) {
 	var temp =[];
-	objs.find("span.tweet a[rel^=noref], span.unshorturl a[rel^=noref]").each(function () {
+	objs.find("span.tweet a[rel^=noref], span.tweet_url").each(function () {
 		var t = $(this);
 		var href = t.attr("href");
 		if(!(href in temp) && !t.data("previewed")) {
