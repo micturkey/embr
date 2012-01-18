@@ -729,6 +729,7 @@ $(function (){
 		});
 	});
 var translate = function(text,context,lang,callback){
+	
 	var a = "http://www.google.com/uds/Gtranslate";
 	a += "?callback="+callback;
 	a += "&context="+context;
@@ -770,10 +771,11 @@ var transCallback = function(content,translation){
 		li.removeClass("loading");
 	}
 };
+
 $(function (){
 	$('body').click(function (){
 		$('ul.right_menu').fadeOut('fast');
-	})
+	});
 	$('ol.timeline').click(function(e){
 		var $this = $(e.target);
 		switch(e.target.id){
@@ -835,9 +837,39 @@ $(function (){
 				tBody.parent().addClass('loading');
 				translate(text,id,lang,'transCallback');
 			break;
+			// unshorturl 
+			case 'tweet_url':
+				var tp = $this.text().split('/');
+				var d = tp[0];
+				if(d == 't.cn' || d == 'goo.gl' || d == 'bit.ly' || d == 'j.mp' || d == 'is.gd' || d == '163.fm') {
+					e.preventDefault();
+					updateSentTip('Unshorting the URL...',3e3,'ing');
+					$.getJSON('http://api.longurl.org/v2/expand?url=' +encodeURIComponent($this.attr('href')) + '&format=json&callback=?', function(data) {
+						if('long-url' in data) {
+							var url = data['long-url'];
+							if (url != $this.attr('href')) {
+								var tmp = url.split("://");
+								$this.text(tmp[1]);
+								$this.attr('href',url);
+								updateSentTip('Successfully unshort the URL!',3e3,'success');
+								if ($.cookie('showpic') === 'true') previewImg($this);
+								if ($.cookie('mediaPre') === 'true') previewFlash($this);
+								$this.data('previewed',true);
+							}
+						} else {
+							updateSentTip('Fail to unshort the URL! Please try again later!',3e3,'failure');
+						}
+					});
+				}
+			break;
 		}
 	});
+	$('ol.timeline').on("dbclick", 'a.tweet_url', function(e){
+		$this = $(e.target);	
+		
+	});
 });
+
 //sidebar function
 var scroller = function(){
 	var $sidebar = $("#side");

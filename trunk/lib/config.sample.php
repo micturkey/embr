@@ -1,6 +1,5 @@
 <?php
 	define('API_URL', 'http://api.twitter.com/1');
-	define('TWITESE_API_URL', 'http://embrpublic1.appspot.com');//need NOT change it
 	
 	// Config
 	define('SECURE_KEY', 'YOU SHOULD CHANGE IT'); //You should NOT leave it blank

@@ -30,12 +30,11 @@ class TwitterOAuth {
 	public $connecttimeout = 30;
 	/* Verify SSL Cert */
 	public $ssl_verifypeer = FALSE;
-	/* Respons type */
+	/* Response type */
 	public $type = 'json';
-	/* Decode returne json data */
+	/* Decode return json data */
 	public $decode_json = TRUE;
-	/* Immediately retry the API call if the response was not successful. */
-	//public $retry = TRUE;
+
 	public $source = 'embr';
 
 	// user info
@@ -838,37 +837,13 @@ class TwitterOAuth {
 	}
 	
 	function updateMedia($status,$image,$replying_to = false) {
-		$url='https://upload.twitter.com/1/statuses/update_with_media'.$this->type;
+		$url = 'https://upload.twitter.com/1/statuses/update_with_media'.$this->type;
 		$args = array();
 		if($status) $args['status'] = $status;
 		if($replying_to) $args['in_reply_to_status_id'] = $replying_to;
 		$mul = array();
 		if($image) $mul['media'][] = $image;
 		return $this->post($url,$args,$mul);
-	}
-	/* ---------- twitese method ---------- */
-	function rank($page = false, $count = false){
-		$url = TWITESE_API_URL."/rank.$this->type";
-		$args = array();
-		if($page){
-			$args['page'] = $page;
-		}
-		if($count){
-			$args['count'] = $count;
-		}
-		return $this->get($url, $args);
-	}
-
-	function browse($page = false, $count = false){
-		$url = TWITESE_API_URL."/browse.$this->type";
-		$args = array();
-		if($page){
-			$args['page'] = $page;
-		}
-		if($count){
-			$args['count'] = $count;
-		}
-		return $this->get($url, $args);
 	}
 }
 

@@ -4,11 +4,13 @@
 	include_once('inc/header.php');
 	include_once('lib/timeline_format.php');
 	if (!loginStatus()) header('location: login.php');
+?>
+<div id="statuses" class="column round-left">
+<?php
 	include('inc/sentForm.php');
 ?>
 <script src="js/all.js"></script>
 <style>.timeline li {border-bottom:1px solid #EFEFEF;border-top:none !important}</style>
-<div id="statuses" class="column round-left">
 			<div id="allNav">
 			<a class="allBtn allHighLight" id="allTimelineBtn" href="#">Updates</a>
 			<a class="allBtn" id="allRepliesBtn" href="#">Replies</a>

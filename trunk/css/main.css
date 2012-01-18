@@ -114,12 +114,6 @@ li.loading #avatar{opacity:0.2}
 .rank_img{top:15px;left:10px;position:absolute;width:48px;height:48px}
 .status_author img,.rank_img img,#avatar{height:48px;width:48px;border-radius:5px}
 
-
-.unshorturl{border-radius:5px;border:1px solid #DDD;display:block;font-family:tahoma;font-size:11px;overflow:hidden;margin:5px 5px 5px 1px;padding:0 5px 2px;white-space:nowrap;word-wrap:break-word;-moz-transition:all .5s ease-out;-webkit-transition:all .5s ease-out}
-.unshorturl:hover{border:1px solid #999;box-shadow:0 1px 2px rgba(0,0,0,.25);-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25)}
-.unshorturl a{color:#999;word-wrap:break-word;word-break:break-all;white-space:nowrap;display:inline;padding:0 3px}
-.unshorturl a:hover{text-decoration:none!important}
-
 #thumb_pic{display:block;margin:5px 0}
 #thumb_pic img{padding:3px;border:1px solid #ccc;max-width:420px;max-height:420px;box-shadow:0 1px 2px rgba(0,0,0,.25);-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25)}
 .hashtag{font-weight:700}

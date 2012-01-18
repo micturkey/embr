@@ -57,7 +57,7 @@
 		return $text;
 	}
 
-	function formatEntities($entities,$html,&$url_recover = false){
+	function formatEntities($entities,$html){
 		$user_mentions = $entities->user_mentions;
 		$hashtags = $entities->hashtags;
 		$urls = $entities->urls;
@@ -80,17 +80,11 @@
 				if(substr($url->url,0,4) != 'http') $url->url = 'http://'.$url->url;
 				if(isset($url->display_url)) {
 					$dis = $url->display_url;
-				} elseif ($url->url[4] == 's'){
-					$dis = substr($url->url,8);
 				} else {
-					$dis = substr($url->url,7,26);
+					$tmp = explode('://', $url->url);
+					$dis = $tmp[1];
 				}
-				$html = str_replace($url->url,"<a href=\"$exp\" target=\"_blank\" rel=\"noreferrer\">$dis</a>",$html);
-				if($url_recover !== false && $recovered = unshortUrl($exp)){
-					$split = explode('/', $recovered);
-		 			$fav_icon = $scheme.'://www.google.com/s2/favicons?domain='.$split[2];
-		 			$url_recover .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
-				}
+				$html = str_replace($url->url,"<a href=\"$exp\" target=\"_blank\" rel=\"noreferrer\" class=\"tweet_url\">$dis</a>",$html);
 			}	
 		}
 		if(isset($entities->media)) {
@@ -124,60 +118,6 @@
 			}
 		}
 		return $text;
-	}
-
-	/* ---------- Recover unshorten urls ---------- */
-	function recoverShortens($text){
-		$patten = '/(http[s]?\:\/\/[\w]+[\w\.]*\/[\w\/+=%#&\:_\.~\?\!\-\,]+)/i';
-		preg_match_all($patten, $text, $matches);
-		$output = '';
-		$scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
-		for($i = 0; $i < count($matches[0]); $i += 2){
-			if($recovered = unshortUrl($matches[0][$i])){
-				$split = explode('/', $recovered);
-	 			$fav_icon = $scheme.'://www.google.com/s2/favicons?domain='.$split[2];
-	 			$output .= "<span class=\"unshorturl\"><img src=\"$fav_icon\" alt=\"URL\" align=\"absmiddle\"><a href=\"$recovered\" target=\"_blank\" rel=\"noreferrer\">$recovered</a></span>";
-			}
-		}
-		return $output;
-	}
-
-	function unshortUrl($text) {
-		$urlRegs = array();
-
-		$urlRegs[] ='/http:\/\/tinyurl\.com\/([a-z0-9]{5}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/bit\.ly\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/j\.mp\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/is\.gd\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/retwt\.me\/([a-z0-9]{5}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/ff\.im\/-([a-z0-9]{5}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/tr\.im\/([a-z0-9]{5}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/htxt\.it\/([a-z0-9]{4}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/yy\.cx\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/aa\.cx\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/digg\.com\/([a-z0-9]{6}[a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/goo\.gl\/fb\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/goo\.gl\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/zi\.mu\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/knb\.im\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/ff\.im\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/sinaurl\.cn\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/163\.fm\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/fl5\.me\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/9911\.ms\/([a-z0-9]*)/i';
-		$urlRegs[] ='/http:\/\/t\.co\/([a-z0-9]*)/i';	
-		$urlRegs[] ='/http:\/\/t\.cn\/([a-z0-9]*)/i';
-		
-		foreach($urlRegs as $urlReg) {
-			if(preg_match($urlReg,$text,$match)){
-				$request = 'http://api.unfwd4.me/?url=' . urlencode($match[0]);
-				$result = processCurl($request);
-				if(substr($result,0,6) != "ERROR:"){
-					return $result;
-				}
-			}
-		}
-		return false; 
 	}
 
 	function processCurl($url,$postdata=false,$header=false)
