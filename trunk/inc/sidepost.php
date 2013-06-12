@@ -26,6 +26,7 @@
 </div>
 </div>
 <hr />
+<!-- 
 <div id="apiquota">
 <h2 id="apiquota_title">
 <span>API Quota</span>
@@ -34,8 +35,9 @@
 </ul>
 </div>
 <hr />
+!-->
 <div id="version">
-<h2 id="version_title"><span>Version: 0.6(r91)</span></h2>
+<h2 id="version_title"><span>Version: r92</span></h2>
 </div>
 <hr />
 <!--Preload Start-->
