@@ -21,6 +21,9 @@ class TwitterOAuth {
 	public $http_code;
 	/* Contains the last API call */
 	public $last_api_call;
+	/* API Rate Limit */
+	public $api_rate_limit;
+	public $api_rate_remaining;
 	/* Set up the API root URL */
 	//public $host = "https://api.twitter.com/1/";
 	public $host = API_URL;
@@ -43,6 +46,7 @@ class TwitterOAuth {
 	public $user_id;
 	
 	//for debug use
+	public $debugOn = false;
 	public $curl_info;
 	public $http_header;
 
@@ -188,6 +192,7 @@ class TwitterOAuth {
 		curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
 		curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
+		curl_setopt($ci, CURLOPT_HEADER, TRUE);
 
 		switch ($method) {
 		case 'GET':
@@ -214,12 +219,16 @@ class TwitterOAuth {
 			}
 		}
 
-		$response = curl_exec($ci);
+		$raw = curl_exec($ci);
+		list($header, $response) = explode("\r\n\r\n", $raw, 2);
+		$this->api_rate_limit = 
 		$this->http_header = $request->http_header;
-		$this->curl_info = curl_getinfo($ci);
-		$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
-		$this->last_api_call = curl_getinfo($ci, CURLINFO_EFFECTIVE_URL);
 		
+		if($this->debugOn) {
+			$this->curl_info = curl_getinfo($ci);
+			$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
+			$this->last_api_call = curl_getinfo($ci, CURLINFO_EFFECTIVE_URL);
+		}
 		curl_close ($ci);
 		
 		return $response;
@@ -506,15 +515,15 @@ class TwitterOAuth {
 		return $this->get($url, $args);
 	}
 
-	function showUser($id = false, $email = false, $user_id = false, $screen_name = false,$include_entities = true){
+	function showUser($screen_name = false, $user_id = false, $include_entities = true){
 		$url = '/users/show';
 		$args = array();
-		if($id)
-			$args['id'] = $id;
-		elseif($screen_name)
-			$args['id'] = $screen_name;
+		if($screen_name)
+			$args['screen_name'] = $screen_name;
+		elseif($user_id)
+			$args['user_id'] = $user_id;
 		else
-			$args['id'] = $this->user_id;
+			$args['user_id'] = $this->user_id;
 
 		return $this->get($url, $args);
 	}
@@ -677,15 +686,13 @@ class TwitterOAuth {
 		return $this->get($url, $args);
 	}
 
-	function getFavorites($page = false,$userid=false,$include_entities = true){
-		if($userid == false){
-			$url = '/favorites';
-		}
-		else{
-			$url = '/favorites/'.$userid;
-		}
+	function getFavorites($page = false, $screen_name=false, $include_entities = true){
 		
-		$args = array();
+		if ($screen_name == false)
+			$url = '/favorites';
+		else
+			$url = '/favorites/'.$screen_name;
+		
 		if($page)
 			$args['page'] = $page;
 		if($include_entities)
@@ -749,13 +756,18 @@ class TwitterOAuth {
 		}
 	}
 
-	function userTimeline($page = false, $id = false, $count = false, $since_id = false, $include_rts = true, $include_entities = true){
+	function userTimeline($page = false, $screen_name = false, $id = false, $count = false, $since_id = false, $include_rts = true, $include_entities = true){
 		$url = '/statuses/user_timeline';
 		$args = array();
 		if($page)
 			$args['page'] = $page;
-		if($id)
+		if($screen_name)
+			$args['screen_name'] = $screen_name;
+		else{
+			if($id)
 			$args['id'] = $id;
+		}
+		
 		if($count)
 			$args['count'] = $count;
 		if($since_id)
