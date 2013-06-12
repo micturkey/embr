@@ -9,13 +9,6 @@
 	include_once('utility.php');
 	include_once('twitteroauth.php');
 	include_once('oauth_lib.php');
-	if(!isset($API_NUM)) {
-		$API_NUM = 0;
-	} else {
-		$API_NUM %= count($CONSUMER_KEY_ARRAY);
-	}
-	define("CONSUMER_KEY", $CONSUMER_KEY_ARRAY[$API]);
-	define("CONSUMER_SECRET", $CONSUMER_SECRET_ARRAY[$API]);
 
 	function refreshProfile(){
 		$t = getTwitter();
@@ -26,7 +19,7 @@
 		setcookie('followers_count', $user->followers_count, $time, '/');
 		setcookie('imgurl', getAvatar($user->profile_image_url), $time, '/');
 		setcookie('name', $user->screen_name, $time, '/');
-		setcookie('listed_count', $user->listed_count, $time, '/');
+		setcookie('listed_count', GetListed($t), $time, '/');
 	}
 
 	function getDefCookie($name, $default="") {
@@ -49,7 +42,7 @@
 
 		//添加@链接
 		$atReg = '/\B@{1}(([a-zA-Z0-9\_\.\-])+)/i';
-		$text = preg_replace($atReg,	'<a href="user.php?name=\1" target="_blank">\0</a>', $text);
+		$text = preg_replace($atReg,	'<a href="user.php?id=\1" target="_blank">\0</a>', $text);
 
 		//添加 list 链接
 		$listReg = '/(\<a[\w+=\:\%\#\&\.~\?\"\'\/\- ]+\>@{1}([a-zA-Z0-9_\.\-]+)<\/a\>([\/a-zA-Z0-9_\.\-]+))/i';
@@ -71,7 +64,7 @@
 		if(count($user_mentions) > 0) {
 			foreach($user_mentions as $user_mention) {
 				$name = $user_mention->screen_name;
-				$html = str_replace("@$name","<a href=\"user.php?name=$name\" target=\"_blank\">@$name</a>",$html);
+				$html = str_replace("@$name","<a href=\"user.php?id=$name\" target=\"_blank\">@$name</a>",$html);
 			}
 		}
 		if(count($hashtags) > 0) {
@@ -233,15 +226,20 @@
 	   return false;
    }
 
+	function GetListed($t, $cursor = false){
+		$lists = $t->beAddedLists($t->username, $cursor);
+		$listed = count($lists->lists);
+		if($lists->next_cursor > 1){
+			$listed += GetListed($t, $lists->next_cursor);
+		}
+		return	$listed;
+	}
+
 	function getAvatar($profileImg){
 		if (getcookie('p_avatar') == 'true') {
 				return 'img.php?imgurl='.$profileImg;
 		}
-		return s3ize($profileImg);
-	}
-	
-	function s3ize($img) {
-		return preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$img);
+		return preg_replace('/https?:\/\/\w+([0-9])\.twimg\.com/i','https://s3.amazonaws.com/twitter_production',$profileImg);
 	}
 
 	// $target: can't be current user
