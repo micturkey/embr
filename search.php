@@ -10,12 +10,8 @@
 		GLOBAL $output;
 		$t = getTwitter();
 		$result = $t->search($query, $max_id_str);
-		$max_id_str = $result->search_metadata->max_id_str;
 		$statuses = $result->statuses;
-
-		//if ($statuses === false) {
-		//	header('location: error.php');exit();
-		//}
+		$max_id_str = end($statuses)->id_str;
 		$resultCount = count($statuses);
 		if ($resultCount <= 0) {
 			echo "<div id=\"empty\">No tweet to display.</div>";
